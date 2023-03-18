@@ -15,8 +15,8 @@ loom {
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
 
-        mixinConfig  "sleep_tight-common.mixins.json"
-        mixinConfig  "sleep_tight.mixins.json"
+        mixinConfig  "suppsquared-common.mixins.json"
+        mixinConfig  "suppsquared.mixins.json"
     }
 }
 
@@ -103,8 +103,9 @@ dependencies {
     implementation 'org.jetbrains:annotations:22.0.0'
 
     modImplementation("net.mehvahdjukaar:moonlight-forge:${project.moonlight_version}")
+    modImplementation("net.mehvahdjukaar:supplementaries:${project.supplementaries_version}")
     modCompileOnly("net.mehvahdjukaar:heartstone-forge:1.19.2-1.1.2")
     modImplementation ("curse.maven:jei-238222:3884337")
     modImplementation ("curse.maven:configured-457570:4011355")
-    modImplementation ("curse.maven:supplementaries-412082:4375776")
+    //modImplementation ("curse.maven:supplementaries-412082:4375776")
 }

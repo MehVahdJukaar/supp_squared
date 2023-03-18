@@ -2,10 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "group": "hammock",
   "ingredients": [
-    {"item": "sleep_tight:hammock_white"},
+    {"item": "suppsquared:hammock_white"},
     {"item": "minecraft:pink_dye"}
   ],
   "result": {
-    "item": "sleep_tight:hammock_pink"
+    "item": "suppsquared:hammock_pink"
   }
 }

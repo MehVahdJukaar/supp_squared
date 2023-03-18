@@ -7,7 +7,7 @@ license="ARR"
 
 [[mods]] #mandatory
 
-modId= "sleep_tight" #mandatory
+modId= "suppsquared" #mandatory
 
 version = "${version}"
 
@@ -24,26 +24,26 @@ Balanced sleep
 '''
 
 
-[modproperties.sleep_tight]
-    catalogueItemIcon = "sleep_tight:dreamer_essence" #catalogue icon
+[modproperties.suppsquared]
+    catalogueItemIcon = "suppsquared:dreamer_essence" #catalogue icon
     configuredBackground = "minecraft:textures/block/blue_wool.png"
 
 
-[[dependencies.sleep_tight]] #optional
+[[dependencies.suppsquared]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
     versionRange="[40,)" #mandatory
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.sleep_tight]]
+[[dependencies.suppsquared]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.sleep_tight]]
+[[dependencies.suppsquared]]
     modId="moonlight"
     mandatory=true
     versionRange="[1.19.2-2.2.16,]"

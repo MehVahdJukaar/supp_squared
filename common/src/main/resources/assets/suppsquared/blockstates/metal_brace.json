@@ -1,0 +1,17 @@
+
+{
+  "variants": {
+    "has_block=false,flipped=true": {
+      "model": "suppsquared:block/metal_brace_f"
+    },
+    "has_block=true,flipped=true": {
+      "model": "suppsquared:block/metal_brace_loader_f"
+    },
+    "has_block=false,flipped=false": {
+      "model": "suppsquared:block/metal_brace"
+    },
+    "has_block=true,flipped=false": {
+      "model": "suppsquared:block/metal_brace_loader"
+    }
+  }
+}

@@ -1,25 +1,22 @@
 {
   "schemaVersion": 1,
-  "id": "sleep_tight",
+  "id": "suppsquared",
   "version": "${version}",
-  "name": "Sleep Tight",
-  "description": "Balanced sleep. Don't let bedbugs bite!",
+  "name": "Supplementaries Squared",
+  "description": "Additional blocks for Supplementaries mod",
   "authors": [
     "Mehvahdjukaar, Plantkillable"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/sleep_tight",
-    "sources": "https://github.com/MehVahdJukaar/sleep_tight"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/suppsquared",
+    "sources": "https://github.com/MehVahdJukaar/suppsquared"
   },
   "license": "ARR",
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.mehvahdjukaar.sleep_tight.fabric.SleepTightFabric"
-    ],
-    "modmenu": [
-      "net.mehvahdjukaar.sleep_tight.integration.fabric.ModMenuCompat"
+      "net.mehvahdjukaar.suppsquared.fabric.SuppSquaredFabric"
     ]
   },
   "mixins": [
@@ -28,7 +25,7 @@
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": ">=1.19.2",
+    "minecraft": "1.19.2",
     "moonlight": ">=1.19.2-2.0.35"
   }
 }
