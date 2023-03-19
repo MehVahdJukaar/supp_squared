@@ -1,23 +1,26 @@
 package net.mehvahdjukaar.suppsquared;
 
-import com.mojang.blaze3d.platform.NativeImage;
 import net.mehvahdjukaar.moonlight.api.item.WoodBasedBlockItem;
 import net.mehvahdjukaar.moonlight.api.misc.RegSupplier;
 import net.mehvahdjukaar.moonlight.api.misc.Registrator;
 import net.mehvahdjukaar.moonlight.api.platform.PlatformHelper;
 import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
 import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
-import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.*;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBlock;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBraceBlock;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.ItemShelfBlock;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.SackBlock;
 import net.mehvahdjukaar.supplementaries.common.items.OptionalTagBlockItem;
 import net.mehvahdjukaar.supplementaries.common.items.SackItem;
 import net.mehvahdjukaar.supplementaries.common.items.TimberFrameItem;
-import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
+import net.mehvahdjukaar.supplementaries.reg.RegUtils;
+import net.mehvahdjukaar.suppsquared.client.ClientPackProvider;
+import net.mehvahdjukaar.suppsquared.common.PlaqueBlock;
 import net.mehvahdjukaar.suppsquared.common.PlaqueBlockTile;
-import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.mehvahdjukaar.suppsquared.common.ServerPackProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -116,15 +119,16 @@ public class SuppSquared {
                             new Item.Properties().tab(getTab(CreativeModeTab.TAB_DECORATIONS, SACK_NAME)).stacksTo(1)
                     ))));
 
-    public static final Map<DyeColor, Supplier<Block>> GOLDEN_CANDLE_HOLDERS = registerCandleHolders("gold_candle_holder");
+    public static final Map<DyeColor, Supplier<Block>> GOLDEN_CANDLE_HOLDERS = RegUtils.
+            registerCandleHolders(res("gold_candle_holder"));
+
+    private static final RegHelper.VariantType[] TYPES = List.of(RegHelper.VariantType.SLAB, RegHelper.VariantType.STAIRS, RegHelper.VariantType.VERTICAL_SLAB).toArray(RegHelper.VariantType[]::new);
 
     public static final Map<RegHelper.VariantType, Supplier<Block>> DAUB_VARIANTS =
-            RegHelper.registerBlockSet(RegHelper.VariantType.values(), DAUB, SuppSquared.MOD_ID);
+            RegHelper.registerBlockSet(TYPES, DAUB, SuppSquared.MOD_ID);
 
     public static final Map<RegHelper.VariantType, Supplier<Block>> DAUB_FRAME_VARIANTS =
-            RegHelper.registerBlockSet(RegHelper.VariantType.values(), DAUB_FRAME, SuppSquared.MOD_ID);
-
-
+            RegHelper.registerBlockSet(TYPES, DAUB_FRAME, SuppSquared.MOD_ID);
 
 
     //iron frames
@@ -150,30 +154,26 @@ public class SuppSquared {
             new Item.Properties().tab(getTab(CreativeModeTab.TAB_BUILDING_BLOCKS, TIMBER_FRAME_NAME))));
 
 
+    //plaque
+    public static final Supplier<PlaqueBlock> GOLD_PLAQUE = regWithItem("gold_plaque", () ->
+            new PlaqueBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE)
+                    .requiresCorrectToolForDrops().noCollission()
+                    .strength(1, 1)), CreativeModeTab.TAB_DECORATIONS);
+
+    public static final Supplier<PlaqueBlock> IRON_PLAQUE = regWithItem("iron_plaque", () ->
+                    new PlaqueBlock(BlockBehaviour.Properties.copy(GOLD_PLAQUE.get())),
+            CreativeModeTab.TAB_DECORATIONS);
+
+    public static final Supplier<PlaqueBlock> COPPER_PLAQUE = regWithItem("copper_plaque", () ->
+                    new PlaqueBlock(BlockBehaviour.Properties.copy(GOLD_PLAQUE.get())),
+            CreativeModeTab.TAB_DECORATIONS);
+
     public static final Supplier<BlockEntityType<PlaqueBlockTile>> PLAQUE_TILE =
             RegHelper.registerBlockEntityType(res("plaque"),
                     () -> PlatformHelper.newBlockEntityType(
-                            PlaqueBlockTile::new, SIGN_POST.get()));
+                            PlaqueBlockTile::new,
+                            IRON_PLAQUE.get(), COPPER_PLAQUE.get(), GOLD_PLAQUE.get()));
 
-
-    private static Map<DyeColor, Supplier<Block>> registerCandleHolders(String baseName) {
-        Map<DyeColor, Supplier<Block>> map = new HashMap<>();
-
-        Supplier<Block> block = regWithItem(baseName, () -> new CandleHolderBlock(null,
-                        BlockBehaviour.Properties.copy(ModRegistry.SCONCE.get())),
-                getTab(CreativeModeTab.TAB_DECORATIONS, "candle_holder"));
-        map.put(null, block);
-
-        for (DyeColor color : DyeColor.values()) {
-            String name = baseName + "_" + color.getName();
-            Supplier<Block> bb = regWithItem(name, () -> new CandleHolderBlock(color,
-                            BlockBehaviour.Properties.copy(ModRegistry.SCONCE.get())),
-                    getTab(CreativeModeTab.TAB_DECORATIONS, "candle_holder")
-            );
-            map.put(color, bb);
-        }
-        return map;
-    }
 
     public static <T extends Item> Supplier<T> regItem(String name, Supplier<T> sup) {
         return RegHelper.registerItem(SuppSquared.res(name), sup);

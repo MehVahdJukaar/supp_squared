@@ -1,0 +1,8 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "suppsquared:block/iron_plaque",
+	"textures": {
+		"3": "suppsquared:block/copper_plaque",
+		"particle": "suppsquared:block/copper_plaque"
+	}
+}

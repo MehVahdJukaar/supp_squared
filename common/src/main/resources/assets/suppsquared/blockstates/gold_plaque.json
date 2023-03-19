@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "suppsquared:block/gold_plaque"
+    },
+    "facing=east": {
+      "model": "suppsquared:block/gold_plaque",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "suppsquared:block/gold_plaque",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "suppsquared:block/gold_plaque",
+      "y": 270
+    }
+  }
+}

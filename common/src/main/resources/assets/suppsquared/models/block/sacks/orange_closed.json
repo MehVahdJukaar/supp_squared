@@ -5,6 +5,6 @@
     "2": "suppsquared:block/sack_orange_top",
     "3": "suppsquared:block/sack_orange_bottom",
     "4": "suppsquared:block/sack_orange_closed",
-    "particle": "supplementaries:block/sack_orange_front"
+    "particle": "suppsquared:block/sack_orange_front"
   }
 }

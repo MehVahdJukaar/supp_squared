@@ -5,6 +5,6 @@
     "2": "suppsquared:block/sack_magenta_top",
     "3": "suppsquared:block/sack_magenta_bottom",
     "4": "suppsquared:block/sack_magenta_closed",
-    "particle": "supplementaries:block/sack_magenta_front"
+    "particle": "suppsquared:block/sack_magenta_front"
   }
 }

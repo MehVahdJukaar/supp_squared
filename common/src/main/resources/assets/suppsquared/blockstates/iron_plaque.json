@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "suppsquared:block/iron_plaque"
+    },
+    "facing=east": {
+      "model": "suppsquared:block/iron_plaque",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "suppsquared:block/iron_plaque",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "suppsquared:block/iron_plaque",
+      "y": 270
+    }
+  }
+}

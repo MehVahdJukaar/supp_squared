@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"3": "suppsquared:block/iron_plaque",
+		"particle": "suppsquared:block/iron_plaque"
+	},
+	"elements": [
+		{
+			"from": [0, 3, 15],
+			"to": [16, 13, 16],
+			"faces": {
+				"north": {"uv": [0, 3, 16, 13], "texture": "#3"},
+				"east": {"uv": [0, 3, 1, 13], "rotation": 180, "texture": "#3", "cullface": "east"},
+				"south": {"uv": [0, 3, 16, 13], "texture": "#3", "cullface": "south"},
+				"west": {"uv": [15, 3, 16, 13], "texture": "#3", "cullface": "west"},
+				"up": {"uv": [0, 3, 16, 4], "texture": "#3"},
+				"down": {"uv": [0, 12, 16, 13], "texture": "#3"}
+			}
+		}
+	]
+}

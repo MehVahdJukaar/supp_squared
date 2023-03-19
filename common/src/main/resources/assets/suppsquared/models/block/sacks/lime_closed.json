@@ -5,6 +5,6 @@
     "2": "suppsquared:block/sack_lime_top",
     "3": "suppsquared:block/sack_lime_bottom",
     "4": "suppsquared:block/sack_lime_closed",
-    "particle": "supplementaries:block/sack_lime_front"
+    "particle": "suppsquared:block/sack_lime_front"
   }
 }
