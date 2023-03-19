@@ -1,10 +1,10 @@
 {
   "variants": {
     "open=false": {
-      "model": "suppsquared:block/sack_white_closed"
+      "model": "suppsquared:block/sacks/white_closed"
     },
     "open=true": {
-      "model": "suppsquared:block/sack_white_open"
+      "model": "suppsquared:block/sacks/white_open"
     }
   }
 }

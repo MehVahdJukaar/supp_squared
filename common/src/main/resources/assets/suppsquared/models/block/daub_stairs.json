@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "supplementaries:blocks/daub",
+    "top": "supplementaries:blocks/daub",
+    "side": "supplementaries:blocks/daub"
+  }
+}

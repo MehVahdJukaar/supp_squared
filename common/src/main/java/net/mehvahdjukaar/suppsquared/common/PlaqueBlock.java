@@ -1,17 +1,19 @@
 package net.mehvahdjukaar.suppsquared.common;
 
 import net.mehvahdjukaar.moonlight.api.block.WaterBlock;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SignBlock;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.Nullable;
 
-public class PlaqueBlock extends WaterBlock {
+public class PlaqueBlock extends WaterBlock implements EntityBlock{
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     protected PlaqueBlock(Properties properties) {
@@ -30,10 +32,37 @@ public class PlaqueBlock extends WaterBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        boolean flag = context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER;
-        return this.defaultBlockState().setValue(WATERLOGGED, flag).setValue(FACING, context.getHorizontalDirection().getOpposite());
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        Direction direction = state.getValue(FACING);
+        BlockPos blockPos = pos.relative(direction.getOpposite());
+        BlockState blockState = level.getBlockState(blockPos);
+        return blockState.isFaceSturdy(level, blockPos, direction);
     }
 
-//cansurvive
+    @Nullable
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        boolean flag = context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER;
+
+        BlockState blockState = this.defaultBlockState();
+        LevelReader levelReader = context.getLevel();
+        BlockPos blockPos = context.getClickedPos();
+        Direction[] directions = context.getNearestLookingDirections();
+
+        for(Direction direction : directions) {
+            if (direction.getAxis().isHorizontal()) {
+                Direction direction2 = direction.getOpposite();
+                blockState = blockState.setValue(FACING, direction2);
+                if (blockState.canSurvive(levelReader, blockPos)) {
+                    return blockState.setValue(WATERLOGGED, flag);
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new PlaqueBlockTile(pos, state);
+    }
 }

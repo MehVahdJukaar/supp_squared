@@ -1,5 +1,6 @@
 package net.mehvahdjukaar.suppsquared.forge;
 
+import net.mehvahdjukaar.moonlight.api.platform.ClientPlatformHelper;
 import net.mehvahdjukaar.moonlight.api.platform.PlatformHelper;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.mehvahdjukaar.suppsquared.SuppSquaredClient;
@@ -19,6 +20,7 @@ public class SuppSquaredForge {
         if (PlatformHelper.getEnv().isClient()) {
             SuppSquaredClient.init();
             SuppSquaredForgeClient.init();
+            ClientPlatformHelper.addClientSetup(SuppSquaredClient::setup);
         }
 
         MinecraftForge.EVENT_BUS.register(this);

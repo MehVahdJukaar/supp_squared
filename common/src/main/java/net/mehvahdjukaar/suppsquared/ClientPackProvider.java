@@ -2,9 +2,11 @@ package net.mehvahdjukaar.suppsquared;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import net.mehvahdjukaar.moonlight.api.events.AfterLanguageLoadEvent;
 import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
 import net.mehvahdjukaar.moonlight.api.resources.ResType;
 import net.mehvahdjukaar.moonlight.api.resources.StaticResource;
+import net.mehvahdjukaar.moonlight.api.resources.assets.LangBuilder;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynClientResourcesProvider;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicTexturePack;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Palette;
@@ -13,6 +15,7 @@ import net.mehvahdjukaar.moonlight.api.resources.textures.SpriteUtils;
 import net.mehvahdjukaar.moonlight.api.resources.textures.TextureImage;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.supplementaries.Supplementaries;
+import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -241,6 +244,11 @@ public class ClientPackProvider extends DynClientResourcesProvider {
     public void generateStaticAssetsOnStartup(ResourceManager manager) {
 
     }
-
+    @Override
+    public void addDynamicTranslations(AfterLanguageLoadEvent lang) {
+        SuppSquared.ITEM_SHELVES.forEach((type, block) ->
+                LangBuilder.addDynamicEntry(lang, "block.supplementaries.item_shelf", type, block));
+        lang.addEntry("block.supplementaries.item_shelf", "Oak Item Shelf");
+    }
 
 }

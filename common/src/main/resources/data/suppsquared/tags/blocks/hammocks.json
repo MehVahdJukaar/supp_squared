@@ -1,22 +1,23 @@
 {
   "replace": false,
   "values": [
-    "suppsquared:hammock_red",
-    "suppsquared:hammock_yellow",
-    "suppsquared:hammock_lime",
-    "suppsquared:hammock_brown",
-    "suppsquared:hammock_blue",
-    "suppsquared:hammock_light_blue",
-    "suppsquared:hammock_pink",
-    "suppsquared:hammock_white",
-    "suppsquared:hammock_light_gray",
-    "suppsquared:hammock_gray",
-    "suppsquared:hammock_black",
-    "suppsquared:hammock_cyan",
-    "suppsquared:hammock_green",
-    "suppsquared:hammock_magenta",
-    "suppsquared:hammock_purple",
-    "suppsquared:hammock_orange"
+    "supplementaries:sack",
+    "suppsquared:sack_red",
+    "suppsquared:sack_yellow",
+    "suppsquared:sack_lime",
+    "suppsquared:sack_brown",
+    "suppsquared:sack_blue",
+    "suppsquared:sack_light_blue",
+    "suppsquared:sack_pink",
+    "suppsquared:sack_white",
+    "suppsquared:sack_light_gray",
+    "suppsquared:sack_gray",
+    "suppsquared:sack_black",
+    "suppsquared:sack_cyan",
+    "suppsquared:sack_green",
+    "suppsquared:sack_magenta",
+    "suppsquared:sack_purple",
+    "suppsquared:sack_orange"
   ]
 }
 

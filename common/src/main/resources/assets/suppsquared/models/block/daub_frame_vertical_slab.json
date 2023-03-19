@@ -1,0 +1,9 @@
+{
+    "parent": "supplementaries:block/vertical_slab",
+    "textures": {
+        "bottom": "supplementaries:blocks/daub_frame",
+        "top": "supplementaries:blocks/daub_frame",
+        "side": "supplementaries:blocks/daub_frame",
+        "back": "supplementaries:blocks/daub_frame"
+    }
+}
