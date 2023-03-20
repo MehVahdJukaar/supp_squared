@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "suppsquared:daub_frame_vertical_slab"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "wattle_and_daub"
+    }
+  ],
+  "result": {
+    "item": "suppsquared:daub_frame_slab",
+    "count": 1
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "sack",
+  "ingredients": [
+    {"item": "supplementaries:sack"},
+    {"tag": "forge:dyes/light_gray"}
+  ],
+  "result": {
+    "item": "suppsquared:sack_light_gray"
+  }
+}

@@ -35,7 +35,6 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
         return this.textHolder;
     }
 
-
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
@@ -68,6 +67,11 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return this.saveWithoutMetadata();
     }
 }
 

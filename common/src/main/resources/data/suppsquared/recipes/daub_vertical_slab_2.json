@@ -1,0 +1,26 @@
+{
+  "conditions": [
+    {
+      "flag": "daub",
+      "type": "supplementaries:flag"
+    },
+    {
+      "flag": "vertical_slabs",
+      "type": "supplementaries:flag"
+    },
+    {
+      "modid": "quark",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "suppsquared:daub_vertical_slab"
+    }
+  ],
+  "result": {
+    "item": "suppsquared:daub_slab",
+    "count": 1
+  }
+}

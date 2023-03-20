@@ -5,8 +5,10 @@ import net.mehvahdjukaar.moonlight.api.client.util.RotHlpr;
 import net.mehvahdjukaar.moonlight.api.client.util.TextUtil;
 import net.mehvahdjukaar.supplementaries.client.TextUtils;
 import net.mehvahdjukaar.supplementaries.common.block.TextHolder;
+import net.mehvahdjukaar.supplementaries.reg.ModTextures;
 import net.mehvahdjukaar.suppsquared.common.PlaqueBlock;
 import net.mehvahdjukaar.suppsquared.common.PlaqueBlockTile;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -20,18 +22,9 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class PlaqueTileRenderer implements BlockEntityRenderer<PlaqueBlockTile> {
-    private final BlockRenderDispatcher blockRenderer;
-    private final ItemRenderer itemRenderer;
-    private final MapRenderer mapRenderer;
-    private final Camera camera;
     private final Font font;
 
     public PlaqueTileRenderer(BlockEntityRendererProvider.Context context) {
-        Minecraft minecraft = Minecraft.getInstance();
-        blockRenderer = context.getBlockRenderDispatcher();
-        itemRenderer = minecraft.getItemRenderer();
-        mapRenderer = minecraft.gameRenderer.getMapRenderer();
-        camera = minecraft.gameRenderer.getMainCamera();
         font = context.getFont();
     }
 
@@ -69,7 +62,7 @@ public class PlaqueTileRenderer implements BlockEntityRenderer<PlaqueBlockTile> 
 
     public TextUtil.RenderTextProperties getRenderTextProperties(TextHolder textHolder, int combinedLight) {
         return new TextUtil.RenderTextProperties(textHolder.getColor(), textHolder.hasGlowingText(), combinedLight,
-                Style.EMPTY.withBold(true), () -> true);
+                textHolder.hasAntiqueInk() ? Style.EMPTY: Style.EMPTY.applyFormat(ChatFormatting.BOLD), () -> true);
     }
 
 }

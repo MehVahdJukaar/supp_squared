@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "hammock",
+  "ingredients": [
+    {"item": "supplementaries:sack"},
+    {"item": "minecraft:gray_dye"}
+  ],
+  "result": {
+    "item": "suppsquared:sack_gray"
+  }
+}

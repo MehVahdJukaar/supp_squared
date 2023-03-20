@@ -38,7 +38,7 @@
   "block.suppsquared.iron_plaque": "Iron Plaque",
   "block.suppsquared.gold_plaque": "Gold Plaque",
   "block.suppsquared.copper_plaque": "Copper Plaque",
-  "block.suppsquared.item_shelf": "Item Shelf",
+  "block.suppsquared.item_shelf": "%s Item Shelf",
   "block.suppsquared.daub_stairs": "Daub Stairs",
   "block.suppsquared.daub_slab": "Daub Slab",
   "block.suppsquared.daub_vertical_slab": "Daub Vertical Slab",

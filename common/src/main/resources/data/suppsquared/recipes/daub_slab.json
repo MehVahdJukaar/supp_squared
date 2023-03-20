@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "supplementaries:daub"
+    }
+  },
+  "conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "daub"
+    }
+  ],
+  "result": {
+    "item": "suppsquared:daub_slab",
+    "count": 6
+  }
+}

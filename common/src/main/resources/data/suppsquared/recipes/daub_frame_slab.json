@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "supplementaries:wattle_and_daub"
+    }
+  },
+  "conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "wattle_and_daub"
+    }
+  ],
+  "result": {
+    "item": "suppsquared:daub_slab",
+    "count": 6
+  }
+}

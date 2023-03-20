@@ -1,5 +1,5 @@
 {
-	"parent": "supplementaries:block/candle_holders/ceiling_3",
+	"parent": "suppsquared:block/candle_holders/ceiling_3",
 	"credit": "Made with Blockbench",
 	"textures": {
 		"2": "suppsquared:block/candle_holder",

@@ -10,6 +10,7 @@ import net.mehvahdjukaar.supplementaries.common.network.NetworkHandler;
 import net.mehvahdjukaar.supplementaries.common.network.ServerBoundSetTextHolderPacket;
 import net.mehvahdjukaar.suppsquared.common.PlaqueBlock;
 import net.mehvahdjukaar.suppsquared.common.PlaqueBlockTile;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.font.TextFieldHelper;
@@ -21,6 +22,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 
 import java.util.stream.IntStream;
 
@@ -117,7 +119,7 @@ public class PlaqueEditScreen extends Screen {
         //this.tileSign.setEditable(false);
         this.textInputUtil = new TextFieldHelper(() -> this.cachedLines[this.editLine], (t) -> {
             this.cachedLines[this.editLine] = t;
-            this.tileSign.getTextHolder().setLine(this.editLine, Component.literal(t));
+            this.tileSign.getTextHolder().setLine(this.editLine, Component.literal(t).setStyle(Style.EMPTY.withBold(true)));
         }, TextFieldHelper.createClipboardGetter(this.minecraft), TextFieldHelper.createClipboardSetter(this.minecraft),
                 (s) -> this.minecraft.font.width(s) <= tileSign.getTextHolder().getMaxLineVisualWidth());
     }

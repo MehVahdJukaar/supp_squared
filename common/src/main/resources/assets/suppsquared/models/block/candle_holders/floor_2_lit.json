@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "supplementaries:block/candle_holders/floor_2",
+	"parent": "suppsquared:block/candle_holders/floor_2",
 	"textures": {
-		"2": "suppsquared:block/candle_holder",
-		"particle": "suppsquared:block/candle_holder",
+		"2": "supplementaries:blocks/candle_holder",
+		"particle": "supplementaries:blocks/candle_holder",
 		"all": "block/candle_lit"
 	}
 }
