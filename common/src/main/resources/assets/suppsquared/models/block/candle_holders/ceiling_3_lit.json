@@ -3,7 +3,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"2": "supplementaries:blocks/candle_holder",
-		"3": "block/chain",
+		"3": "suppsquared:block/candle_holder_ceiling",
 		"particle": "supplementaries:blocks/candle_holder",
 		"all": "block/candle_lit"
 	}

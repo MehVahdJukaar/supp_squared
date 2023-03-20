@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PlaqueBlock extends WaterBlock implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final VoxelShape SHAPE_NORTH = Block.box(0, 4, 15, 16, 12, 16);
+    public static final VoxelShape SHAPE_NORTH = Block.box(0, 3, 15, 16, 13, 16);
     public static final VoxelShape SHAPE_SOUTH = Utils.rotateVoxelShape(SHAPE_NORTH, Direction.SOUTH);
     public static final VoxelShape SHAPE_EAST = Utils.rotateVoxelShape(SHAPE_NORTH, Direction.EAST);
     public static final VoxelShape SHAPE_WEST = Utils.rotateVoxelShape(SHAPE_NORTH, Direction.WEST);

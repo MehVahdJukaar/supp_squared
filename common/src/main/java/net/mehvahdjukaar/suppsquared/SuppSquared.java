@@ -157,6 +157,7 @@ public class SuppSquared {
     //plaque
     public static final Supplier<PlaqueBlock> GOLD_PLAQUE = regWithItem("gold_plaque", () ->
             new PlaqueBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.NONE)
+                    .sound(SoundType.METAL)
                     .requiresCorrectToolForDrops().noCollission()
                     .strength(1, 1)), CreativeModeTab.TAB_DECORATIONS);
 
