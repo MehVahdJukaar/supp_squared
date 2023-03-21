@@ -19,7 +19,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "suppsquared:golden_candle_holder_spectacle",
+                  "block": "suppsquared:gold_candle_holder_spectacle",
                   "properties": {
                     "candles": "2"
                   }
@@ -33,7 +33,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "suppsquared:golden_candle_holder_spectacle",
+                  "block": "suppsquared:gold_candle_holder_spectacle",
                   "properties": {
                     "candles": "3"
                   }
@@ -47,7 +47,7 @@
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "suppsquared:golden_candle_holder_spectacle",
+                  "block": "suppsquared:gold_candle_holder_spectacle",
                   "properties": {
                     "candles": "4"
                   }
@@ -60,7 +60,7 @@
               "function": "minecraft:explosion_decay"
             }
           ],
-          "name": "suppsquared:golden_candle_holder_spectacle"
+          "name": "suppsquared:gold_candle_holder_spectacle"
         }
       ]
     }

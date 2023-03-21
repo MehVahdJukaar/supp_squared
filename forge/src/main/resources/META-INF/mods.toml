@@ -11,7 +11,7 @@ modId= "suppsquared" #mandatory
 
 version = "${version}"
 
-displayName="Sleep Tight" #mandatory
+displayName="Supplementaries Squared" #mandatory
 
 logoFile="icon.png" #optional
 
@@ -20,13 +20,12 @@ credits="Mehvahdjukaar, Plantkillable" #optional
 authors="MehVahdJukaar, Plantkillable" #optional
 
 description='''
-Balanced sleep
+Additional blocks for Supplementaries
 '''
 
 
 [modproperties.suppsquared]
-    catalogueItemIcon = "suppsquared:dreamer_essence" #catalogue icon
-    configuredBackground = "minecraft:textures/block/blue_wool.png"
+    catalogueItemIcon = "suppsquared:suppsqaured_sack_lime" #catalogue icon
 
 
 [[dependencies.suppsquared]] #optional
@@ -46,5 +45,5 @@ Balanced sleep
 [[dependencies.suppsquared]]
     modId="moonlight"
     mandatory=true
-    versionRange="[1.19.2-2.2.16,]"
+    versionRange="[1.19.2-2.2.20,]"
     side="BOTH"

@@ -11,9 +11,10 @@ import net.mehvahdjukaar.moonlight.api.resources.textures.Palette;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Respriter;
 import net.mehvahdjukaar.moonlight.api.resources.textures.SpriteUtils;
 import net.mehvahdjukaar.moonlight.api.resources.textures.TextureImage;
+import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
+import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.supplementaries.Supplementaries;
-import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.repository.Pack;
@@ -58,15 +59,19 @@ public class ClientPackProvider extends DynClientResourcesProvider {
 
         SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
             String id = Utils.getID(sign).getPath();
-
+            if(wood == WoodTypeRegistry.OAK_TYPE)return;
             try {
                 addSimilarJsonResource(manager, isItemModel,
+                        s -> s .replace("supplementaries:items", "suppsquared:item")
+                                .replace("item_shelf", "item_shelves/" + id.replace("item_shelf_", "")),
+
                         s -> s.replace("item_shelf", id)
-                                .replace("supplementaries:items/item_shelf_", "suppsquared:item/item_shelves/")
                 );
                 addSimilarJsonResource(manager, isBlockState,
+                        s -> s.replace("supplementaries:block", "suppsquared:block")
+                                .replace("item_shelf", "item_shelves/" + id.replace("item_shelf_", "")),
+
                         s -> s.replace("item_shelf", id)
-                                .replace("supplementaries:block/item_shelf_", "suppsquared:block/item_shelves/")
                 );
                 addSimilarJsonResource(manager, isModel,
                         s -> s.replace("birch", id.replace("item_shelf_", ""))
@@ -85,7 +90,7 @@ public class ClientPackProvider extends DynClientResourcesProvider {
             SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
 
                 ResourceLocation textureRes = SuppSquared.res("item/item_shelves/" + Utils.getID(sign).getPath()
-                        .replace("item_shelf_",""));
+                        .replace("item_shelf_", ""));
 
                 if (alreadyHasTextureAtLocation(manager, textureRes)) return;
 
@@ -131,7 +136,7 @@ public class ClientPackProvider extends DynClientResourcesProvider {
 
             SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
                 var textureRes = SuppSquared.res("block/item_shelves/" + Utils.getID(sign).getPath()
-                        .replace("item_shelf_",""));
+                        .replace("item_shelf_", ""));
                 if (alreadyHasTextureAtLocation(manager, textureRes)) return;
 
                 try (TextureImage plankTexture = TextureImage.open(manager,
@@ -153,6 +158,7 @@ public class ClientPackProvider extends DynClientResourcesProvider {
     public void generateStaticAssetsOnStartup(ResourceManager manager) {
 
     }
+
     @Override
     public void addDynamicTranslations(AfterLanguageLoadEvent lang) {
         SuppSquared.ITEM_SHELVES.forEach((type, block) ->

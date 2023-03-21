@@ -250,8 +250,8 @@
 			"to": [15, 8, 8],
 			"rotation": {"angle": 0, "axis": "y", "origin": [15, 9, 15]},
 			"faces": {
-				"north": {"uv": [2, 0, 8, 5], "texture": "#2"},
-				"south": {"uv": [8, 0, 2, 5], "texture": "#2"}
+				"north": {"uv": [0, 0, 6, 5], "texture": "#2"},
+				"south": {"uv": [6, 0, 0, 5], "texture": "#2"}
 			}
 		},
 		{
