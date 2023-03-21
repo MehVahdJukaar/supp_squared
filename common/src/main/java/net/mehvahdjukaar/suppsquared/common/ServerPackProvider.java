@@ -62,20 +62,6 @@ public class ServerPackProvider extends DynServerResourcesProvider {
         dynamicPack.addTag(builder, Registry.ITEM_REGISTRY);
 
         addItemShelfRecipes(manager);
-
-        StaticResource sackLoot = StaticResource.getOrLog(manager,
-                ResType.BLOCK_LOOT_TABLES.getPath(Supplementaries.res("sack")));
-
-        for(DyeColor c : DyeColor.values()){
-            try {
-                addSimilarJsonResource(manager, sackLoot,
-                        s -> s.replace("supplementaries", "suppsquared")
-                                .replace("sack","sack_"+c.getName()));
-            } catch (Exception ex) {
-            }
-        }
-
-
     }
 
     private void addItemShelfRecipes(ResourceManager manager) {
