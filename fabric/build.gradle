@@ -34,6 +34,9 @@ dependencies {
     modImplementation ("net.mehvahdjukaar:moonlight-fabric:${project.moonlight_version}")
     modImplementation ("net.mehvahdjukaar:supplementaries-fabric:${project.supplementaries_version}")
     modImplementation ("curse.maven:ecologics-570463:4171284")
+    modImplementation ("curse.maven:the-twilight-forest-227639:4389094")
+    modImplementation ("curse.maven:porting-lib-696251:4064684")
+
 }
 
 
@@ -105,20 +108,4 @@ publishing {
 repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/releases" }
-}
-
-task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
-
-    apiToken = System.getenv('curseforge_token')
-    disableVersionDetection()
-
-    // Tells CurseForgeGradle to publish the output of the jar task. This will
-    // return a UploadArtifact object that can be used to further configure the file.
-    def mainFile = upload(rootProject.project_id, file("${project.buildDir}/libs/${archivesBaseName}-${version}-fabric.jar"))
-    mainFile.changelog = rootProject.file('changelog.md')
-    mainFile.changelogType = "markdown"
-    mainFile.releaseType = "release"
-    mainFile.addGameVersion(rootProject.minecraft_version)
-    mainFile.addModLoader("fabric")
-    mainFile.addRequirement("supplementaries")
 }

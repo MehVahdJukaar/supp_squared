@@ -1,2 +1,2 @@
-* fixed item shelves models
-* fixed missing assets
+* fixed some lang strings
+* fixed some models

@@ -16,6 +16,8 @@ import net.mehvahdjukaar.supplementaries.common.block.blocks.SackBlock;
 import net.mehvahdjukaar.supplementaries.common.items.OptionalTagBlockItem;
 import net.mehvahdjukaar.supplementaries.common.items.SackItem;
 import net.mehvahdjukaar.supplementaries.common.items.TimberFrameItem;
+import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
+import net.mehvahdjukaar.supplementaries.reg.ModSounds;
 import net.mehvahdjukaar.supplementaries.reg.RegUtils;
 import net.mehvahdjukaar.suppsquared.client.ClientPackProvider;
 import net.mehvahdjukaar.suppsquared.common.PlaqueBlock;
@@ -42,7 +44,6 @@ import java.util.stream.Collectors;
 
 import static net.mehvahdjukaar.supplementaries.reg.ModConstants.SACK_NAME;
 import static net.mehvahdjukaar.supplementaries.reg.ModConstants.TIMBER_FRAME_NAME;
-import static net.mehvahdjukaar.supplementaries.reg.ModRegistry.*;
 import static net.mehvahdjukaar.supplementaries.reg.RegUtils.getTab;
 
 /**
@@ -53,16 +54,12 @@ public class SuppSquared {
     public static final String MOD_ID = "suppsquared";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-    public static final boolean SUPP = PlatformHelper.isModLoaded("supplementaries");
-    public static final boolean HS = PlatformHelper.isModLoaded("heartstone");
-
     public static ResourceLocation res(String name) {
         return new ResourceLocation(MOD_ID, name);
     }
 
 
     public static void commonInit() {
-
         if (PlatformHelper.getEnv().isClient()) {
             ClientPackProvider.INSTANCE.register();
         }
@@ -78,16 +75,19 @@ public class SuppSquared {
         for (WoodType wood : types) {
             Block instance;
             if (wood == WoodTypeRegistry.OAK_TYPE) {
-                instance = ITEM_SHELF.get();
+                //instance = ITEM_SHELF.get();
             } else {
                 String name = wood.getVariantId("item_shelf");
-                ItemShelfBlock block = new ItemShelfBlock(BlockBehaviour.Properties.copy(ITEM_SHELF.get()));
+                ItemShelfBlock block = new ItemShelfBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD)
+                        .sound(SoundType.WOOD)
+                        .strength(0.75F, 0.1F)
+                        .noOcclusion()
+                        .noCollission());
                 instance = block;
                 event.register(SuppSquared.res(name), block);
+                ITEM_SHELVES.put(wood, instance);
+                wood.addChild("supplementaries:item_shelf", (Object) instance);
             }
-
-            ITEM_SHELVES.put(wood, instance);
-            wood.addChild("supplementaries:item_shelf", (Object) instance);
         }
     }
 
@@ -101,15 +101,26 @@ public class SuppSquared {
             );
             event.register(Utils.getID(block), item);
         }
+        ITEM_SHELVES.put(WoodTypeRegistry.OAK_TYPE, ModRegistry.ITEM_SHELF.get());
+        WoodTypeRegistry.OAK_TYPE.addChild("supplementaries:item_shelf", (Object) ModRegistry.ITEM_SHELF.get());
+
     }
 
+    private static final RegHelper.VariantType[] TYPES = List.of(RegHelper.VariantType.SLAB, RegHelper.VariantType.STAIRS, RegHelper.VariantType.VERTICAL_SLAB).toArray(RegHelper.VariantType[]::new);
 
-    public static final Map<WoodType, Block> ITEM_SHELVES = new LinkedHashMap();
+
+    public static final Map<RegHelper.VariantType, Supplier<Block>> DAUBS = RegHelper.registerBlockSet(TYPES, ModRegistry.DAUB, SuppSquared.MOD_ID);
+
+    public static final Map<RegHelper.VariantType, Supplier<Block>> FRAMES = RegHelper.registerBlockSet(TYPES, ModRegistry.DAUB_FRAME, SuppSquared.MOD_ID);
+
+
+    public static final Map<WoodType, Block> ITEM_SHELVES = new LinkedHashMap<>();
 
     public static final Map<DyeColor, Supplier<Block>> SACKS = Arrays.stream(DyeColor.values())
             .collect(Collectors.toUnmodifiableMap(d -> d, d ->
                     regBlock(SACK_NAME + "_" + d.getName(), () -> new SackBlock(
-                            BlockBehaviour.Properties.copy(SACK.get()).color(d.getMaterialColor())
+                            BlockBehaviour.Properties.of(Material.WOOL, MaterialColor.WOOD).strength(0.8F).sound(ModSounds.SACK)
+                                    .color(d.getMaterialColor())
                     ))));
 
     public static final Map<DyeColor, Supplier<Item>> SACK_ITEMS = Arrays.stream(DyeColor.values())
@@ -121,14 +132,6 @@ public class SuppSquared {
 
     public static final Map<DyeColor, Supplier<Block>> GOLDEN_CANDLE_HOLDERS = RegUtils.
             registerCandleHolders(res("gold_candle_holder"));
-
-    private static final RegHelper.VariantType[] TYPES = List.of(RegHelper.VariantType.SLAB, RegHelper.VariantType.STAIRS, RegHelper.VariantType.VERTICAL_SLAB).toArray(RegHelper.VariantType[]::new);
-
-    public static final Map<RegHelper.VariantType, Supplier<Block>> DAUB_VARIANTS =
-            RegHelper.registerBlockSet(TYPES, DAUB, SuppSquared.MOD_ID);
-
-    public static final Map<RegHelper.VariantType, Supplier<Block>> DAUB_FRAME_VARIANTS =
-            RegHelper.registerBlockSet(TYPES, DAUB_FRAME, SuppSquared.MOD_ID);
 
 
     //iron frames

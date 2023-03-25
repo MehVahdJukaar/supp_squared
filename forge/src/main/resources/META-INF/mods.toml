@@ -45,5 +45,12 @@ Additional blocks for Supplementaries
 [[dependencies.suppsquared]]
     modId="moonlight"
     mandatory=true
-    versionRange="[1.19.2-2.2.20,]"
+    versionRange="[1.19.2-2.2.25,]"
     side="BOTH"
+
+[[dependencies.suppsquared]]
+    modId="supplementaries"
+    mandatory=true
+    versionRange="[1.19.2-2.2.61,]"
+    side="BOTH"
+    ordering="AFTER"
