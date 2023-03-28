@@ -22,12 +22,16 @@ import net.mehvahdjukaar.supplementaries.reg.RegUtils;
 import net.mehvahdjukaar.suppsquared.client.ClientPackProvider;
 import net.mehvahdjukaar.suppsquared.common.PlaqueBlock;
 import net.mehvahdjukaar.suppsquared.common.PlaqueBlockTile;
+import net.mehvahdjukaar.suppsquared.common.SackDyeRecipe;
 import net.mehvahdjukaar.suppsquared.common.ServerPackProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -109,9 +113,12 @@ public class SuppSquared {
     private static final RegHelper.VariantType[] TYPES = List.of(RegHelper.VariantType.SLAB, RegHelper.VariantType.STAIRS, RegHelper.VariantType.VERTICAL_SLAB).toArray(RegHelper.VariantType[]::new);
 
 
-    public static final Map<RegHelper.VariantType, Supplier<Block>> DAUBS = RegHelper.registerBlockSet(TYPES, ModRegistry.DAUB, SuppSquared.MOD_ID);
+    public static final Supplier<RecipeSerializer<SackDyeRecipe>> SACK_DYE_RECIPE =
+            RegHelper.registerRecipeSerializer(new ResourceLocation("suppsquared:sack_dye"), () -> new SimpleRecipeSerializer<>(SackDyeRecipe::new));
 
-    public static final Map<RegHelper.VariantType, Supplier<Block>> FRAMES = RegHelper.registerBlockSet(TYPES, ModRegistry.DAUB_FRAME, SuppSquared.MOD_ID);
+    public static final Map<RegHelper.VariantType, Supplier<Block>> DAUBS = RegHelper.registerBlockSet(TYPES, ModRegistry.DAUB, SuppSquared.MOD_ID, false);
+
+    public static final Map<RegHelper.VariantType, Supplier<Block>> FRAMES = RegHelper.registerBlockSet(TYPES, ModRegistry.DAUB_FRAME, SuppSquared.MOD_ID, false);
 
 
     public static final Map<WoodType, Block> ITEM_SHELVES = new LinkedHashMap<>();

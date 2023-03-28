@@ -51,9 +51,9 @@ public class ClientPackProvider extends DynClientResourcesProvider {
 
         //------item shelves-----
         StaticResource isItemModel = StaticResource.getOrLog(manager,
-                ResType.ITEM_MODELS.getPath(Supplementaries.res("item_shelf")));
+                ResType.ITEM_MODELS.getPath(SuppSquared.res("item_shelf_birch")));
         StaticResource isBlockState = StaticResource.getOrLog(manager,
-                ResType.BLOCKSTATES.getPath(Supplementaries.res("item_shelf")));
+                ResType.BLOCKSTATES.getPath(SuppSquared.res("item_shelf_birch")));
         StaticResource isModel = StaticResource.getOrLog(manager,
                 ResType.BLOCK_MODELS.getPath(SuppSquared.res("item_shelves/birch")));
 
@@ -61,21 +61,16 @@ public class ClientPackProvider extends DynClientResourcesProvider {
             String id = Utils.getID(sign).getPath();
             if(wood == WoodTypeRegistry.OAK_TYPE)return;
             try {
-                addSimilarJsonResource(manager, isItemModel,
-                        s -> s .replace("supplementaries:items", "suppsquared:item")
-                                .replace("item_shelf", "item_shelves/" + id.replace("item_shelf_", "")),
+                addSimilarJsonResource(manager, isBlockState, s ->
+                        s.replace("item_shelf_birch", id)
+                                .replace("birch", id.replace("item_shelf_","")));
+                addSimilarJsonResource(manager, isModel, s ->
+                        s.replace("item_shelf_birch", id)
+                                .replace("birch", id.replace("item_shelf_","")));
+                addSimilarJsonResource(manager, isItemModel, s ->
+                        s.replace("item_shelf_birch", id)
+                                .replace("birch", id.replace("item_shelf_","")));
 
-                        s -> s.replace("item_shelf", id)
-                );
-                addSimilarJsonResource(manager, isBlockState,
-                        s -> s.replace("supplementaries:block", "suppsquared:block")
-                                .replace("item_shelf", "item_shelves/" + id.replace("item_shelf_", "")),
-
-                        s -> s.replace("item_shelf", id)
-                );
-                addSimilarJsonResource(manager, isModel,
-                        s -> s.replace("birch", id.replace("item_shelf_", ""))
-                );
             } catch (Exception ex) {
                 getLogger().error("Failed to generate models for {} : {}", sign, ex);
             }

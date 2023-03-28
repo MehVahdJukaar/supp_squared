@@ -34,7 +34,7 @@ dependencies {
     modImplementation ("net.mehvahdjukaar:moonlight-fabric:${project.moonlight_version}")
     modImplementation ("net.mehvahdjukaar:supplementaries-fabric:${project.supplementaries_version}")
     modImplementation ("curse.maven:ecologics-570463:4171284")
-    modImplementation ("curse.maven:the-twilight-forest-227639:4389094")
+   // modImplementation ("curse.maven:the-twilight-forest-227639:4389094")
     modImplementation ("curse.maven:porting-lib-696251:4064684")
 
 }

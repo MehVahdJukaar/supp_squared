@@ -66,7 +66,7 @@ public class ServerPackProvider extends DynServerResourcesProvider {
 
     private void addItemShelfRecipes(ResourceManager manager) {
         IRecipeTemplate<?> template = RPUtils.readRecipeAsTemplate(manager,
-                ResType.RECIPES.getPath(Supplementaries.res("item_shelf")));
+                ResType.RECIPES.getPath(SuppSquared.res("item_shelf_oak")));
 
         SuppSquared.ITEM_SHELVES.forEach((w, b) -> {
             if (w != WoodTypeRegistry.OAK_TYPE) {

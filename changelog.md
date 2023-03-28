@@ -1,2 +1,1 @@
-* fixed some lang strings
-* fixed some models
+* fixed item shelf recipe (again)

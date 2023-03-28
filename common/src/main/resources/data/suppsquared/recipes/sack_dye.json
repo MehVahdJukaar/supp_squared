@@ -1,0 +1,9 @@
+{
+  "type": "suppsquared:sack_dye",
+  "conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "sack"
+    }
+  ]
+}

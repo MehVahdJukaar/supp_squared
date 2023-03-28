@@ -2,13 +2,19 @@ package net.mehvahdjukaar.suppsquared.forge;
 
 import net.mehvahdjukaar.moonlight.api.platform.ClientPlatformHelper;
 import net.mehvahdjukaar.moonlight.api.platform.PlatformHelper;
+import net.mehvahdjukaar.moonlight.api.platform.forge.RegHelperImpl;
+import net.mehvahdjukaar.supplementaries.Supplementaries;
+import net.mehvahdjukaar.supplementaries.forge.SupplementariesForge;
 import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.mehvahdjukaar.suppsquared.SuppSquaredClient;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLLoader;
+import vazkii.quark.addons.oddities.block.TinyPotatoBlock;
 
 /**
  * Author: MehVahdJukaar
@@ -17,15 +23,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class SuppSquaredForge {
 
     public SuppSquaredForge() {
-        //be sure supplementaries stuff loaded first. we touch to ensure class loading.
-        //should be taken care by load order but apparently can fail sometimes...
-        try {
-            // Check if the class has been loaded
-            Class.forName("net.mehvahdjukaar.supplementaries.reg.ModRegistry");
-        } catch (ClassNotFoundException e) {
-            SuppSquared.LOGGER.warn("Supplementaries has not been loaded before this mod. How?");
-        }
-        Object v = ModRegistry.DAUB;
 
         SuppSquared.commonInit();
         if (PlatformHelper.getEnv().isClient()) {
