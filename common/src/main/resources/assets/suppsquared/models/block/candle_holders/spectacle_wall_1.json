@@ -1,0 +1,9 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "suppsquared:block/candle_holders/wall_1",
+	"textures": {
+		"2": "suppsquared:block/candle_holder",
+		"particle": "suppsquared:block/candle_holder",
+		"all": "cave_enhancements:block/spectacle_candle"
+	}
+}

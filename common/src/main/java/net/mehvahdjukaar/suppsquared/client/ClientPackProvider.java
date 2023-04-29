@@ -16,9 +16,11 @@ import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.supplementaries.Supplementaries;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import org.apache.logging.log4j.Logger;
 
@@ -160,4 +162,38 @@ public class ClientPackProvider extends DynClientResourcesProvider {
                 LangBuilder.addDynamicEntry(lang, "block.suppsquared.item_shelf", type, block));
     }
 
+
+
+    /*
+    @Override
+    public void addDynamicClientResources(ClientDynamicResourcesHandler handler, ResourceManager manager) {
+        super.addDynamicClientResources(handler, manager);
+
+
+        try (TextureImage hammock = TextureImage.open(manager, EveryCompat.res("hammock"));
+             TextureImage mask = TextureImage.open(manager, EveryCompat.res("hammock_overlay"));
+             TextureImage bed_mask = TextureImage.open(manager, EveryCompat.res("bed_mask"))
+        ) {
+
+
+            for (var  d : DyeColor.values()                                   ) {
+                var r = Sheets.BED_TEXTURES[d.getId()];
+
+                try (TextureImage bedTexture = TextureImage.open(manager, r.texture())) {
+
+                    Palette p = Palette.fromImage(bedTexture, bed_mask);
+
+                    Respriter res = Respriter.of(hammock);
+
+                    handler.dynamicPack.addAndCloseTexture(new ResourceLocation("hammocks",
+                            "item/" + d.getName()), res.recolor(p));
+
+                } catch (Exception ignored) {
+                }
+            }
+        } catch (Exception ex) {
+            handler.getLogger().error("Could not generate any Tiki torch item texture : ", ex);
+        }
+    }
+*/
 }

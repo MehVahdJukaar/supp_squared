@@ -1,1 +1,1 @@
-* fixed item shelf recipe (again)
+Possibly fixed a rare startup issue
