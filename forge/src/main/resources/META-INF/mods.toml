@@ -51,6 +51,6 @@ Additional blocks for Supplementaries
 [[dependencies.suppsquared]]
     modId="supplementaries"
     mandatory=true
-    versionRange="[1.19.2-2.2.61,]"
+    versionRange="[1.19.2-2.3.10,]"
     side="BOTH"
     ordering="AFTER"

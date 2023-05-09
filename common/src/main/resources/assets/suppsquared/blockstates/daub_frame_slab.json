@@ -5,7 +5,7 @@
       "model": "suppsquared:block/daub_frame_slab"
     },
     "type=double": {
-      "model": "supplementaries:block/daub_frame"
+      "model": "suppsquared:block/daub_frame_slab_double"
     },
     "type=top": {
       "model": "suppsquared:block/daub_frame_slab_top"

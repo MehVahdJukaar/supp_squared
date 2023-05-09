@@ -1,0 +1,7 @@
+{
+	"parent": "minecraft:block/cube_column",
+	"textures": {
+		"end": "suppsquared:block/daub_frame_inner",
+		"side": "suppsquared:block/daub_frame_slab_f"
+	}
+}

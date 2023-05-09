@@ -1,9 +1,9 @@
 {
-    "parent": "supplementaries:block/vertical_slab",
+    "parent": "moonlight:block/vertical_slab",
     "textures": {
-        "bottom": "supplementaries:blocks/daub_frame",
-        "top": "supplementaries:blocks/daub_frame",
-        "side": "supplementaries:blocks/daub_frame",
+        "bottom": "suppsquared:block/daub_frame_inner",
+        "top": "suppsquared:block/daub_frame_inner",
+        "side": "suppsquared:block/daub_frame_slab_f",
         "back": "supplementaries:blocks/daub_frame"
     }
 }

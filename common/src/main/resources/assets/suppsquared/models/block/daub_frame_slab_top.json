@@ -3,6 +3,6 @@
 	"textures": {
 		"bottom": "supplementaries:blocks/daub_frame",
 		"top": "supplementaries:blocks/daub_frame",
-		"side": "supplementaries:blocks/daub_frame"
+		"side": "suppsquared:block/daub_frame_slab"
 	}
 }

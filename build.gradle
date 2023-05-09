@@ -59,7 +59,7 @@ subprojects {
         }
     }
 
-    if (false && env.CURSEFORGE_TOKEN) {
+    if (env.CURSEFORGE_TOKEN) {
         curseforge {
             apiKey = env.CURSEFORGE_TOKEN
             project {

@@ -20,16 +20,9 @@ import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.mehvahdjukaar.supplementaries.reg.ModSounds;
 import net.mehvahdjukaar.supplementaries.reg.RegUtils;
 import net.mehvahdjukaar.suppsquared.client.ClientPackProvider;
-import net.mehvahdjukaar.suppsquared.common.PlaqueBlock;
-import net.mehvahdjukaar.suppsquared.common.PlaqueBlockTile;
-import net.mehvahdjukaar.suppsquared.common.SackDyeRecipe;
-import net.mehvahdjukaar.suppsquared.common.ServerPackProvider;
+import net.mehvahdjukaar.suppsquared.common.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.block.Block;
@@ -46,8 +39,7 @@ import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static net.mehvahdjukaar.supplementaries.reg.ModConstants.SACK_NAME;
-import static net.mehvahdjukaar.supplementaries.reg.ModConstants.TIMBER_FRAME_NAME;
+import static net.mehvahdjukaar.supplementaries.reg.ModConstants.*;
 import static net.mehvahdjukaar.supplementaries.reg.RegUtils.getTab;
 
 /**
@@ -184,6 +176,14 @@ public class SuppSquared {
                     () -> PlatformHelper.newBlockEntityType(
                             PlaqueBlockTile::new,
                             IRON_PLAQUE.get(), COPPER_PLAQUE.get(), GOLD_PLAQUE.get()));
+
+    public static final Supplier<HeavyKeyItem> SKELETON_KEY =
+            RegHelper.registerItem(res("heavy_key"), () -> new HeavyKeyItem(
+                    new Item.Properties()
+                            .fireResistant()
+                            .stacksTo(1)
+                            .rarity(Rarity.UNCOMMON)
+                            .tab(getTab(CreativeModeTab.TAB_TOOLS, KEY_NAME))));
 
 
     public static <T extends Item> Supplier<T> regItem(String name, Supplier<T> sup) {

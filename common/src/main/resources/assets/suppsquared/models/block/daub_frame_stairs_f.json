@@ -1,0 +1,12 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "suppsquared:block/daub_frame_stairs",
+	"textures": {
+		"1": "suppsquared:block/daub_frame_stairs",
+		"3": "suppsquared:block/daub_frame_slab",
+		"4": "suppsquared:block/daub_frame_stairs_f",
+		"5": "suppsquared:block/daub_frame_slab",
+		"particle": "supplementaries:blocks/daub_frame",
+		"side": "supplementaries:blocks/daub_frame"
+	}
+}

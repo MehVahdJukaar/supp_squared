@@ -1,12 +1,12 @@
 {
   "variants": {
     "facing=east,half=bottom,shape=inner_left": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_270",
       "y": 270,
       "uvlock": true
     },
     "facing=east,half=bottom,shape=inner_right": {
-      "model": "suppsquared:block/daub_frame_stairs_inner"
+      "model": "suppsquared:block/daub_frame_stairs_inner_0"
     },
     "facing=east,half=bottom,shape=outer_left": {
       "model": "suppsquared:block/daub_frame_stairs_outer",
@@ -20,39 +20,36 @@
       "model": "suppsquared:block/daub_frame_stairs"
     },
     "facing=east,half=top,shape=inner_left": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_0",
       "x": 180,
       "uvlock": true
     },
     "facing=east,half=top,shape=inner_right": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_0",
       "x": 180,
       "y": 90,
       "uvlock": true
     },
     "facing=east,half=top,shape=outer_left": {
-      "model": "suppsquared:block/daub_frame_stairs_outer",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_outer_top",
       "uvlock": true
     },
     "facing=east,half=top,shape=outer_right": {
-      "model": "suppsquared:block/daub_frame_stairs_outer",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_outer_top",
       "y": 90,
       "uvlock": true
     },
     "facing=east,half=top,shape=straight": {
-      "model": "suppsquared:block/daub_frame_stairs",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_top",
       "uvlock": true
     },
     "facing=north,half=bottom,shape=inner_left": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_180",
       "y": 180,
       "uvlock": true
     },
     "facing=north,half=bottom,shape=inner_right": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_270",
       "y": 270,
       "uvlock": true
     },
@@ -67,43 +64,40 @@
       "uvlock": true
     },
     "facing=north,half=bottom,shape=straight": {
-      "model": "suppsquared:block/daub_frame_stairs",
+      "model": "suppsquared:block/daub_frame_stairs_f",
       "y": 270,
       "uvlock": true
     },
     "facing=north,half=top,shape=inner_left": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_0",
       "x": 180,
       "y": 270,
       "uvlock": true
     },
     "facing=north,half=top,shape=inner_right": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_0",
       "x": 180,
       "uvlock": true
     },
     "facing=north,half=top,shape=outer_left": {
-      "model": "suppsquared:block/daub_frame_stairs_outer",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_outer_top",
       "y": 270,
       "uvlock": true
     },
     "facing=north,half=top,shape=outer_right": {
-      "model": "suppsquared:block/daub_frame_stairs_outer",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_outer_top",
       "uvlock": true
     },
     "facing=north,half=top,shape=straight": {
-      "model": "suppsquared:block/daub_frame_stairs",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_top_f",
       "y": 270,
       "uvlock": true
     },
     "facing=south,half=bottom,shape=inner_left": {
-      "model": "suppsquared:block/daub_frame_stairs_inner"
+      "model": "suppsquared:block/daub_frame_stairs_inner_0"
     },
     "facing=south,half=bottom,shape=inner_right": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_90",
       "y": 90,
       "uvlock": true
     },
@@ -116,47 +110,44 @@
       "uvlock": true
     },
     "facing=south,half=bottom,shape=straight": {
-      "model": "suppsquared:block/daub_frame_stairs",
+      "model": "suppsquared:block/daub_frame_stairs_f",
       "y": 90,
       "uvlock": true
     },
     "facing=south,half=top,shape=inner_left": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_0",
       "x": 180,
       "y": 90,
       "uvlock": true
     },
     "facing=south,half=top,shape=inner_right": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_0",
       "x": 180,
       "y": 180,
       "uvlock": true
     },
     "facing=south,half=top,shape=outer_left": {
-      "model": "suppsquared:block/daub_frame_stairs_outer",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_outer_top",
       "y": 90,
       "uvlock": true
     },
     "facing=south,half=top,shape=outer_right": {
-      "model": "suppsquared:block/daub_frame_stairs_outer",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_outer_top",
       "y": 180,
       "uvlock": true
     },
     "facing=south,half=top,shape=straight": {
-      "model": "suppsquared:block/daub_frame_stairs",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_top_f",
       "y": 90,
       "uvlock": true
     },
     "facing=west,half=bottom,shape=inner_left": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_90",
       "y": 90,
       "uvlock": true
     },
     "facing=west,half=bottom,shape=inner_right": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_180",
       "y": 180,
       "uvlock": true
     },
@@ -176,32 +167,29 @@
       "uvlock": true
     },
     "facing=west,half=top,shape=inner_left": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_0",
       "x": 180,
       "y": 180,
       "uvlock": true
     },
     "facing=west,half=top,shape=inner_right": {
-      "model": "suppsquared:block/daub_frame_stairs_inner",
+      "model": "suppsquared:block/daub_frame_stairs_inner_0",
       "x": 180,
       "y": 270,
       "uvlock": true
     },
     "facing=west,half=top,shape=outer_left": {
-      "model": "suppsquared:block/daub_frame_stairs_outer",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_outer_top",
       "y": 180,
       "uvlock": true
     },
     "facing=west,half=top,shape=outer_right": {
-      "model": "suppsquared:block/daub_frame_stairs_outer",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_outer_top",
       "y": 270,
       "uvlock": true
     },
     "facing=west,half=top,shape=straight": {
-      "model": "suppsquared:block/daub_frame_stairs",
-      "x": 180,
+      "model": "suppsquared:block/daub_frame_stairs_top",
       "y": 180,
       "uvlock": true
     }

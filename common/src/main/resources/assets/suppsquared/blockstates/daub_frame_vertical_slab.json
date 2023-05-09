@@ -5,6 +5,6 @@
     "type=south": { "model": "suppsquared:block/daub_frame_vertical_slab", "y": 180, "uvlock": true },
     "type=east": { "model": "suppsquared:block/daub_frame_vertical_slab", "y": 90, "uvlock": true },
     "type=west": { "model": "suppsquared:block/daub_frame_vertical_slab", "y": 270, "uvlock": true },
-    "type=double": { "model": "supplementaries:block/daub_frame" }
+    "type=double": { "model": "suppsquared:block/daub_frame_vertical_slab_double" }
   }
 }

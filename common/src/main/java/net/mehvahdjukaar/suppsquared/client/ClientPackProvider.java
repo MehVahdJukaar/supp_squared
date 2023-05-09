@@ -11,17 +11,16 @@ import net.mehvahdjukaar.moonlight.api.resources.textures.Palette;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Respriter;
 import net.mehvahdjukaar.moonlight.api.resources.textures.SpriteUtils;
 import net.mehvahdjukaar.moonlight.api.resources.textures.TextureImage;
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.supplementaries.Supplementaries;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Explosion;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
@@ -61,17 +60,17 @@ public class ClientPackProvider extends DynClientResourcesProvider {
 
         SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
             String id = Utils.getID(sign).getPath();
-            if(wood == WoodTypeRegistry.OAK_TYPE)return;
+            if (wood == WoodTypeRegistry.OAK_TYPE) return;
             try {
                 addSimilarJsonResource(manager, isBlockState, s ->
                         s.replace("item_shelf_birch", id)
-                                .replace("birch", id.replace("item_shelf_","")));
+                                .replace("birch", id.replace("item_shelf_", "")));
                 addSimilarJsonResource(manager, isModel, s ->
                         s.replace("item_shelf_birch", id)
-                                .replace("birch", id.replace("item_shelf_","")));
+                                .replace("birch", id.replace("item_shelf_", "")));
                 addSimilarJsonResource(manager, isItemModel, s ->
                         s.replace("item_shelf_birch", id)
-                                .replace("birch", id.replace("item_shelf_","")));
+                                .replace("birch", id.replace("item_shelf_", "")));
 
             } catch (Exception ex) {
                 getLogger().error("Failed to generate models for {} : {}", sign, ex);
@@ -149,6 +148,18 @@ public class ClientPackProvider extends DynClientResourcesProvider {
         } catch (Exception ex) {
             getLogger().error("Could not generate any Item Shelf block texture : ", ex);
         }
+
+        try (TextureImage c = TextureImage.open(manager, new ResourceLocation("block/copper_block"));
+             TextureImage s = TextureImage.open(manager, SuppSquared.res("block/copper_plaque"))) {
+
+            Respriter front_res = Respriter.of(s);
+             Palette targetPalette = Palette.fromImage(c);
+            targetPalette.remove(targetPalette.getDarkest());
+            targetPalette.remove(targetPalette.getDarkest());
+            this.dynamicPack.addAndCloseTexture(SuppSquared.res("block/copper_plaque"), front_res.recolor(targetPalette));
+        } catch (Exception e) {
+        }
+        // aa(manager);
     }
 
     @Override
@@ -163,37 +174,56 @@ public class ClientPackProvider extends DynClientResourcesProvider {
     }
 
 
-
-    /*
-    @Override
-    public void addDynamicClientResources(ClientDynamicResourcesHandler handler, ResourceManager manager) {
-        super.addDynamicClientResources(handler, manager);
+    public void generateSacks(ResourceManager manager) {
 
 
-        try (TextureImage hammock = TextureImage.open(manager, EveryCompat.res("hammock"));
-             TextureImage mask = TextureImage.open(manager, EveryCompat.res("hammock_overlay"));
-             TextureImage bed_mask = TextureImage.open(manager, EveryCompat.res("bed_mask"))
+        try (TextureImage front_mask = TextureImage.open(manager, SuppSquared.res("block/front_mask"));
+             TextureImage open_mask = TextureImage.open(manager, SuppSquared.res("block/open_mask"));
+             TextureImage bottom = TextureImage.open(manager, Supplementaries.res("blocks/sack_bottom"));
+             TextureImage closed = TextureImage.open(manager, Supplementaries.res("blocks/sack_closed"));
+             TextureImage open = TextureImage.open(manager, Supplementaries.res("blocks/sack_open"));
+             TextureImage top = TextureImage.open(manager, Supplementaries.res("blocks/sack_top"));
+             TextureImage front = TextureImage.open(manager, Supplementaries.res("blocks/sack_front"))
         ) {
+            Respriter bottom_res = Respriter.of(bottom);
+            Respriter closed_res = Respriter.of(closed);
+            Respriter open_res = Respriter.masked(open, open_mask);
+            Respriter top_res = Respriter.of(top);
+            Respriter front_res = Respriter.masked(front, front_mask);
 
+            for (var d : DyeColor.values()) {
 
-            for (var  d : DyeColor.values()                                   ) {
-                var r = Sheets.BED_TEXTURES[d.getId()];
+                try (TextureImage bottom_c = TextureImage.open(manager, SuppSquared.res("block/sack_" + d.getName() + "_bottom"));
+                     TextureImage closed_c = TextureImage.open(manager, SuppSquared.res("block/sack_" + d.getName() + "_closed"));
+                     TextureImage open_c = TextureImage.open(manager, SuppSquared.res("block/sack_" + d.getName() + "_open"));
+                     TextureImage top_c = TextureImage.open(manager, SuppSquared.res("block/sack_" + d.getName() + "_top"));
+                     TextureImage front_c = TextureImage.open(manager, SuppSquared.res("block/sack_" + d.getName() + "_front"))
+                ) {
+                    this.dynamicPack.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_bottom"),
+                            bottom_res.recolor(Palette.fromImage(bottom_c)));
 
-                try (TextureImage bedTexture = TextureImage.open(manager, r.texture())) {
+                    this.dynamicPack.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_closed"),
+                            closed_res.recolor(Palette.fromImage(closed_c)));
 
-                    Palette p = Palette.fromImage(bedTexture, bed_mask);
+                    var i = open_res.recolor(Palette.fromImage(open_c, open_mask));
+                    open_c.crop(open_mask.makeCopy(), false);
+                    i.applyOverlay(open_c);
+                    this.dynamicPack.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_open"), i);
 
-                    Respriter res = Respriter.of(hammock);
+                    var f = front_res.recolor(Palette.fromImage(front_c, front_mask));
+                    front_c.crop(front_mask.makeCopy(), false);
+                    f.applyOverlay(front_c);
+                    this.dynamicPack.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_front"), f);
 
-                    handler.dynamicPack.addAndCloseTexture(new ResourceLocation("hammocks",
-                            "item/" + d.getName()), res.recolor(p));
+                    this.dynamicPack.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_top"),
+                            top_res.recolor(Palette.fromImage(top_c)));
 
                 } catch (Exception ignored) {
                 }
             }
         } catch (Exception ex) {
-            handler.getLogger().error("Could not generate any Tiki torch item texture : ", ex);
+            int aa = 1;
         }
     }
-*/
+
 }

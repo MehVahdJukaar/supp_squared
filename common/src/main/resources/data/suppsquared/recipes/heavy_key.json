@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "supplementaries:key"
+  },
+  "addition": {
+    "item": "minecraft:netherite_scrap"
+  },
+  "result": {
+    "item": "suppsquared:heavy_key"
+  },
+  "conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "key"
+    }
+  ]
+}
