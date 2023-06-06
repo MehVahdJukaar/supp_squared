@@ -13,7 +13,6 @@ import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBraceBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.ItemShelfBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.SackBlock;
-import net.mehvahdjukaar.supplementaries.common.items.OptionalTagBlockItem;
 import net.mehvahdjukaar.supplementaries.common.items.SackItem;
 import net.mehvahdjukaar.supplementaries.common.items.TimberFrameItem;
 import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
@@ -27,7 +26,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -53,6 +51,7 @@ public class SuppSquared {
     public static ResourceLocation res(String name) {
         return new ResourceLocation(MOD_ID, name);
     }
+    //TODO: figure out why keys areant obfuscared
 
 
     public static void commonInit() {
@@ -190,10 +189,6 @@ public class SuppSquared {
         return RegHelper.registerItem(SuppSquared.res(name), sup);
     }
 
-    public static <T extends BlockEntityType<E>, E extends BlockEntity> Supplier<T> regTile(String name, Supplier<T> sup) {
-        return RegHelper.registerBlockEntityType(SuppSquared.res(name), sup);
-    }
-
     public static <T extends Block> RegSupplier<T> regBlock(String name, Supplier<T> sup) {
         return RegHelper.registerBlock(SuppSquared.res(name), sup);
     }
@@ -212,22 +207,9 @@ public class SuppSquared {
         return block;
     }
 
-    public static <T extends Block> Supplier<T> regWithItem(String name, Supplier<T> block, CreativeModeTab tab, String requiredMod) {
-        CreativeModeTab t = PlatformHelper.isModLoaded(requiredMod) ? tab : null;
-        return regWithItem(name, block, t);
-    }
-
-    public static RegSupplier<BlockItem> regBlockItem(String name, Supplier<? extends Block> blockSup, CreativeModeTab group, String tagKey) {
-        return RegHelper.registerItem(SuppSquared.res(name), () -> new OptionalTagBlockItem(blockSup.get(), new Item.Properties().tab(group), tagKey));
-    }
-
     public static RegSupplier<BlockItem> regBlockItem(String name, Supplier<? extends Block> blockSup, Item.Properties properties, int burnTime) {
         return RegHelper.registerItem(SuppSquared.res(name), () -> burnTime == 0 ? new BlockItem(blockSup.get(), properties) :
                 new WoodBasedBlockItem(blockSup.get(), properties, burnTime));
-    }
-
-    public static RegSupplier<BlockItem> regBlockItem(String name, Supplier<? extends Block> blockSup, Item.Properties properties) {
-        return regBlockItem(name, blockSup, properties, 0);
     }
 
 }

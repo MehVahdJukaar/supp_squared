@@ -121,7 +121,7 @@ public class PlaqueEditScreen extends Screen {
             this.cachedLines[this.editLine] = t;
             this.tileSign.getTextHolder().setLine(this.editLine, Component.literal(t).setStyle(Style.EMPTY.withBold(true)));
         }, TextFieldHelper.createClipboardGetter(this.minecraft), TextFieldHelper.createClipboardSetter(this.minecraft),
-                (s) -> this.minecraft.font.width(s) <= tileSign.getTextHolder().getMaxLineVisualWidth());
+                (s) -> this.minecraft.font.width(Component.literal(s).setStyle(Style.EMPTY.withBold(true))) <= tileSign.getTextHolder().getMaxLineVisualWidth());
     }
 
     @Override

@@ -22,12 +22,14 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
 
     public static final int MAX_LINES = 3;
     public static final int LINE_SEPARATION = 12;
+    private static final int MAX_WIDTH = 80;
+
     private final TextHolder textHolder;
     private UUID owner = null;
 
     public PlaqueBlockTile(BlockPos pos, BlockState state) {
         super(SuppSquared.PLAQUE_TILE.get(), pos, state);
-        this.textHolder = new TextHolder(MAX_LINES, 80);
+        this.textHolder = new TextHolder(MAX_LINES, MAX_WIDTH);
     }
 
     @Override

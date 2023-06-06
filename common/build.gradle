@@ -11,8 +11,10 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
 
     modImplementation("net.mehvahdjukaar:moonlight:${project.moonlight_version}")
-    modImplementation("net.mehvahdjukaar:supplementaries:${project.supplementaries_version}")
-    modCompileOnly("net.mehvahdjukaar:heartstone:1.19.2-1.1.2")
+    modImplementation("net.mehvahdjukaar:supplementaries:${project.supplementaries_version}"){
+        exclude module: "registrate"
+    }
+    //modCompileOnly("net.mehvahdjukaar:heartstone:1.19.2-1.1.2")
    // modImplementation ("curse.maven:supplementaries-412082:4375776")
 
 }

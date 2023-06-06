@@ -1,5 +1,1 @@
-- Added Heavy Key. Functions like a normal key but its "password" isnt the item name but the item itself. This means that each heavy key you craft will be unique. Don't loose it!
-- Dispensers can now use keys to unlock key lockable blocks
-- Updated sacks textures
-- Updated daub frame slab, stairs and v slab textures
-- Fixed base golden candle holder loot table
+- fixed tag typo

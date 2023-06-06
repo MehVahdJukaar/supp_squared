@@ -148,7 +148,7 @@ public class ClientPackProvider extends DynClientResourcesProvider {
         } catch (Exception ex) {
             getLogger().error("Could not generate any Item Shelf block texture : ", ex);
         }
-
+/*
         try (TextureImage c = TextureImage.open(manager, new ResourceLocation("block/copper_block"));
              TextureImage s = TextureImage.open(manager, SuppSquared.res("block/copper_plaque"))) {
 
@@ -158,7 +158,8 @@ public class ClientPackProvider extends DynClientResourcesProvider {
             targetPalette.remove(targetPalette.getDarkest());
             this.dynamicPack.addAndCloseTexture(SuppSquared.res("block/copper_plaque"), front_res.recolor(targetPalette));
         } catch (Exception e) {
-        }
+        }*/
+
         // aa(manager);
     }
 

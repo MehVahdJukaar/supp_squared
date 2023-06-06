@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "item/generated",
+	"parent": "supplementaries:item/key",
 	"textures": {
 		"layer0": "suppsquared:item/heavy_key"
 	}
