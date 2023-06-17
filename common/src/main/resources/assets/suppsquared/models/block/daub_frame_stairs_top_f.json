@@ -6,7 +6,7 @@
 		"3": "suppsquared:block/daub_frame_slab",
 		"4": "suppsquared:block/daub_frame_stairs_top_f",
 		"5": "suppsquared:block/daub_frame_slab",
-		"particle": "supplementaries:blocks/daub_frame",
-		"side": "supplementaries:blocks/daub_frame"
+		"particle": "supplementaries:block/daub_frame",
+		"side": "supplementaries:block/daub_frame"
 	}
 }

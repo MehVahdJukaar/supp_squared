@@ -1,9 +1,0 @@
-{
-    "parent": "moonlight:block/vertical_slab",
-    "textures": {
-        "bottom": "suppsquared:block/daub_frame_inner",
-        "top": "suppsquared:block/daub_frame_inner",
-        "side": "suppsquared:block/daub_frame_slab_f",
-        "back": "supplementaries:blocks/daub_frame"
-    }
-}

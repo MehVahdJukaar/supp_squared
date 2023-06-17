@@ -1,11 +1,10 @@
 package net.mehvahdjukaar.suppsquared.fabric;
 
 import net.fabricmc.api.ModInitializer;
-import net.mehvahdjukaar.moonlight.api.platform.ClientPlatformHelper;
-import net.mehvahdjukaar.moonlight.api.platform.PlatformHelper;
-import net.mehvahdjukaar.moonlight.api.util.VillagerAIManager;
-import net.mehvahdjukaar.supplementaries.common.entities.trades.ModVillagerTrades;
+import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;
+import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.supplementaries.configs.CommonConfigs;
+import net.mehvahdjukaar.supplementaries.fabric.SupplementariesFabric;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.mehvahdjukaar.suppsquared.SuppSquaredClient;
 
@@ -19,11 +18,10 @@ public class SuppSquaredFabric implements ModInitializer {
         if (!CommonConfigs.SPEC.isLoaded()) {
             throw new AssertionError();
         }
-
         SuppSquared.commonInit();
-        if (PlatformHelper.getEnv().isClient()) {
-            ClientPlatformHelper.addClientSetup(SuppSquaredClient::init);
-            ClientPlatformHelper.addClientSetup(SuppSquaredClient::setup);
+        if (PlatHelper.getPhysicalSide().isClient()) {
+            ClientHelper.addClientSetup(SuppSquaredClient::init);
+            ClientHelper.addClientSetup(SuppSquaredClient::setup);
         }
 
     }

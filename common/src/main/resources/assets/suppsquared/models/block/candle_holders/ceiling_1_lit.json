@@ -3,7 +3,8 @@
 	"parent": "suppsquared:block/candle_holders/ceiling_1",
 	"textures": {
 		"4": "suppsquared:block/candle_holder_ceiling",
-		"particle": "suppsquared:block/candle_holder_ceiling", "chain": "block/chain",
+		"particle": "suppsquared:block/candle_holder_ceiling",
+		"chain": "block/chain",
 		"all": "block/candle_lit"
 	}
 }

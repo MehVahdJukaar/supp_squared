@@ -5,7 +5,7 @@ import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
 import net.mehvahdjukaar.moonlight.api.resources.ResType;
 import net.mehvahdjukaar.moonlight.api.resources.StaticResource;
 import net.mehvahdjukaar.moonlight.api.resources.assets.LangBuilder;
-import net.mehvahdjukaar.moonlight.api.resources.pack.DynClientResourcesProvider;
+import net.mehvahdjukaar.moonlight.api.resources.pack.DynClientResourcesGenerator;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicTexturePack;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Palette;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Respriter;
@@ -20,18 +20,16 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.Explosion;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class ClientPackProvider extends DynClientResourcesProvider {
+public class ClientPackProvider extends DynClientResourcesGenerator {
 
     public static final ClientPackProvider INSTANCE = new ClientPackProvider();
 
     public ClientPackProvider() {
         super(new DynamicTexturePack(SuppSquared.res("generated_pack"), Pack.Position.BOTTOM, true, true));
-        this.dynamicPack.generateDebugResources = true;
         this.dynamicPack.addNamespaces("minecraft");
         this.dynamicPack.addNamespaces("supplementaries");
     }
@@ -79,7 +77,7 @@ public class ClientPackProvider extends DynClientResourcesProvider {
 
 
         //item textures
-        try (TextureImage template = TextureImage.open(manager, Supplementaries.res("items/item_shelf"))) {
+        try (TextureImage template = TextureImage.open(manager, Supplementaries.res("item/item_shelf"))) {
 
             Respriter respriter = Respriter.of(template);
 
@@ -96,7 +94,7 @@ public class ClientPackProvider extends DynClientResourcesProvider {
                     try (TextureImage vanillaSign = TextureImage.open(manager,
                             RPUtils.findFirstItemTextureLocation(manager, signItem));
                          TextureImage signMask = TextureImage.open(manager,
-                                 Supplementaries.res("items/hanging_signs/sign_board_mask"))) {
+                                 Supplementaries.res("item/hanging_signs/sign_board_mask"))) {
 
                         List<Palette> targetPalette = Palette.fromAnimatedImage(vanillaSign, signMask);
                         newImage = respriter.recolor(targetPalette);
@@ -126,7 +124,7 @@ public class ClientPackProvider extends DynClientResourcesProvider {
 
         //block textures
         try (TextureImage template = TextureImage.open(manager,
-                Supplementaries.res("blocks/item_shelf"))) {
+                Supplementaries.res("block/item_shelf"))) {
 
             Respriter respriter = Respriter.of(template);
 
@@ -164,11 +162,6 @@ public class ClientPackProvider extends DynClientResourcesProvider {
     }
 
     @Override
-    public void generateStaticAssetsOnStartup(ResourceManager manager) {
-
-    }
-
-    @Override
     public void addDynamicTranslations(AfterLanguageLoadEvent lang) {
         SuppSquared.ITEM_SHELVES.forEach((type, block) ->
                 LangBuilder.addDynamicEntry(lang, "block.suppsquared.item_shelf", type, block));
@@ -180,11 +173,11 @@ public class ClientPackProvider extends DynClientResourcesProvider {
 
         try (TextureImage front_mask = TextureImage.open(manager, SuppSquared.res("block/front_mask"));
              TextureImage open_mask = TextureImage.open(manager, SuppSquared.res("block/open_mask"));
-             TextureImage bottom = TextureImage.open(manager, Supplementaries.res("blocks/sack_bottom"));
-             TextureImage closed = TextureImage.open(manager, Supplementaries.res("blocks/sack_closed"));
-             TextureImage open = TextureImage.open(manager, Supplementaries.res("blocks/sack_open"));
-             TextureImage top = TextureImage.open(manager, Supplementaries.res("blocks/sack_top"));
-             TextureImage front = TextureImage.open(manager, Supplementaries.res("blocks/sack_front"))
+             TextureImage bottom = TextureImage.open(manager, Supplementaries.res("block/sack_bottom"));
+             TextureImage closed = TextureImage.open(manager, Supplementaries.res("block/sack_closed"));
+             TextureImage open = TextureImage.open(manager, Supplementaries.res("block/sack_open"));
+             TextureImage top = TextureImage.open(manager, Supplementaries.res("block/sack_top"));
+             TextureImage front = TextureImage.open(manager, Supplementaries.res("block/sack_front"))
         ) {
             Respriter bottom_res = Respriter.of(bottom);
             Respriter closed_res = Respriter.of(closed);

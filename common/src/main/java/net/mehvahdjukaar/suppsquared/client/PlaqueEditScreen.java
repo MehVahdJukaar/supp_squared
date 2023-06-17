@@ -5,16 +5,17 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.mehvahdjukaar.moonlight.api.client.util.RotHlpr;
 import net.mehvahdjukaar.moonlight.api.client.util.TextUtil;
-import net.mehvahdjukaar.supplementaries.client.renderers.tiles.HangingSignBlockTileRenderer;
+import net.mehvahdjukaar.supplementaries.common.block.tiles.DoormatBlockTile;
 import net.mehvahdjukaar.supplementaries.common.network.NetworkHandler;
 import net.mehvahdjukaar.supplementaries.common.network.ServerBoundSetTextHolderPacket;
 import net.mehvahdjukaar.suppsquared.common.PlaqueBlock;
 import net.mehvahdjukaar.suppsquared.common.PlaqueBlockTile;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.font.TextFieldHelper;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.HangingSignEditScreen;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -38,7 +39,9 @@ public class PlaqueEditScreen extends Screen {
     private PlaqueEditScreen(PlaqueBlockTile teSign) {
         super(Component.translatable("sign.edit"));
         this.tileSign = teSign;
-        this.cachedLines = IntStream.range(0, PlaqueBlockTile.MAX_LINES).mapToObj(teSign.getTextHolder()::getLine).map(Component::getString).toArray(String[]::new);
+        this.cachedLines = IntStream.range(0, DoormatBlockTile.MAX_LINES)
+                .mapToObj(t -> teSign.getTextHolder().getMessage(t, Minecraft.getInstance().isTextFilteringEnabled()))
+                .map(Component::getString).toArray(String[]::new);
 
     }
 
@@ -98,7 +101,6 @@ public class PlaqueEditScreen extends Screen {
 
     @Override
     public void removed() {
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
         // send new text to the server
         NetworkHandler.CHANNEL.sendToServer(new ServerBoundSetTextHolderPacket(this.tileSign.getBlockPos(), this.tileSign.getTextHolder()));
     }
@@ -110,31 +112,30 @@ public class PlaqueEditScreen extends Screen {
 
     @Override
     protected void init() {
-
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-
-        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height / 4 + 120, 200, 20, CommonComponents.GUI_DONE, (p_169820_) -> {
-            this.close();
-        }));
+        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, a -> this.close())
+                .bounds(this.width / 2 - 100, this.height / 4 + 120, 200, 20)
+                .build());
         //this.tileSign.setEditable(false);
         this.textInputUtil = new TextFieldHelper(() -> this.cachedLines[this.editLine], (t) -> {
             this.cachedLines[this.editLine] = t;
-            this.tileSign.getTextHolder().setLine(this.editLine, Component.literal(t).setStyle(Style.EMPTY.withBold(true)));
+            this.tileSign.getTextHolder().setMessage(this.editLine, Component.literal(t).setStyle(Style.EMPTY.withBold(true)));
         }, TextFieldHelper.createClipboardGetter(this.minecraft), TextFieldHelper.createClipboardSetter(this.minecraft),
                 (s) -> this.minecraft.font.width(Component.literal(s).setStyle(Style.EMPTY.withBold(true))) <= tileSign.getTextHolder().getMaxLineVisualWidth());
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         Lighting.setupForFlatItems();
-        this.renderBackground(poseStack);
+        this.renderBackground(graphics);
 
-        super.render(poseStack, mouseX, mouseY, partialTicks);
+        super.render(graphics, mouseX, mouseY, partialTicks);
 
-        drawCenteredString(poseStack, this.font, this.title, this.width / 2, 40, 16777215);
+        graphics.drawCenteredString(this.font, this.title, this.width / 2, 40, 16777215);
 
         MultiBufferSource.BufferSource bufferSource = this.minecraft.renderBuffers().bufferSource();
+
+        PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
 
         poseStack.translate((this.width / 2d), 0.0D, 50.0D);
@@ -157,9 +158,9 @@ public class PlaqueEditScreen extends Screen {
 
         poseStack.translate(0, 0, 0.0625 + 0.005);
         poseStack.scale(0.010416667F, -0.010416667F, 0.010416667F);
-        poseStack.translate(0,-1,0);
+        poseStack.translate(0, -1, 0);
         TextUtil.renderGuiText(this.tileSign.getTextHolder().getGUIRenderTextProperties(),
-                this.cachedLines, this.font, poseStack, bufferSource, this.textInputUtil.getCursorPos(),
+                this.cachedLines, this.font, graphics, bufferSource, this.textInputUtil.getCursorPos(),
                 this.textInputUtil.getSelectionPos(), this.editLine, blink, PlaqueBlockTile.LINE_SEPARATION);
 
         poseStack.popPose();

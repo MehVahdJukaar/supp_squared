@@ -7,11 +7,12 @@
     "suppsquared:metal_brace",
     "suppsquared:metal_cross_brace",
     "suppsquared:daub_frame_stairs",
-    "suppsquared:daub_frame_vertical_slab",
     "suppsquared:daub_frame_slab",
     "suppsquared:daub_slab",
     "suppsquared:daub_stairs",
-    "suppsquared:daub_vertical_slab"
+    "suppsquared:copper_lantern",
+    "suppsquared:crimson_lantern",
+    "suppsquared:brass_lantern"
   ]
 }
 

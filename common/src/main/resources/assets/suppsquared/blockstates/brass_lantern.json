@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "hanging=false,lit=true": {
+      "model": "suppsquared:block/brass_lantern"
+    },
+    "hanging=false,lit=false": {
+      "model": "suppsquared:block/brass_lantern_off"
+    },
+    "hanging=true,lit=true": {
+      "model": "suppsquared:block/brass_lantern_hanging"
+    },
+    "hanging=true,lit=false": {
+      "model": "suppsquared:block/brass_lantern_hanging_off"
+    }
+  }
+}

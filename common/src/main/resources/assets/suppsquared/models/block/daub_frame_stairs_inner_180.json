@@ -5,7 +5,7 @@
 		"1": "suppsquared:block/daub_frame_stairs",
 		"2": "suppsquared:block/daub_frame_stairs_f",
 		"top": "suppsquared:block/daub_frame_stairs_top",
-		"particle": "supplementaries:blocks/daub_frame",
-		"side": "supplementaries:blocks/daub_frame"
+		"particle": "supplementaries:block/daub_frame",
+		"side": "supplementaries:block/daub_frame"
 	}
 }

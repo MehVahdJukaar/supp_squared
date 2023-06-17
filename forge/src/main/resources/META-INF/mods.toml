@@ -38,19 +38,19 @@ Additional blocks for Supplementaries
 [[dependencies.suppsquared]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="[1.20,1.21)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.suppsquared]]
     modId="moonlight"
     mandatory=true
-    versionRange="[1.19.2-2.2.25,]"
+    versionRange="[1.20-2.5.0,]"
     side="BOTH"
 
 [[dependencies.suppsquared]]
     modId="supplementaries"
     mandatory=true
-    versionRange="[1.19.2-2.3.10,]"
+    versionRange="[1.20-2.5.2,]"
     side="BOTH"
     ordering="AFTER"

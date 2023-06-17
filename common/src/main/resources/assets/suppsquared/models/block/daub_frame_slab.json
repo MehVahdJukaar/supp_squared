@@ -1,8 +1,8 @@
 {
 	"parent": "minecraft:block/slab",
 	"textures": {
-		"bottom": "supplementaries:blocks/daub_frame",
-		"top": "supplementaries:blocks/daub_frame",
+		"bottom": "supplementaries:block/daub_frame",
+		"top": "supplementaries:block/daub_frame",
 		"side": "suppsquared:block/daub_frame_slab"
 	}
 }

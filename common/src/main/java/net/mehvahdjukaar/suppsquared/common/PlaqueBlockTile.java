@@ -4,7 +4,6 @@ package net.mehvahdjukaar.suppsquared.common;
 import net.mehvahdjukaar.moonlight.api.block.IOwnerProtected;
 import net.mehvahdjukaar.supplementaries.common.block.ITextHolderProvider;
 import net.mehvahdjukaar.supplementaries.common.block.TextHolder;
-import net.mehvahdjukaar.supplementaries.common.block.tiles.HangingSignBlockTile;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.mehvahdjukaar.suppsquared.client.PlaqueEditScreen;
 import net.minecraft.core.BlockPos;
@@ -33,7 +32,7 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     }
 
     @Override
-    public TextHolder getTextHolder() {
+    public TextHolder getTextHolder(int ind) {
         return this.textHolder;
     }
 

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "hanging=false,attached=false": {
+      "model": "suppsquared:block/crimson_lantern"
+    },
+    "hanging=true,attached=false": {
+      "model": "suppsquared:block/crimson_lantern_hanging"
+    },
+    "hanging=false,attached=true": {
+      "model": "suppsquared:block/crimson_lantern"
+    },
+    "hanging=true,attached=true": {
+      "model": "suppsquared:block/crimson_lantern_hanging_connected"
+    }
+  }
+}

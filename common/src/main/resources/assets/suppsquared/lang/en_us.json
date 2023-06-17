@@ -47,5 +47,9 @@
   "block.suppsquared.daub_frame_stairs": "Wattle and Daub Stairs",
   "block.suppsquared.daub_frame_slab": "Wattle and Daub Slab",
   "block.suppsquared.daub_frame_vertical_slab": "Wattle and Daub Vertical Slab",
-  "item.suppsquared.heavy_key": "Heavy Key"
+  "item.suppsquared.heavy_key": "Heavy Key",
+  "block.suppsquared.copper_lantern": "Copper Lantern",
+  "block.suppsquared.crimson_lantern": "Crimson Lantern",
+  "block.suppsquared.gold_lantern": "Gold Lantern",
+  "block.suppsquared.brass_lantern": "Brass Lantern"
 }

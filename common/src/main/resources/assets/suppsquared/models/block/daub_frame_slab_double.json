@@ -1,7 +1,7 @@
 {
 	"parent": "minecraft:block/cube_column",
 	"textures": {
-		"end": "supplementaries:blocks/daub_frame",
+		"end": "supplementaries:block/daub_frame",
 		"side": "suppsquared:block/daub_frame_slab"
 	}
 }
