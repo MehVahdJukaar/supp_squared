@@ -1,11 +1,13 @@
 {
-  "type": "minecraft:smithing",
-  "base": {
-    "item": "supplementaries:key"
-  },
-  "addition": {
-    "item": "minecraft:netherite_scrap"
-  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "supplementaries:key"
+    },
+    {
+      "item": "minecraft:netherite_scrap"
+    }
+  ],
   "result": {
     "item": "suppsquared:heavy_key"
   },
