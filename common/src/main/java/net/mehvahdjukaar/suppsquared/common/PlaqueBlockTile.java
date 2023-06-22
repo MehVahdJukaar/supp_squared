@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -21,10 +22,14 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
 
     public static final int MAX_LINES = 3;
     public static final int LINE_SEPARATION = 12;
-    private static final int MAX_WIDTH = 80;
+    private static final int MAX_WIDTH = 65;
 
     private final TextHolder textHolder;
     private UUID owner = null;
+    private boolean waxed = false;
+
+    @Nullable
+    private UUID playerWhoMayEdit;
 
     public PlaqueBlockTile(BlockPos pos, BlockState state) {
         super(SuppSquared.PLAQUE_TILE.get(), pos, state);
@@ -39,8 +44,11 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        this.textHolder.load(compound);
+        this.textHolder.load(compound, this.level, this.worldPosition);
         this.loadOwner(compound);
+        if(compound.contains("Waxed")){
+            this.waxed = compound.getBoolean("Waxed");
+        }
     }
 
     @Override
@@ -48,6 +56,9 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
         super.saveAdditional(compound);
         this.textHolder.save(compound);
         this.saveOwner(compound);
+        if(this.waxed){
+            compound.putBoolean("Waxed", waxed);
+        }
     }
 
     @Override
@@ -73,6 +84,26 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     @Override
     public CompoundTag getUpdateTag() {
         return this.saveWithoutMetadata();
+    }
+
+    @Override
+    public void setPlayerWhoMayEdit(@Nullable UUID uuid) {
+        this.playerWhoMayEdit = uuid;
+    }
+
+    @Override
+    public UUID getPlayerWhoMayEdit() {
+        return playerWhoMayEdit;
+    }
+
+    @Override
+    public boolean isWaxed() {
+        return waxed;
+    }
+
+    @Override
+    public void setWaxed(boolean b) {
+        this.waxed = b;
     }
 }
 

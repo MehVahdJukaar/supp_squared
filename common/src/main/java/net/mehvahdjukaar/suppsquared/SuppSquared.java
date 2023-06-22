@@ -176,8 +176,8 @@ public class SuppSquared {
 
     public static final Map<WoodType, Block> ITEM_SHELVES = new LinkedHashMap<>();
 
-    public static final Map<DyeColor, Supplier<Block>> SACKS = Util.make(() -> {
-        var map = new LinkedHashMap<DyeColor, Supplier<Block>>();
+    public static final Map<DyeColor, Supplier<ColoredSackBlock>> SACKS = Util.make(() -> {
+        var map = new LinkedHashMap<DyeColor, Supplier<ColoredSackBlock>>();
         for (var c : BlocksColorAPI.SORTED_COLORS) {
             map.put(c, regBlock(SACK_NAME + "_" + c.getName(), () -> new ColoredSackBlock(
                     BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL)
@@ -191,12 +191,16 @@ public class SuppSquared {
         return map;
     });
 
-    public static final Map<DyeColor, Supplier<Item>> SACK_ITEMS = Arrays.stream(DyeColor.values())
-            .collect(Collectors.toUnmodifiableMap(d -> d, d ->
-                    regItem(SACK_NAME + "_" + d.getName(), () -> new SackItem(
-                            SACKS.get(d).get(),
-                            new Item.Properties().stacksTo(1)
-                    ))));
+    public static final Map<DyeColor, Supplier<Item>> SACK_ITEMS = Util.make(() -> {
+        var map = new LinkedHashMap<DyeColor, Supplier<Item>>();
+        for (var c : BlocksColorAPI.SORTED_COLORS) {
+            map.put(c, regItem(SACK_NAME + "_" + c.getName(), () -> new SackItem(
+                    SACKS.get(c).get(),
+                    new Item.Properties().stacksTo(1)
+            )));
+        }
+        return map;
+    });
 
     public static final Map<DyeColor, Supplier<Block>> GOLDEN_CANDLE_HOLDERS = RegUtils.
             registerCandleHolders(res("gold_candle_holder"));

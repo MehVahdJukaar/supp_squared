@@ -1,10 +1,9 @@
 package net.mehvahdjukaar.suppsquared.forge;
 
-import net.mehvahdjukaar.moonlight.api.platform.ClientPlatformHelper;
-import net.mehvahdjukaar.moonlight.api.platform.PlatformHelper;
+import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;
+import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.mehvahdjukaar.suppsquared.SuppSquaredClient;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -20,10 +19,10 @@ public class SuppSquaredForge {
     public SuppSquaredForge() {
 
         SuppSquared.commonInit();
-        if (PlatformHelper.getEnv().isClient()) {
+        if (PlatHelper.getPhysicalSide().isClient()) {
             SuppSquaredClient.init();
             SuppSquaredForgeClient.init();
-            ClientPlatformHelper.addClientSetup(SuppSquaredClient::setup);
+            ClientHelper.addClientSetup(SuppSquaredClient::setup);
         }
 
         MinecraftForge.EVENT_BUS.register(this);

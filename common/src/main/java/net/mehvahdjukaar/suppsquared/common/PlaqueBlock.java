@@ -1,10 +1,7 @@
 package net.mehvahdjukaar.suppsquared.common;
 
 import net.mehvahdjukaar.moonlight.api.block.WaterBlock;
-import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.moonlight.api.util.math.MthUtils;
-import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
-import net.mehvahdjukaar.supplementaries.reg.RegUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -72,9 +69,9 @@ public class PlaqueBlock extends WaterBlock implements EntityBlock {
         BlockState blockState = level.getBlockState(blockPos);
         VoxelShape faceShape = blockState.getBlockSupportShape(level, pos).getFaceShape(direction);
         var axis = direction.getAxis();
-        if(direction.getAxisDirection() == Direction.AxisDirection.POSITIVE){
+        if (direction.getAxisDirection() == Direction.AxisDirection.POSITIVE) {
             return faceShape.max(axis) == 1;
-        }else   return faceShape.min(axis) == 0;
+        } else return faceShape.min(axis) == 0;
     }
 
     @Nullable
@@ -108,22 +105,10 @@ public class PlaqueBlock extends WaterBlock implements EntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn,
                                  BlockHitResult hit) {
-        if (!level.isClientSide) {
-            if (level.getBlockEntity(pos) instanceof PlaqueBlockTile tile && tile.isAccessibleBy(player)) {
-                InteractionResult result = tile.getTextHolder().playerInteract(level, pos, player, handIn, tile);
-                if (result != InteractionResult.PASS) return result;
-
-                //place item
-                if (handIn == InteractionHand.MAIN_HAND) {
-                    // open gui (edit sign with empty hand)
-                    tile.sendOpenGuiPacket(level, pos, player);
-                    return InteractionResult.CONSUME;
-                }
-            }
-            return InteractionResult.PASS;
-        } else {
-            return InteractionResult.SUCCESS;
+        if (level.getBlockEntity(pos) instanceof PlaqueBlockTile tile && tile.isAccessibleBy(player)) {
+            return tile.interactWithTextHolder(0, level, pos, state, player, handIn);
         }
+        return InteractionResult.PASS;
     }
 
     @Override

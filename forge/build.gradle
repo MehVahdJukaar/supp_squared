@@ -102,15 +102,11 @@ dependencies {
 
     implementation 'org.jetbrains:annotations:22.0.0'
 
-    modCompileOnly("net.mehvahdjukaar:moonlight-forge:${project.moonlight_version}")
-    modRuntimeOnly("net.mehvahdjukaar:supplementaries-forge:${project.supplementaries_version}"){
-        exclude module: "registrate"
-    }
-    modImplementation ("curse.maven:jei-238222:3884337")
+    modImplementation("net.mehvahdjukaar:moonlight-forge:${project.moonlight_version}")
+   // modRuntimeOnly("net.mehvahdjukaar:supplementaries-forge:${project.supplementaries_version}"){
+     //   exclude module: "registrate"
+    //}
+   // modImplementation ("curse.maven:jei-238222:3884337")
     //modImplementation ("curse.maven:configured-457570:4011355")
-    modImplementation ("curse.maven:the-twilight-forest-227639:4389567")
-   // modRuntimeOnly ("curse.maven:supplementaries-412082:4526191")
-    modImplementation("curse.maven:autoreglib-250363:3857246")
-    modImplementation("curse.maven:quark-oddities-301051:3575623")
-    modImplementation("curse.maven:quark-243121:4426258")
+    modImplementation ("curse.maven:supplementaries-412082:4601970")
 }
