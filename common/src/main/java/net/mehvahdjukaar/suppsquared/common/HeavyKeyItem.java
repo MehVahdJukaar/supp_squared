@@ -1,6 +1,5 @@
 package net.mehvahdjukaar.suppsquared.common;
 
-import dev.architectury.injectables.annotations.PlatformOnly;
 import net.mehvahdjukaar.supplementaries.common.items.KeyItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -35,7 +34,7 @@ public class HeavyKeyItem extends KeyItem {
     public void onCraftedBy(ItemStack stack, Level level, Player player) {
         super.onCraftedBy(stack, level, player);
         stack.getOrCreateTag().putUUID(KEY_TAG, UUID.randomUUID());
-        player.sendSystemMessage(Component.literal("crafted"+ stack.getTag()));
+        player.sendSystemMessage(Component.literal("crafted" + stack.getTag()));
     }
 
     private static String uuidToLongString(UUID id) {
@@ -50,12 +49,6 @@ public class HeavyKeyItem extends KeyItem {
             stack.getOrCreateTag().putUUID(KEY_TAG, UUID.randomUUID());
         }
         return super.use(level, player, usedHand);
-    }
-    //crafted : m_7836_
-    //used : m_7203_
-    @PlatformOnly(PlatformOnly.FORGE)
-    public void m_7836_(ItemStack stack, Level level, Player player) {
-        stack.getOrCreateTag().putUUID(KEY_TAG, UUID.randomUUID());
     }
 
 }

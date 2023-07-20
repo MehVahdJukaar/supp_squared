@@ -48,7 +48,7 @@ public class PlaqueTileRenderer implements BlockEntityRenderer<PlaqueBlockTile> 
         TextHolder textHolder = tile.getTextHolder();
 
         // render text
-        poseStack.translate(0, -16, (-0.5 + 0.0625 + 0.005));
+        poseStack.translate(0, 0, (-0.5 + 0.0625 + 0.005));
 
         float f = 0.015625F * 0.9f;
 

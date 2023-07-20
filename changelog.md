@@ -1,3 +1,2 @@
-- updated with new sign logic
-- plaque text is no longer bold, instead its just bigger
-- fixed some loot tables
+- fixed sign text not rendering
+- fixed item shelves not being in creative tabs

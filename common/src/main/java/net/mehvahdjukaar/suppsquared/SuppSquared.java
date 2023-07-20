@@ -102,8 +102,8 @@ public class SuppSquared {
                     SACK_ITEMS.values().stream().map(Supplier::get).toArray(Item[]::new));
         }
         if (CommonConfigs.Building.ITEM_SHELF_ENABLED.get()) {
-            event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(ModRegistry.ITEM_SHELF.get().asItem()),
-                    ITEM_SHELVES.values().toArray(Block[]::new));
+            Block[] array = ITEM_SHELVES.values().stream().filter(i->i!= ModRegistry.ITEM_SHELF.get()).toArray(Block[]::new);
+            event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(ModRegistry.ITEM_SHELF.get().asItem()), array);
         }
         if (isTagOn("c:brass_ingots") || isTagOn("forge:ingots/brass")) {
             event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(Items.SOUL_LANTERN),
@@ -159,7 +159,7 @@ public class SuppSquared {
             event.register(Utils.getID(block), item);
         }
         ITEM_SHELVES.put(WoodTypeRegistry.OAK_TYPE, ModRegistry.ITEM_SHELF.get());
-        WoodTypeRegistry.OAK_TYPE.addChild("supplementaries:item_shelf", (Object) ModRegistry.ITEM_SHELF.get());
+        WoodTypeRegistry.OAK_TYPE.addChild("supplementaries:item_shelf",  ModRegistry.ITEM_SHELF.get());
 
     }
 
