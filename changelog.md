@@ -1,2 +1,2 @@
-- fixed sign text not rendering
-- fixed item shelves not being in creative tabs
+- fixed plaque text rendering
+- fixed copper lantern model

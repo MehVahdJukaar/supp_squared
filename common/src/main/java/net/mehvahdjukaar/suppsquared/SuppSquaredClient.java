@@ -9,6 +9,8 @@ public class SuppSquaredClient {
 
 
     public static void init() {
+        ClientHelper.addClientSetup(SuppSquaredClient::setup);
+
         ClientHelper.addBlockColorsRegistration(SuppSquaredClient::registerBlockColors);
         ClientHelper.addBlockEntityRenderersRegistration(SuppSquaredClient::registerTileRenderers);
     }

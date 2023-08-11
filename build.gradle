@@ -38,7 +38,7 @@ subprojects {
 
     if (env.MODRINTH_TOKEN) {
         modrinth {
-            projectId = rootProject.mod_id
+            projectId = "supplementaries-squared"
             uploadFile = tasks.remapJar
             gameVersions = [rootProject.minecraft_version]
             loaders = [modLoader]
@@ -124,6 +124,11 @@ allprojects {
         maven {
             url "https://maven.firstdarkdev.xyz/snapshots"
         }
+        maven {
+            name = 'Ladysnake Mods'
+            url = 'https://maven.ladysnake.org/releases'
+        }
+        maven { url 'https://jitpack.io' }
 
         flatDir {
             dirs 'mods'

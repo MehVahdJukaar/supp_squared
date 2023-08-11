@@ -20,8 +20,7 @@ public class SuppSquaredFabric implements ModInitializer {
         }
         SuppSquared.commonInit();
         if (PlatHelper.getPhysicalSide().isClient()) {
-            ClientHelper.addClientSetup(SuppSquaredClient::init);
-            ClientHelper.addClientSetup(SuppSquaredClient::setup);
+            SuppSquaredClient.init();
         }
 
     }

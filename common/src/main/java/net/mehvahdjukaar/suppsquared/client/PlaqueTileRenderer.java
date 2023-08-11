@@ -41,8 +41,7 @@ public class PlaqueTileRenderer implements BlockEntityRenderer<PlaqueBlockTile> 
         //rotate towards direction
 
         poseStack.translate(0.5, 0.5, 0.5);
-        poseStack.mulPose(RotHlpr.rot(state.getValue(PlaqueBlock.FACING)));
-        poseStack.mulPose(RotHlpr.XN90);
+        poseStack.mulPose(RotHlpr.rot(state.getValue(PlaqueBlock.FACING).getOpposite()));
 
         // render item
         TextHolder textHolder = tile.getTextHolder();

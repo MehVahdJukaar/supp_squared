@@ -21,8 +21,6 @@ public class SuppSquaredForge {
         SuppSquared.commonInit();
         if (PlatHelper.getPhysicalSide().isClient()) {
             SuppSquaredClient.init();
-            SuppSquaredForgeClient.init();
-            ClientHelper.addClientSetup(SuppSquaredClient::setup);
         }
 
         MinecraftForge.EVENT_BUS.register(this);
