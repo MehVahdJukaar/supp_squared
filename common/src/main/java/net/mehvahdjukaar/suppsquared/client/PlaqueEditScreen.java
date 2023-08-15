@@ -73,5 +73,12 @@ public class PlaqueEditScreen extends TextHolderEditScreen<PlaqueBlockTile> {
         Lighting.setupFor3DItems();
 
     }
+
+    @Deprecated(forRemoval = true)
+    @Override
+    protected void scrollText(int amount) {
+        super.scrollText(amount);
+        textInputUtil.setCursorToEnd();
+    }
 }
 
