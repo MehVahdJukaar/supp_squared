@@ -43,11 +43,10 @@ public class ServerPackProvider extends DynServerResourcesGenerator {
     public void regenerateDynamicAssets(ResourceManager manager) {
 
         //------item shelves-----
-        SimpleTagBuilder builder = SimpleTagBuilder.of(Supplementaries.res("item_shelves"));
+        SimpleTagBuilder builder = SimpleTagBuilder.of(SuppSquared.res("item_shelves"));
 
         SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
             builder.addEntry(sign);
-            String id = Utils.getID(sign).toString();
             if (wood != WoodTypeRegistry.OAK_TYPE) {
                 dynamicPack.addSimpleBlockLootTable(sign);
             }

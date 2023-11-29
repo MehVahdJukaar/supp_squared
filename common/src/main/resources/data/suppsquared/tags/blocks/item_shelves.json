@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#suppsquared:item_shelves"
+    "supplementaries:item_shelf"
   ]
 }
 

@@ -64,6 +64,8 @@ public class PlaqueBlock extends WaterBlock implements EntityBlock {
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        return level.getBlockState(pos.relative(state.getValue(FACING).getOpposite())).isSolid();
+        /*
         Direction direction = state.getValue(FACING);
         BlockPos blockPos = pos.relative(direction.getOpposite());
         BlockState blockState = level.getBlockState(blockPos);
@@ -71,7 +73,7 @@ public class PlaqueBlock extends WaterBlock implements EntityBlock {
         var axis = direction.getAxis();
         if (direction.getAxisDirection() == Direction.AxisDirection.POSITIVE) {
             return faceShape.max(axis) == 1;
-        } else return faceShape.min(axis) == 0;
+        } else return faceShape.min(axis) == 0;*/
     }
 
     @Nullable

@@ -108,5 +108,5 @@ dependencies {
     //}
    // modImplementation ("curse.maven:jei-238222:3884337")
     //modImplementation ("curse.maven:configured-457570:4011355")
-    modImplementation ("curse.maven:supplementaries-412082:4601970")
+    modImplementation ("curse.maven:supplementaries-412082:4707417")
 }

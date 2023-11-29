@@ -1,2 +1,1 @@
-- fixed plaque text rendering
-- fixed copper lantern model
+plaques can be placed on any solid block
