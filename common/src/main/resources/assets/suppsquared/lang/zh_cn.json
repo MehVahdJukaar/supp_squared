@@ -47,5 +47,9 @@
   "block.suppsquared.daub_frame_stairs": "粗灰泥篱笆楼梯",
   "block.suppsquared.daub_frame_slab": "粗灰泥篱笆台阶",
   "block.suppsquared.daub_frame_vertical_slab": "粗灰泥篱笆竖直台阶",
-  "item.suppsquared.heavy_key": "重型钥匙"
+  "item.suppsquared.heavy_key": "重型钥匙",
+  "block.suppsquared.copper_lantern": "铜灯笼",
+  "block.suppsquared.crimson_lantern": "绯红灯笼",
+  "block.suppsquared.gold_lantern": "金灯笼",
+  "block.suppsquared.brass_lantern": "黄铜灯笼"
 }
