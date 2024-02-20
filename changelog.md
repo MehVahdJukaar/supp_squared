@@ -1,1 +1,1 @@
-plaques can be placed on any solid block
+update supp version

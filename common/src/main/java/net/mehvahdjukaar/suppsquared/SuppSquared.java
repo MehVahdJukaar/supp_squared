@@ -21,6 +21,7 @@ import net.mehvahdjukaar.supplementaries.reg.RegUtils;
 import net.mehvahdjukaar.suppsquared.client.ClientPackProvider;
 import net.mehvahdjukaar.suppsquared.common.*;
 import net.mehvahdjukaar.suppsquared.common.CopperLanternBlock;
+import net.mehvahdjukaar.suppsquared.common.CrimsonLanternBlock;
 import net.mehvahdjukaar.suppsquared.common.LightableLanternBlock;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
