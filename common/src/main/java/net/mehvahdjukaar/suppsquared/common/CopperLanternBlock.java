@@ -15,14 +15,14 @@ public class CopperLanternBlock extends LightableLanternBlock {
 
     public CopperLanternBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(AXIS, Direction.Axis.Z)
-                .setValue(WATERLOGGED, false).setValue(LIT,true));
+        this.registerDefaultState(this.defaultBlockState().setValue(AXIS, Direction.Axis.Z)
+                .setValue(WATERLOGGED, false).setValue(LIT, true));
     }
 
     @Override
     public BlockState rotate(BlockState state, Rotation rotation) {
-        if(rotation == Rotation.CLOCKWISE_90 ||rotation == Rotation.COUNTERCLOCKWISE_90){
-            return state.setValue(AXIS,state.getValue(AXIS) == Direction.Axis.X ? Direction.Axis.Z : Direction.Axis.X);
+        if (rotation == Rotation.CLOCKWISE_90 || rotation == Rotation.COUNTERCLOCKWISE_90) {
+            return state.setValue(AXIS, state.getValue(AXIS) == Direction.Axis.X ? Direction.Axis.Z : Direction.Axis.X);
         }
         return state;
     }

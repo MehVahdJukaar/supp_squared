@@ -1,1 +1,1 @@
-update supp version
+fixed lantern texture
