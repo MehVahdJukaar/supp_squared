@@ -11,7 +11,7 @@
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/suppsquared",
     "sources": "https://github.com/MehVahdJukaar/suppsquared"
   },
-  "license": "ARR",
+  "license": "Supplementaries Team License v1.1",
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
@@ -19,10 +19,6 @@
       "net.mehvahdjukaar.suppsquared.fabric.SuppSquaredFabric"
     ]
   },
-  "mixins": [
-    "${mod_id}.mixins.json",
-    "${mod_id}-common.mixins.json"
-  ],
   "depends": {
     "fabric": "*",
     "minecraft": ">=1.20",

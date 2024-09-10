@@ -1,1 +1,1 @@
-fixed lantern texture
+fixed plaquest not working

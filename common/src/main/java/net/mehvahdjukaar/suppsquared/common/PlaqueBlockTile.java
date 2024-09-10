@@ -2,23 +2,31 @@ package net.mehvahdjukaar.suppsquared.common;
 
 
 import net.mehvahdjukaar.moonlight.api.block.IOwnerProtected;
+import net.mehvahdjukaar.moonlight.api.client.IScreenProvider;
 import net.mehvahdjukaar.supplementaries.common.block.ITextHolderProvider;
 import net.mehvahdjukaar.supplementaries.common.block.TextHolder;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.DoormatBlock;
+import net.mehvahdjukaar.supplementaries.common.block.tiles.DoormatBlockTile;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.mehvahdjukaar.suppsquared.client.PlaqueEditScreen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
 
-public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider, IOwnerProtected {
+public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider, IOwnerProtected, IScreenProvider {
 
     public static final int MAX_LINES = 3;
     public static final int LINE_SEPARATION = 12;
@@ -69,6 +77,11 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     @Override
     public void setOwner(UUID owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public void openScreen(Level level, BlockPos pos, Player player, Direction dir) {
+        PlaqueEditScreen.open(this);
     }
 
     @Override

@@ -14,9 +14,6 @@ loom {
     forge {
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
-
-        mixinConfig  "suppsquared-common.mixins.json"
-        mixinConfig  "suppsquared.mixins.json"
     }
 }
 
@@ -103,12 +100,17 @@ dependencies {
 
     implementation 'org.jetbrains:annotations:22.0.0'
 
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.6"))
+    implementation(include("io.github.llamalad7:mixinextras-forge:0.3.6"))
+
+    annotationProcessor 'net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5'
+
     modImplementation("net.mehvahdjukaar:moonlight-forge:${project.moonlight_version}")
-   // modRuntimeOnly("net.mehvahdjukaar:supplementaries-forge:${project.supplementaries_version}"){
+    modImplementation("net.mehvahdjukaar:supplementaries-forge:${project.supplementaries_version}")
      //   exclude module: "registrate"
     //}
    // modImplementation ("curse.maven:jei-238222:3884337")
     //modImplementation ("curse.maven:configured-457570:4011355")
-    modImplementation ("curse.maven:supplementaries-412082:5676069")
+    //modImplementation ("curse.maven:supplementaries-412082:5676069")
 
 }

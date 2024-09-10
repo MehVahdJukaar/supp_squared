@@ -3,7 +3,7 @@ modLoader="javafml" #mandatory
 
 loaderVersion="[40,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 
-license="ARR"
+license="Supplementaries Team License v1.1"
 
 [[mods]] #mandatory
 
