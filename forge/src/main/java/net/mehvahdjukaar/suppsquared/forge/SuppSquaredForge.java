@@ -24,7 +24,6 @@ public class SuppSquaredForge {
         }
 
         MinecraftForge.EVENT_BUS.register(this);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(SuppSquaredForge::setup);
 
         /*
         v(t) = sqrt(f * r / m);
@@ -43,10 +42,6 @@ public class SuppSquaredForge {
         Vec3 gravityMovement = radius.normalize().scale(radInc);
         Vec3 sidewayMovement = radius.cross(new Vec3(0, 0, 1)).scale(Math.sqrt(targetRad * radInc * radInc / radius.length()));
         Vec3 vecToApply = gravityMovement.add(sidewayMovement);*/
-    }
-
-    public static void setup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(SuppSquared::commonSetup);
     }
 
 

@@ -9,6 +9,7 @@ import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
 import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
+import net.mehvahdjukaar.moonlight.api.util.DispenserHelper;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.*;
 import net.mehvahdjukaar.supplementaries.common.items.SackItem;
@@ -72,6 +73,8 @@ public class SuppSquared {
 
         //we let supp call this so it always happens after
         ModCreativeTabs.SYNCED_ADD_TO_TABS.add(SuppSquared::addItemsToTabs);
+
+        PlatHelper.addCommonSetup(SuppSquared::commonSetup);
     }
 
     private static void addItemsToTabs(RegHelper.ItemToTabEvent event) {
