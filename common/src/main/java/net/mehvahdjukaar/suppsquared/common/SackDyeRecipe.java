@@ -5,30 +5,29 @@ import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
 import net.mehvahdjukaar.supplementaries.common.items.SackItem;
 import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class SackDyeRecipe extends CustomRecipe {
 
-    public SackDyeRecipe(ResourceLocation resourceLocation, CraftingBookCategory craftingBookCategory) {
-        super(resourceLocation, craftingBookCategory);
+    public SackDyeRecipe(CraftingBookCategory craftingBookCategory) {
+        super(craftingBookCategory);
     }
 
     @Override
-    public boolean matches(CraftingContainer craftingContainer, Level level) {
+    public boolean matches(CraftingInput inv, Level level) {
         int i = 0;
         int j = 0;
 
-        for (int k = 0; k < craftingContainer.getContainerSize(); ++k) {
-            ItemStack itemstack = craftingContainer.getItem(k);
+        for (int k = 0; k < inv.size(); ++k) {
+            ItemStack itemstack = inv.getItem(k);
             if (!itemstack.isEmpty()) {
                 if (itemstack.is(ModRegistry.SACK_ITEM.get())) {
                     ++i;
@@ -50,11 +49,11 @@ public class SackDyeRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer craftingContainer, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider provider) {
         ItemStack itemstack = ItemStack.EMPTY;
         DyeColor dyecolor = DyeColor.WHITE;
-        for (int i = 0; i < craftingContainer.getContainerSize(); ++i) {
-            ItemStack stack = craftingContainer.getItem(i);
+        for (int i = 0; i < inv.size(); ++i) {
+            ItemStack stack = inv.getItem(i);
             if (!stack.isEmpty()) {
                 Item item = stack.getItem();
                 if (item instanceof SackItem) {
@@ -66,15 +65,8 @@ public class SackDyeRecipe extends CustomRecipe {
             }
         }
 
-        //improve this is crap
-
-        ItemStack result = BlocksColorAPI.getColoredItem("suppsquared:sack", dyecolor).getDefaultInstance();
-
-        if (itemstack.hasTag()) {
-            result.setTag(itemstack.getTag().copy());
-        }
-
-        return result;
+        return itemstack.transmuteCopy(
+                BlocksColorAPI.getColoredItem("suppsquared:sack", dyecolor), 1);
     }
 
     @Override

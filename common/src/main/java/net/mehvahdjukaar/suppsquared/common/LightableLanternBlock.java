@@ -1,19 +1,15 @@
 package net.mehvahdjukaar.suppsquared.common;
 
-import net.mehvahdjukaar.moonlight.api.util.Utils;
-import net.mehvahdjukaar.supplementaries.common.utils.BlockUtil;
+import net.mehvahdjukaar.moonlight.api.block.ILightable;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.FireChargeItem;
-import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -25,11 +21,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
 import org.jetbrains.annotations.Nullable;
-import java.util.Optional;
 
-public class LightableLanternBlock extends LanternBlock {
+public class LightableLanternBlock extends LanternBlock implements ILightable {
     public final VoxelShape shapeDown;
     public final VoxelShape shapeUp;
 
@@ -40,7 +34,7 @@ public class LightableLanternBlock extends LanternBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false).setValue(LIT, true)
                 .setValue(HANGING, false));
         this.shapeDown = shape;
-        this.shapeUp = shapeDown.move(0, 14/16f - shape.bounds().maxY, 0);
+        this.shapeUp = shapeDown.move(0, 14 / 16f - shape.bounds().maxY, 0);
     }
 
     public LightableLanternBlock(Properties properties) {
@@ -65,51 +59,21 @@ public class LightableLanternBlock extends LanternBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        var optional = toggleLight(state, worldIn, pos, player, handIn);
-        if (optional.isPresent()) {
-            if (!worldIn.isClientSide) {
-                worldIn.setBlockAndUpdate(pos, optional.get());
-            }
-            return InteractionResult.sidedSuccess(worldIn.isClientSide);
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!state.getValue(WATERLOGGED)) {
+            return this.lightableInteractWithPlayerItem(state, level, pos, player, hand, stack);
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
 
-    public static Optional<BlockState> toggleLight(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn) {
-        if (Utils.mayBuild(player,pos) && handIn == InteractionHand.MAIN_HAND) {
-            ItemStack item = player.getItemInHand(handIn);
-            if (!state.getValue(LIT)) {
-                if (item.getItem() instanceof FlintAndSteelItem) {
-
-                    worldIn.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, worldIn.getRandom().nextFloat() * 0.4F + 0.8F);
-                    state = state.setValue(LIT, true);
-
-                    item.hurtAndBreak(1, player, (playerIn) -> playerIn.broadcastBreakEvent(handIn));
-                    return Optional.of(state);
-                } else if (item.getItem() instanceof FireChargeItem) {
-
-                    worldIn.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1.0F, (worldIn.getRandom().nextFloat() - worldIn.getRandom().nextFloat()) * 0.2F + 1.0F);
-                    state = state.setValue(LIT, true);
-
-                    if (!player.isCreative()) item.shrink(1);
-                    return Optional.of(state);
-                }
-            } else if (item.isEmpty()) {
-
-                worldIn.playSound(null, pos, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 0.5F, 1.5F);
-                state = state.setValue(LIT, false);
-
-                return Optional.of(state);
-            }
-        }
-        return Optional.empty();
+    @Override
+    public boolean isLitUp(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getValue(LIT);
     }
 
     @Override
-    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        BlockUtil.addOptionalOwnership(placer, world, pos);
+    public void setLitUp(BlockState state, LevelAccessor world, BlockPos pos, @Nullable Entity entity, boolean lit) {
+        world.setBlock(pos, state.setValue(LIT, lit), 3);
     }
-
 }

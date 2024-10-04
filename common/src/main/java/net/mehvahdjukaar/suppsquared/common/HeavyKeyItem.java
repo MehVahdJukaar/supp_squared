@@ -1,20 +1,19 @@
 package net.mehvahdjukaar.suppsquared.common;
 
 import net.mehvahdjukaar.supplementaries.common.items.KeyItem;
-import net.minecraft.nbt.CompoundTag;
+import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
 import java.util.UUID;
 
 public class HeavyKeyItem extends KeyItem {
-
-    private static final String DEFAULT_KEY = uuidToLongString(UUID.fromString("8d5fae3f-1d44-47b4-9d81-1d0ee7669dd6"));
-    private static final String KEY_TAG = "id";
 
     public HeavyKeyItem(Properties properties) {
         super(properties);
@@ -22,33 +21,26 @@ public class HeavyKeyItem extends KeyItem {
 
     @Override
     public String getPassword(ItemStack stack) {
-        CompoundTag t = stack.getTag();
-        if (t != null && t.contains(KEY_TAG)) {
-            UUID id = t.getUUID(KEY_TAG);
-            return uuidToLongString(id);
-        }
-        return DEFAULT_KEY;
+        verifyComponentsAfterLoad(stack);
+        return uuidToLongString(stack.get(SuppSquared.HEAVY_KEY_UUID.get()));
     }
 
     @Override
-    public void onCraftedBy(ItemStack stack, Level level, Player player) {
-        super.onCraftedBy(stack, level, player);
-        stack.getOrCreateTag().putUUID(KEY_TAG, UUID.randomUUID());
-        player.sendSystemMessage(Component.literal("crafted" + stack.getTag()));
+    public void verifyComponentsAfterLoad(ItemStack stack) {
+        super.verifyComponentsAfterLoad(stack);
+        if (!stack.has(SuppSquared.HEAVY_KEY_UUID.get())) {
+            stack.set(SuppSquared.HEAVY_KEY_UUID.get(), UUID.randomUUID());
+        }
+    }
+
+    @Override
+    public void onCraftedPostProcess(ItemStack stack, Level level) {
+        super.onCraftedPostProcess(stack, level);
+        verifyComponentsAfterLoad(stack);
     }
 
     private static String uuidToLongString(UUID id) {
         return id.toString().replace("-", "-----");
-    }
-
-    //TODO: figure out why this shit isnt obfuscared
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        ItemStack stack = player.getItemInHand(usedHand);
-        if (!stack.hasTag() || !stack.getTag().contains(KEY_TAG)) {
-            stack.getOrCreateTag().putUUID(KEY_TAG, UUID.randomUUID());
-        }
-        return super.use(level, player, usedHand);
     }
 
 }

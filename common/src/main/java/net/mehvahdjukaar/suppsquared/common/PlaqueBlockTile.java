@@ -1,39 +1,32 @@
 package net.mehvahdjukaar.suppsquared.common;
 
 
-import net.mehvahdjukaar.moonlight.api.block.IOwnerProtected;
 import net.mehvahdjukaar.moonlight.api.client.IScreenProvider;
 import net.mehvahdjukaar.supplementaries.common.block.ITextHolderProvider;
 import net.mehvahdjukaar.supplementaries.common.block.TextHolder;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.DoormatBlock;
-import net.mehvahdjukaar.supplementaries.common.block.tiles.DoormatBlockTile;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.mehvahdjukaar.suppsquared.client.PlaqueEditScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
 
-public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider, IOwnerProtected, IScreenProvider {
+public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider, IScreenProvider {
 
     public static final int MAX_LINES = 3;
     public static final int LINE_SEPARATION = 12;
     private static final int MAX_WIDTH = 65;
 
     private final TextHolder textHolder;
-    private UUID owner = null;
     private boolean waxed = false;
 
     @Nullable
@@ -50,42 +43,25 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.textHolder.load(compound, this.level, this.worldPosition);
-        this.loadOwner(compound);
-        if(compound.contains("Waxed")){
+        if (compound.contains("Waxed")) {
             this.waxed = compound.getBoolean("Waxed");
         }
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
-        this.textHolder.save(compound);
-        this.saveOwner(compound);
-        if(this.waxed){
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
+        this.textHolder.save(compound, registries);
+        if (this.waxed) {
             compound.putBoolean("Waxed", waxed);
         }
     }
 
     @Override
-    public UUID getOwner() {
-        return owner;
-    }
-
-    @Override
-    public void setOwner(UUID owner) {
-        this.owner = owner;
-    }
-
-    @Override
     public void openScreen(Level level, BlockPos pos, Player player, Direction dir) {
-        PlaqueEditScreen.open(this);
-    }
-
-    @Override
-    public void openScreen(Level level, BlockPos pos, Player player) {
         PlaqueEditScreen.open(this);
     }
 
@@ -95,8 +71,8 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return this.saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return this.saveWithoutMetadata(registries);
     }
 
     @Override

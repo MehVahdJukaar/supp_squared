@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "id": "suppsquared",
-  "version": "${version}",
-  "name": "Supplementaries Squared",
-  "description": "Additional blocks for Supplementaries mod",
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
   "authors": [
-    "Mehvahdjukaar, Plantkillable"
+    "${mod_authors}"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/suppsquared",
-    "sources": "https://github.com/MehVahdJukaar/suppsquared"
+    "homepage": "${mod_homepage}",
+    "sources": "${mod_github}"
   },
-  "license": "Supplementaries Team License v1.1",
+  "license": "${mod_license}",
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
@@ -20,9 +20,7 @@
     ]
   },
   "depends": {
-    "fabric": "*",
-    "minecraft": ">=1.20",
-    "moonlight": ">=1.20-2.5.0",
-    "supplementaries": ">=1.20-2.5.2"
+    "fabric": ">=0.92.0+1.20.1",
+    "moonlight": ">=${moonlight_version_range}"
   }
 }

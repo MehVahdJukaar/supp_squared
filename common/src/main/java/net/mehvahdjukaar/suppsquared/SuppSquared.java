@@ -25,6 +25,8 @@ import net.mehvahdjukaar.suppsquared.common.CopperLanternBlock;
 import net.mehvahdjukaar.suppsquared.common.CrimsonLanternBlock;
 import net.mehvahdjukaar.suppsquared.common.LightableLanternBlock;
 import net.minecraft.Util;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -58,13 +60,16 @@ public class SuppSquared {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static ResourceLocation res(String name) {
-        return new ResourceLocation(MOD_ID, name);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
     }
     //TODO: figure out why keys areant obfuscared
+    //TODO: burn times
 
 
     public static void commonInit() {
         if (PlatHelper.getPhysicalSide().isClient()) {
+            SuppSquaredClient.init();
+
             ClientPackProvider.INSTANCE.register();
         }
         ServerPackProvider.INSTANCE.register();
@@ -126,10 +131,10 @@ public class SuppSquared {
     }
 
     private static boolean isTagOn(String tag) {
-        return BuiltInRegistries.ITEM.getTag(TagKey.create(Registries.ITEM, new ResourceLocation(tag))).isPresent();
+        return BuiltInRegistries.ITEM.getTag(TagKey.create(Registries.ITEM, ResourceLocation.parse(tag))).isPresent();
     }
 
-    private static final TagKey<Item> CANDLE_HOLDERS = TagKey.create(Registries.ITEM, new ResourceLocation("supplementaries:candle_holders"));
+    private static final TagKey<Item> CANDLE_HOLDERS = TagKey.create(Registries.ITEM, ResourceLocation.parse("supplementaries:candle_holders"));
 
     public static void commonSetup() {
     }
@@ -160,7 +165,7 @@ public class SuppSquared {
             if (wood == WoodTypeRegistry.OAK_TYPE) continue;
             Block block = entry.getValue();
             Item item = new WoodBasedBlockItem(
-                    block, new Item.Properties().stacksTo(16), wood, 200
+                    block, new Item.Properties().stacksTo(16), wood
             );
             event.register(Utils.getID(block), item);
         }
@@ -171,6 +176,11 @@ public class SuppSquared {
 
     private static final RegHelper.VariantType[] TYPES = List.of(RegHelper.VariantType.SLAB, RegHelper.VariantType.STAIRS).toArray(RegHelper.VariantType[]::new);
 
+    public static final Supplier<DataComponentType<UUID>> HEAVY_KEY_UUID = RegHelper.registerDataComponent(res("heavy_key_uuid"),
+            ()-> DataComponentType.<UUID>builder()
+                    .persistent(UUIDUtil.CODEC)
+                    .networkSynchronized(UUIDUtil.STREAM_CODEC)
+                    .build());
 
     public static final Supplier<RecipeSerializer<SackDyeRecipe>> SACK_DYE_RECIPE =
             RegHelper.registerSpecialRecipe(res("sack_dye"), SackDyeRecipe::new);
@@ -186,7 +196,7 @@ public class SuppSquared {
         var map = new LinkedHashMap<DyeColor, Supplier<ColoredSackBlock>>();
         for (var c : BlocksColorAPI.SORTED_COLORS) {
             map.put(c, regBlock(SACK_NAME + "_" + c.getName(), () -> new ColoredSackBlock(
-                    BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL)
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL)
                             .mapColor(c)
                             .pushReaction(PushReaction.DESTROY)
                             .strength(0.8f)
@@ -216,7 +226,7 @@ public class SuppSquared {
 
     //iron frame
     public static final RegSupplier<FrameBlock> IRON_FRAME = regBlock("metal_frame", () ->
-            new FrameBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
+            new FrameBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
                     .strength(5.0F, 6.0F)
                     .mapColor(DyeColor.GRAY)
                     .dynamicShape()
@@ -227,20 +237,20 @@ public class SuppSquared {
 
     //iron brace
     public static final Supplier<FrameBraceBlock> IRON_BRACE = regBlock("metal_brace", () ->
-            new FrameBraceBlock(BlockBehaviour.Properties.copy(IRON_FRAME.get())));
+            new FrameBraceBlock(BlockBehaviour.Properties.ofFullCopy(IRON_FRAME.get())));
     public static final Supplier<Item> TIMBER_BRACE_ITEM = regItem("metal_brace", () -> new TimberFrameItem(IRON_BRACE.get(),
             new Item.Properties()));
 
     //iron cross brace
     public static final Supplier<FrameBlock> IRON_CROSS_BRACE = regBlock("metal_cross_brace", () ->
-            new FrameBlock(BlockBehaviour.Properties.copy(IRON_FRAME.get())));
+            new FrameBlock(BlockBehaviour.Properties.ofFullCopy(IRON_FRAME.get())));
     public static final Supplier<Item> TIMBER_CROSS_BRACE_ITEM = regItem("metal_cross_brace", () -> new TimberFrameItem(IRON_CROSS_BRACE.get(),
             new Item.Properties()));
 
 
     //plaque
     public static final Supplier<PlaqueBlock> GOLD_PLAQUE = regWithItem("gold_plaque", () ->
-            new PlaqueBlock(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK)
+            new PlaqueBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK)
                     .mapColor(MapColor.NONE)
                     .sound(SoundType.METAL)
                     .requiresCorrectToolForDrops()
@@ -248,10 +258,10 @@ public class SuppSquared {
                     .strength(1, 1)));
 
     public static final Supplier<PlaqueBlock> IRON_PLAQUE = regWithItem("iron_plaque", () ->
-            new PlaqueBlock(BlockBehaviour.Properties.copy(GOLD_PLAQUE.get())));
+            new PlaqueBlock(BlockBehaviour.Properties.ofFullCopy(GOLD_PLAQUE.get())));
 
     public static final Supplier<PlaqueBlock> COPPER_PLAQUE = regWithItem("copper_plaque", () ->
-            new PlaqueBlock(BlockBehaviour.Properties.copy(GOLD_PLAQUE.get())));
+            new PlaqueBlock(BlockBehaviour.Properties.ofFullCopy(GOLD_PLAQUE.get())));
 
     public static final Supplier<BlockEntityType<PlaqueBlockTile>> PLAQUE_TILE =
             RegHelper.registerBlockEntityType(res("plaque"),
@@ -281,7 +291,7 @@ public class SuppSquared {
 
     //brass lantern
     public static final Supplier<Block> BRASS_LANTERN = regWithItem("brass_lantern", () -> new LightableLanternBlock(
-            BlockBehaviour.Properties.copy(COPPER_LANTERN.get()),
+            BlockBehaviour.Properties.ofFullCopy(COPPER_LANTERN.get()),
             Shapes.or(Block.box(5.0D, 0.0D, 5.0D, 11.0D, 8.0D, 11.0D),
                     Block.box(6.0D, 8.0D, 6.0D, 10.0D, 9.0D, 10.0D),
                     Block.box(4.0D, 7.0D, 4.0D, 12.0D, 8.0D, 12.0D))));
@@ -307,18 +317,17 @@ public class SuppSquared {
     }
 
     public static <T extends Block> RegSupplier<T> regWithItem(String name, Supplier<T> blockFactory) {
-        return regWithItem(name, blockFactory, new Item.Properties(), 0);
+        return regWithItem(name, blockFactory, new Item.Properties());
     }
 
-    public static <T extends Block> RegSupplier<T> regWithItem(String name, Supplier<T> blockFactory, Item.Properties properties, int burnTime) {
+    public static <T extends Block> RegSupplier<T> regWithItem(String name, Supplier<T> blockFactory, Item.Properties properties) {
         RegSupplier<T> block = regBlock(name, blockFactory);
-        regBlockItem(name, block, properties, burnTime);
+        regBlockItem(name, block, properties);
         return block;
     }
 
-    public static RegSupplier<BlockItem> regBlockItem(String name, Supplier<? extends Block> blockSup, Item.Properties properties, int burnTime) {
-        return RegHelper.registerItem(SuppSquared.res(name), () -> burnTime == 0 ? new BlockItem(blockSup.get(), properties) :
-                new WoodBasedBlockItem(blockSup.get(), properties, burnTime));
+    public static RegSupplier<BlockItem> regBlockItem(String name, Supplier<? extends Block> blockSup, Item.Properties properties) {
+        return RegHelper.registerItem(SuppSquared.res(name), () -> new BlockItem(blockSup.get(), properties));
     }
 
 }

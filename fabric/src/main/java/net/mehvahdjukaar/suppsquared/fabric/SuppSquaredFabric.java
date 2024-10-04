@@ -15,13 +15,7 @@ public class SuppSquaredFabric implements ModInitializer {
 
         //be sure supp configs are loaded. might cause issues with quilt if i dont for some reason
         CommonConfigs.init();
-        if (!CommonConfigs.SPEC.isLoaded()) {
-            throw new AssertionError();
-        }
         SuppSquared.commonInit();
-        if (PlatHelper.getPhysicalSide().isClient()) {
-            SuppSquaredClient.init();
-        }
 
     }
 

@@ -1,22 +1,17 @@
 package net.mehvahdjukaar.suppsquared.common;
 
-import net.mehvahdjukaar.moonlight.api.platform.ForgeHelper;
 import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
 import net.mehvahdjukaar.moonlight.api.resources.ResType;
 import net.mehvahdjukaar.moonlight.api.resources.SimpleTagBuilder;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynServerResourcesGenerator;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicDataPack;
-import net.mehvahdjukaar.moonlight.api.resources.recipe.IRecipeTemplate;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
-import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.supplementaries.Supplementaries;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Recipe;
 import org.apache.logging.log4j.Logger;
 
 public class ServerPackProvider extends DynServerResourcesGenerator {
@@ -59,22 +54,20 @@ public class ServerPackProvider extends DynServerResourcesGenerator {
     }
 
     private void addItemShelfRecipes(ResourceManager manager) {
-        IRecipeTemplate<?> template = RPUtils.readRecipeAsTemplate(manager,
-                ResType.RECIPES.getPath(SuppSquared.res("item_shelf_oak")));
+        Recipe<?> recipe = RPUtils.readRecipe(manager, ResType.RECIPES.getPath(
+                Supplementaries.res("item_shelf")));
 
         SuppSquared.ITEM_SHELVES.forEach((w, b) -> {
             if (w != WoodTypeRegistry.OAK_TYPE) {
-                FinishedRecipe newR = template.createSimilar(WoodTypeRegistry.OAK_TYPE, w, w.mainChild().asItem());
-                if (newR == null) return;
-                newR = ForgeHelper.addRecipeConditions(newR, template.getConditions());
-                dynamicPack.addJson(SuppSquared.res(Utils.getID(b).getPath()), newR.serializeRecipe(), ResType.RECIPES);
-                ResourceLocation advancementId = newR.getAdvancementId();
-                if (advancementId != null) {
-                    dynamicPack.addJson(newR.getAdvancementId(), newR.serializeAdvancement(), ResType.ADVANCEMENTS);
+                try {
+                    var newR = RPUtils.makeSimilarRecipe(recipe, WoodTypeRegistry.OAK_TYPE, w, "sign_post_oak");
+                    //newR = ForgeHelper.addRecipeConditions(newR, recipe);
+                    this.dynamicPack.addRecipe(newR);
+                } catch (Exception e) {
+                    Supplementaries.LOGGER.error("Failed to generate recipe for sign post {}:", w, e);
                 }
             }
         });
     }
-
-
 }
+

@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.github.johnrengelman.shadow"
 }
 
 architectury {
@@ -26,29 +26,23 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 
-    modCompileOnly("curse.maven:yacl-667299:3987709")
+    modImplementation("net.mehvahdjukaar:moonlight-fabric:${moonlight_version}")
+    modImplementation("net.mehvahdjukaar:supplementaries-fabric:${project.supplementaries_version}")
+
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}") {
+        exclude group: 'net.fabricmc.fabric-api'
+    }
+    modImplementation("curse.maven:yacl-667299:4574163")
 
     modCompileOnly("curse.maven:modmenu-308702:3920481") {
         exclude module: "fabric-api"
     }
-    modImplementation ("net.mehvahdjukaar:moonlight-fabric:${project.moonlight_version}")
-   // modImplementation ("net.mehvahdjukaar:supplementaries-fabric:${project.supplementaries_version}")
-    modImplementation ("curse.maven:supplementaries-412082:5676066")
-
-    modCompileOnly ("curse.maven:ecologics-570463:4171284")
-    //modImplementation ("curse.maven:the-twilight-forest-227639:4389094")
-    //modCompileOnly ("curse.maven:porting-lib-696251:4064684")
-
 }
 
 
-
 processResources {
-    inputs.property "version", project.version
-    inputs.property "mod_id", rootProject.mod_id
-
     filesMatching("fabric.mod.json") {
-        expand "version": project.version, "mod_id": rootProject.mod_id
+        expand rootProject.ext.replaceProperties + [project: project]
     }
 }
 
@@ -59,7 +53,7 @@ shadowJar {
     configurations = [project.configurations.shadowCommon]
     archiveClassifier = "dev-shadow"
 
-
+    zip64 true
 }
 
 remapJar {
@@ -100,16 +94,5 @@ publishing {
             url = "https://www.cursemaven.com"
             allowInsecureProtocol = true
         }
-        maven {
-            name = "TerraformersMC"
-            url = "https://maven.terraformersmc.com/releases"
-        }
-        maven {
-            url = "https://maven.shedaniel.me"
-        }
     }
-}
-repositories {
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://maven.terraformersmc.com/releases" }
 }

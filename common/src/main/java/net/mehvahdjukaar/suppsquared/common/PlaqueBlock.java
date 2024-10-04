@@ -6,7 +6,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -103,14 +105,12 @@ public class PlaqueBlock extends WaterBlock implements EntityBlock {
         return new PlaqueBlockTile(pos, state);
     }
 
-
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn,
-                                 BlockHitResult hit) {
-        if (level.getBlockEntity(pos) instanceof PlaqueBlockTile tile && tile.isAccessibleBy(player)) {
-            return tile.interactWithTextHolder(0, level, pos, state, player, handIn);
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.getBlockEntity(pos) instanceof PlaqueBlockTile tile) {
+            return tile.textHolderInteract(0, level, pos, state, player, hand, stack);
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override

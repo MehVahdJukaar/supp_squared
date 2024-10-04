@@ -4,10 +4,8 @@ import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.mehvahdjukaar.suppsquared.SuppSquaredClient;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
 
 
 /**
@@ -19,11 +17,8 @@ public class SuppSquaredForge {
     public SuppSquaredForge() {
 
         SuppSquared.commonInit();
-        if (PlatHelper.getPhysicalSide().isClient()) {
-            SuppSquaredClient.init();
-        }
 
-        MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
 
         /*
         v(t) = sqrt(f * r / m);

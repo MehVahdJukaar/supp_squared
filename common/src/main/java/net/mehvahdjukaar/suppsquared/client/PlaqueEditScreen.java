@@ -31,7 +31,6 @@ public class PlaqueEditScreen extends TextHolderEditScreen<PlaqueBlockTile> {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         Lighting.setupForFlatItems();
-        this.renderBackground(graphics);
 
         super.render(graphics, mouseX, mouseY, partialTicks);
 
@@ -74,11 +73,5 @@ public class PlaqueEditScreen extends TextHolderEditScreen<PlaqueBlockTile> {
 
     }
 
-    @Deprecated(forRemoval = true)
-    @Override
-    protected void scrollText(int amount) {
-        super.scrollText(amount);
-        textInputUtil.setCursorToEnd();
-    }
 }
 

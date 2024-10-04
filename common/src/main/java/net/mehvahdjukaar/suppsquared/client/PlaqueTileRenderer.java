@@ -55,7 +55,7 @@ public class PlaqueTileRenderer implements BlockEntityRenderer<PlaqueBlockTile> 
 
         var textProperties = TextUtil.renderProperties(textHolder.getColor(), textHolder.hasGlowingText(),
                 combinedLightIn,
-                textHolder.hasAntiqueInk() ? Style.EMPTY : Style.EMPTY.applyFormat(ChatFormatting.BOLD),
+                textHolder.supplementaries$isAntique() ? Style.EMPTY : Style.EMPTY.applyFormat(ChatFormatting.BOLD),
                 state.getValue(PlaqueBlock.FACING).step(),
                 new LOD(camera, tile.getBlockPos())::isVeryNear);
 
