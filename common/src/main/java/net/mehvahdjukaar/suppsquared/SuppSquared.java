@@ -96,10 +96,11 @@ public class SuppSquared {
                     FRAMES.get(RegHelper.VariantType.STAIRS).get(), FRAMES.get(RegHelper.VariantType.SLAB).get());
         }
         if (CommonConfigs.Building.CANDLE_HOLDER_ENABLED.get()) {
-            event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(CANDLE_HOLDERS),
-                    GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
-            event.addAfter(CreativeModeTabs.COLORED_BLOCKS, i -> i.is(CANDLE_HOLDERS),
-                    GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
+            //already added by supp
+           // event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(CANDLE_HOLDERS),
+             //       GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
+            //event.addAfter(CreativeModeTabs.COLORED_BLOCKS, i -> i.is(CANDLE_HOLDERS),
+              //      GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
         }
         if (CommonConfigs.isEnabled(KEY_NAME)) {
             event.addAfter(CreativeModeTabs.TOOLS_AND_UTILITIES, i -> i.is(ModRegistry.KEY_ITEM.get().asItem()),

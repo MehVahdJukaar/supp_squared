@@ -18,8 +18,6 @@ public class SuppSquaredForge {
 
         SuppSquared.commonInit();
 
-        NeoForge.EVENT_BUS.register(this);
-
         /*
         v(t) = sqrt(f * r / m);
         f = ma;

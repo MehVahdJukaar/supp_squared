@@ -60,11 +60,12 @@ public class ServerPackProvider extends DynServerResourcesGenerator {
         SuppSquared.ITEM_SHELVES.forEach((w, b) -> {
             if (w != WoodTypeRegistry.OAK_TYPE) {
                 try {
-                    var newR = RPUtils.makeSimilarRecipe(recipe, WoodTypeRegistry.OAK_TYPE, w, "sign_post_oak");
+                    var newR = RPUtils.makeSimilarRecipe(recipe, WoodTypeRegistry.OAK_TYPE, w,
+                            "item_shelf");
                     //newR = ForgeHelper.addRecipeConditions(newR, recipe);
                     this.dynamicPack.addRecipe(newR);
                 } catch (Exception e) {
-                    Supplementaries.LOGGER.error("Failed to generate recipe for sign post {}:", w, e);
+                    Supplementaries.LOGGER.error("Failed to generate recipe for item shelf {}:", w, e);
                 }
             }
         });

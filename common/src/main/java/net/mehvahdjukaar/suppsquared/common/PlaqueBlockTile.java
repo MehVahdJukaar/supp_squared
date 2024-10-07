@@ -45,7 +45,7 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     @Override
     public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
         super.loadAdditional(compound, registries);
-        this.textHolder.load(compound, this.level, this.worldPosition);
+        this.textHolder.load(compound, registries, this.worldPosition);
         if (compound.contains("Waxed")) {
             this.waxed = compound.getBoolean("Waxed");
         }
