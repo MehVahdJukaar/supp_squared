@@ -20,5 +20,11 @@
   "result": {
     "id": "suppsquared:crimson_lantern",
     "count": 2
-  }
+  },
+  "conditions": [
+    {
+      "type":"suppsquared:flag",
+      "flag":"lanterns"
+    }
+  ]
 }

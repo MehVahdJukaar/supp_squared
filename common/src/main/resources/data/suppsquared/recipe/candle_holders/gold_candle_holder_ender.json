@@ -9,24 +9,24 @@
       "item": "buzzier_bees:ender_candle"
     },
     "2": {
-      "tag": "c:ingots/iron"
+      "item": "minecraft:iron_ingot"
     }
   },
   "result": {
-    "id": "suppsquared:gold_candle_holder_ender",
+    "item": "suppsquared:gold_candle_holder_ender",
     "count": 1
   },
-  "fabric:load_conditions": [
+  "conditions": [
     {
-      "condition": "supplementaries:flag",
+      "type": "supplementaries:flag",
       "flag": "candle_holder"
     },
     {
-      "condition": "fabric:mod_loaded",
+      "type": "forge:mod_loaded",
       "modid": "buzzier_bees"
     },
     {
-      "condition": "fabric:mod_loaded",
+      "type": "forge:mod_loaded",
       "modid": "endergetic"
     }
   ]

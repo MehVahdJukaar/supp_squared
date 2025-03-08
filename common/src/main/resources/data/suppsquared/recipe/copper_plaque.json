@@ -11,5 +11,11 @@
   "result": {
     "id": "suppsquared:copper_plaque",
     "count": 3
-  }
+  },
+  "conditions": [
+    {
+      "type":"suppsquared:flag",
+      "flag":"plaques"
+    }
+  ]
 }
