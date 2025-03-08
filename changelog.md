@@ -1,1 +1,2 @@
-item shelves stack to 64
+- added configs to disable plaques and extra lanterns
+- fixed some missing mod compat candle holders assets and tags
