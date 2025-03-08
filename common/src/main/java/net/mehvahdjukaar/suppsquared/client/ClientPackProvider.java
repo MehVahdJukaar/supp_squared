@@ -50,25 +50,25 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
 
         //------item shelves-----
         StaticResource isItemModel = StaticResource.getOrLog(manager,
-                ResType.ITEM_MODELS.getPath(SuppSquared.res("item_shelf_birch")));
+                ResType.ITEM_MODELS.getPath(SuppSquared.res("item_shelf_suppsquared_shelf")));
         StaticResource isBlockState = StaticResource.getOrLog(manager,
-                ResType.BLOCKSTATES.getPath(SuppSquared.res("item_shelf_birch")));
+                ResType.BLOCKSTATES.getPath(SuppSquared.res("item_shelf_suppsquared_shelf")));
         StaticResource isModel = StaticResource.getOrLog(manager,
-                ResType.BLOCK_MODELS.getPath(SuppSquared.res("item_shelves/birch")));
+                ResType.BLOCK_MODELS.getPath(SuppSquared.res("item_shelves/suppsquared_shelf")));
 
         SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
             String id = Utils.getID(sign).getPath();
             if (wood == WoodTypeRegistry.OAK_TYPE) return;
             try {
                 addSimilarJsonResource(manager, isBlockState, s ->
-                        s.replace("item_shelf_birch", id)
-                                .replace("birch", id.replace("item_shelf_", "")));
+                        s.replace("item_shelf_suppsquared_shelf", id)
+                                .replace("suppsquared_shelf", id.replace("item_shelf_", "")));
                 addSimilarJsonResource(manager, isModel, s ->
-                        s.replace("item_shelf_birch", id)
-                                .replace("birch", id.replace("item_shelf_", "")));
+                        s.replace("item_shelf_suppsquared_shelf", id)
+                                .replace("suppsquared_shelf", id.replace("item_shelf_", "")));
                 addSimilarJsonResource(manager, isItemModel, s ->
-                        s.replace("item_shelf_birch", id)
-                                .replace("birch", id.replace("item_shelf_", "")));
+                        s.replace("item_shelf_suppsquared_shelf", id)
+                                .replace("suppsquared_shelf", id.replace("item_shelf_", "")));
 
             } catch (Exception ex) {
                 getLogger().error("Failed to generate models for {} : {}", sign, ex);
