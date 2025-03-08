@@ -11,5 +11,11 @@
   "result": {
     "item": "suppsquared:iron_plaque",
     "count": 3
-  }
+  },
+  "conditions": [
+    {
+      "type":"suppsquared:flag",
+      "flag":"plaques"
+    }
+  ]
 }

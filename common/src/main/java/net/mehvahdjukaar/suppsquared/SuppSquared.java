@@ -5,13 +5,16 @@ import net.mehvahdjukaar.moonlight.api.misc.RegSupplier;
 import net.mehvahdjukaar.moonlight.api.misc.Registrator;
 import net.mehvahdjukaar.moonlight.api.platform.PlatHelper;
 import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
+import net.mehvahdjukaar.moonlight.api.platform.configs.ConfigBuilder;
+import net.mehvahdjukaar.moonlight.api.platform.configs.ConfigType;
 import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
 import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
-import net.mehvahdjukaar.moonlight.api.util.DispenserHelper;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.*;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBlock;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBraceBlock;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.ItemShelfBlock;
 import net.mehvahdjukaar.supplementaries.common.items.SackItem;
 import net.mehvahdjukaar.supplementaries.common.items.TimberFrameItem;
 import net.mehvahdjukaar.supplementaries.configs.CommonConfigs;
@@ -21,9 +24,6 @@ import net.mehvahdjukaar.supplementaries.reg.ModSounds;
 import net.mehvahdjukaar.supplementaries.reg.RegUtils;
 import net.mehvahdjukaar.suppsquared.client.ClientPackProvider;
 import net.mehvahdjukaar.suppsquared.common.*;
-import net.mehvahdjukaar.suppsquared.common.CopperLanternBlock;
-import net.mehvahdjukaar.suppsquared.common.CrimsonLanternBlock;
-import net.mehvahdjukaar.suppsquared.common.LightableLanternBlock;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -42,9 +42,11 @@ import net.minecraft.world.phys.shapes.Shapes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import static net.mehvahdjukaar.supplementaries.reg.ModConstants.KEY_NAME;
 import static net.mehvahdjukaar.supplementaries.reg.ModConstants.SACK_NAME;
@@ -61,12 +63,16 @@ public class SuppSquared {
         return new ResourceLocation(MOD_ID, name);
     }
     //TODO: figure out why keys areant obfuscared
+    //gold candle for modded compat ones missing textures
 
+    public static Supplier<Boolean> PLAQUES;
+    public static Supplier<Boolean> LANTERNS;
 
     public static void commonInit() {
         if (PlatHelper.getPhysicalSide().isClient()) {
             ClientPackProvider.INSTANCE.register();
         }
+
         ServerPackProvider.INSTANCE.register();
         BlockSetAPI.addDynamicBlockRegistration(SuppSquared::registerItemShelves, WoodType.class);
         BlockSetAPI.addDynamicItemRegistration(SuppSquared::registerItemShelfItems, WoodType.class);
@@ -75,6 +81,25 @@ public class SuppSquared {
         ModCreativeTabs.SYNCED_ADD_TO_TABS.add(SuppSquared::addItemsToTabs);
 
         PlatHelper.addCommonSetup(SuppSquared::commonSetup);
+
+        ConfigBuilder builder = ConfigBuilder.create(MOD_ID, ConfigType.COMMON);
+        builder.setSynced();
+        builder.push("features");
+
+        builder.comment("Enable plaques");
+        PLAQUES = builder.define("plaques", true);
+
+        builder.comment("Enable lanterns");
+        LANTERNS = builder.define("lanterns", true);
+
+        builder.pop();
+        builder.buildAndRegister().loadFromFile();
+
+        RegHelper.registerSimpleRecipeCondition(res("flag"), a -> switch (a) {
+            case "plaques" -> PLAQUES.get();
+            case "lanterns" -> LANTERNS.get();
+            default -> true;
+        });
     }
 
     private static void addItemsToTabs(RegHelper.ItemToTabEvent event) {
@@ -108,21 +133,25 @@ public class SuppSquared {
                     SACK_ITEMS.values().stream().map(Supplier::get).toArray(Item[]::new));
         }
         if (CommonConfigs.Building.ITEM_SHELF_ENABLED.get()) {
-            Block[] array = ITEM_SHELVES.values().stream().filter(i->i!= ModRegistry.ITEM_SHELF.get()).toArray(Block[]::new);
+            Block[] array = ITEM_SHELVES.values().stream().filter(i -> i != ModRegistry.ITEM_SHELF.get()).toArray(Block[]::new);
             event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(ModRegistry.ITEM_SHELF.get().asItem()), array);
         }
-        if (isTagOn("c:brass_ingots") || isTagOn("forge:ingots/brass")) {
+        if (LANTERNS.get()) {
+            if (isTagOn("c:brass_ingots") || isTagOn("forge:ingots/brass")) {
+                event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(Items.SOUL_LANTERN),
+                        BRASS_LANTERN.get());
+            }
             event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(Items.SOUL_LANTERN),
-                    BRASS_LANTERN.get());
-        }
-        event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(Items.SOUL_LANTERN),
-                COPPER_LANTERN.get(), CRIMSON_LANTERN.get());
+                    COPPER_LANTERN.get(), CRIMSON_LANTERN.get());
 
-        event.addBefore(CreativeModeTabs.FUNCTIONAL_BLOCKS, i ->
-                        i.is(ModRegistry.DOORMAT.get().asItem()) ||
-                                i.is(ModRegistry.ITEM_SHELF.get().asItem()) ||
-                                i.is(Items.CHEST),
-                IRON_PLAQUE.get(), COPPER_PLAQUE.get(), GOLD_PLAQUE.get());
+        }
+        if (PLAQUES.get()) {
+            event.addBefore(CreativeModeTabs.FUNCTIONAL_BLOCKS, i ->
+                            i.is(ModRegistry.DOORMAT.get().asItem()) ||
+                                    i.is(ModRegistry.ITEM_SHELF.get().asItem()) ||
+                                    i.is(Items.CHEST),
+                    IRON_PLAQUE.get(), COPPER_PLAQUE.get(), GOLD_PLAQUE.get());
+        }
     }
 
     private static boolean isTagOn(String tag) {
@@ -165,7 +194,7 @@ public class SuppSquared {
             event.register(Utils.getID(block), item);
         }
         ITEM_SHELVES.put(WoodTypeRegistry.OAK_TYPE, ModRegistry.ITEM_SHELF.get());
-        WoodTypeRegistry.OAK_TYPE.addChild("supplementaries:item_shelf",  ModRegistry.ITEM_SHELF.get());
+        WoodTypeRegistry.OAK_TYPE.addChild("supplementaries:item_shelf", ModRegistry.ITEM_SHELF.get());
 
     }
 

@@ -18,6 +18,11 @@
     "suppsquared:gold_candle_holder_green",
     "suppsquared:gold_candle_holder_magenta",
     "suppsquared:gold_candle_holder_purple",
-    "suppsquared:gold_candle_holder_orange"
+    "suppsquared:gold_candle_holder_orange",
+    {"id":"suppsquared:gold_candle_holder_soul","required":false},
+    {"id":"suppsquared:gold_candle_holder_spectacle","required":false},
+    {"id":"suppsquared:gold_candle_holder_ender","required":false},
+    {"id":"suppsquared:gold_candle_holder_cupric","required":false}
+
   ]
 }

@@ -3,7 +3,11 @@
     {
       "modid": "alexsmobs",
       "type": "forge:mod_loaded"
-    }
+    },
+      {
+        "type":"suppsquared:flag",
+        "flag":"lanterns"
+      }
   ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
