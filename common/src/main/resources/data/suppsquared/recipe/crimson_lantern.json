@@ -1,4 +1,16 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "suppsquared:flag",
+      "flag": "lanterns"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "suppsquared:flag",
+      "flag": "lanterns"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "group": "crimson_lantern",
   "pattern": [
@@ -20,11 +32,5 @@
   "result": {
     "id": "suppsquared:crimson_lantern",
     "count": 2
-  },
-  "conditions": [
-    {
-      "type":"suppsquared:flag",
-      "flag":"lanterns"
-    }
-  ]
+  }
 }

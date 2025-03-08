@@ -1,4 +1,16 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "supplementaries:flag",
+      "flag": "wattle_and_daub"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "wattle_and_daub"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "#  ",
@@ -10,12 +22,6 @@
       "tag": "supplementaries:wattle_and_daub"
     }
   },
-  "fabric:load_conditions": [
-    {
-      "condition": "supplementaries:flag",
-      "flag": "wattle_and_daub"
-    }
-  ],
   "result": {
     "id": "suppsquared:daub_frame_stairs",
     "count": 4

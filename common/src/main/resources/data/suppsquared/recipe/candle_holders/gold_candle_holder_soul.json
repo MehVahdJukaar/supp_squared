@@ -1,4 +1,24 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "supplementaries:flag",
+      "flag": "candle_holder"
+    },
+    {
+      "condition": "forge:mod_loaded",
+      "modid": "buzzier_bees"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "candle_holder"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "buzzier_bees"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "1",
@@ -15,15 +35,5 @@
   "result": {
     "id": "suppsquared:gold_candle_holder_soul",
     "count": 1
-  },
-  "fabric:load_conditions": [
-    {
-      "condition": "supplementaries:flag",
-      "flag": "candle_holder"
-    },
-    {
-      "condition": "forge:mod_loaded",
-      "modid": "buzzier_bees"
-    }
-  ]
+  }
 }

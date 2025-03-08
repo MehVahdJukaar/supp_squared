@@ -1,4 +1,16 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "supplementaries:flag",
+      "flag": "item_shelf"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "item_shelf"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "000"
@@ -11,11 +23,5 @@
   "result": {
     "id": "supplementaries:item_shelf",
     "count": 2
-  },
-  "fabric:load_conditions": [
-    {
-      "condition": "supplementaries:flag",
-      "flag": "item_shelf"
-    }
-  ]
+  }
 }

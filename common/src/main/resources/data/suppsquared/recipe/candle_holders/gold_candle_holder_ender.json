@@ -1,4 +1,32 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "supplementaries:flag",
+      "flag": "candle_holder"
+    },
+    {
+      "condition": "forge:mod_loaded",
+      "modid": "buzzier_bees"
+    },
+    {
+      "condition": "forge:mod_loaded",
+      "modid": "endergetic"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "candle_holder"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "buzzier_bees"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "endergetic"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "1",
@@ -15,19 +43,5 @@
   "result": {
     "item": "suppsquared:gold_candle_holder_ender",
     "count": 1
-  },
-  "conditions": [
-    {
-      "type": "supplementaries:flag",
-      "flag": "candle_holder"
-    },
-    {
-      "type": "forge:mod_loaded",
-      "modid": "buzzier_bees"
-    },
-    {
-      "type": "forge:mod_loaded",
-      "modid": "endergetic"
-    }
-  ]
+  }
 }

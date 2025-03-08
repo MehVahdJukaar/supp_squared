@@ -1,4 +1,16 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "suppsquared:flag",
+      "flag": "plaques"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "suppsquared:flag",
+      "flag": "plaques"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "###"
@@ -11,11 +23,5 @@
   "result": {
     "id": "suppsquared:copper_plaque",
     "count": 3
-  },
-  "conditions": [
-    {
-      "type":"suppsquared:flag",
-      "flag":"plaques"
-    }
-  ]
+  }
 }

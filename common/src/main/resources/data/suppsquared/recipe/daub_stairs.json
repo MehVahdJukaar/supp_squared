@@ -1,4 +1,16 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "supplementaries:flag",
+      "flag": "daub"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "daub"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "#  ",
@@ -10,12 +22,6 @@
       "item": "supplementaries:daub"
     }
   },
-  "fabric:load_conditions": [
-    {
-      "condition": "supplementaries:flag",
-      "flag": "daub"
-    }
-  ],
   "result": {
     "id": "suppsquared:daub_stairs",
     "count": 4

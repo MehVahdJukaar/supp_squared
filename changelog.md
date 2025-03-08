@@ -1,1 +1,3 @@
-fixed plaquest not working
+- added more configs
+- fixed some missing assets
+- improved recipe conditions

@@ -44,10 +44,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 import static net.mehvahdjukaar.supplementaries.reg.ModConstants.KEY_NAME;
@@ -86,8 +83,7 @@ public class SuppSquared {
 
         PlatHelper.addCommonSetup(SuppSquared::commonSetup);
 
-        ConfigBuilder builder = ConfigBuilder.create(MOD_ID, ConfigType.COMMON);
-        builder.setSynced();
+        ConfigBuilder builder = ConfigBuilder.create(MOD_ID, ConfigType.COMMON_SYNCED);
         builder.push("features");
 
         builder.comment("Enable plaques");
@@ -97,7 +93,7 @@ public class SuppSquared {
         LANTERNS = builder.define("lanterns", true);
 
         builder.pop();
-        builder.buildAndRegister().loadFromFile();
+        builder.build().forceLoad();
 
         RegHelper.registerSimpleRecipeCondition(res("flag"), a -> switch (a) {
             case "plaques" -> PLAQUES.get();

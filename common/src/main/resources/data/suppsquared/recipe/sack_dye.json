@@ -1,9 +1,15 @@
 {
-  "type": "suppsquared:sack_dye",
   "fabric:load_conditions": [
     {
       "condition": "supplementaries:flag",
       "flag": "sack"
     }
-  ]
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "sack"
+    }
+  ],
+  "type": "suppsquared:sack_dye"
 }
