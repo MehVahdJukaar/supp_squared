@@ -18,6 +18,8 @@
   "block.suppsquared.gold_candle_holder_cyan": "金制青色蜡烛烛台",
   "block.suppsquared.gold_candle_holder_spectacle": "金制夜视蜡烛烛台",
   "block.suppsquared.gold_candle_holder_soul": "金制灵魂蜡烛烛台",
+  "block.suppsquared.gold_candle_holder_ender": "金制末影蜡烛烛台",
+  "block.suppsquared.gold_candle_holder_cupric": "金制铜绿蜡烛烛台",
   "block.suppsquared.sack_white": "白色麻布袋",
   "block.suppsquared.sack_light_gray": "淡灰色麻布袋",
   "block.suppsquared.sack_gray": "灰色麻布袋",
@@ -51,5 +53,6 @@
   "block.suppsquared.copper_lantern": "铜灯笼",
   "block.suppsquared.crimson_lantern": "绯红灯笼",
   "block.suppsquared.gold_lantern": "金灯笼",
-  "block.suppsquared.brass_lantern": "黄铜灯笼"
+  "block.suppsquared.brass_lantern": "黄铜灯笼",
+  "block.supplementaries.item_shelf": "橡木物品架"
 }
