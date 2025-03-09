@@ -1,18 +1,18 @@
 {
   "fabric:load_conditions": [
     {
-      "condition": "fabric:not",
+      "condition": "neofabric:not",
       "value": {
-        "condition": "fabric:tag_empty",
+        "condition": "neofabric:tag_empty",
         "tag": "c:ingots/brass"
       }
     }
   ],
   "neoforge:conditions": [
     {
-      "type": "neoforge:not",
+      "type": "neoneoforge:not",
       "value": {
-        "type": "neoforge:tag_empty",
+        "type": "neoneoforge:tag_empty",
         "tag": "c:ingots/brass"
       }
     }

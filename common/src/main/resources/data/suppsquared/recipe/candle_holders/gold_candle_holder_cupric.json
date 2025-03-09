@@ -5,11 +5,11 @@
       "flag": "candle_holder"
     },
     {
-      "condition": "forge:mod_loaded",
+      "condition": "fabric:mod_loaded",
       "modid": "buzzier_bees"
     },
     {
-      "condition": "forge:mod_loaded",
+      "condition": "fabric:mod_loaded",
       "modid": "caverns_and_chasms"
     }
   ],
@@ -19,11 +19,11 @@
       "flag": "candle_holder"
     },
     {
-      "type": "forge:mod_loaded",
+      "type": "neoforge:mod_loaded",
       "modid": "buzzier_bees"
     },
     {
-      "type": "forge:mod_loaded",
+      "type": "neoforge:mod_loaded",
       "modid": "caverns_and_chasms"
     }
   ],
