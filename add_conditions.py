@@ -7,7 +7,7 @@ def convert_to_fabric_condition(condition):
     if "type" in condition:
         val = condition["type"]
         if isinstance(val, str):
-            new_cond["condition"] = val.replace("neoforge:", "fabric:")
+            new_cond["condition"] = val.replace("\"neoforge:", "\"fabric:")
         else:
             new_cond["condition"] = val
     # Process remaining keys
@@ -23,12 +23,12 @@ def convert_to_fabric_condition(condition):
                 if isinstance(item, dict):
                     new_list.append(convert_to_neoforge_condition(item))
                 elif isinstance(item, str):
-                    new_list.append(item.replace("neoforge:", "fabric:"))
+                    new_list.append(item.replace("\"neoforge:", "\"fabric:"))
                 else:
                     new_list.append(item)
             new_value = new_list
         elif isinstance(value, str):
-            new_value = value.replace("neoforge:", "fabric:")
+            new_value = value.replace("\"neoforge:", "\"fabric:")
         else:
             new_value = value
         new_cond[key] = new_value
@@ -54,7 +54,7 @@ def convert_to_neoforge_condition(condition):
     if "condition" in condition:
         val = condition["condition"]
         if isinstance(val, str):
-            new_cond["type"] = val.replace("forge:", "neoforge:").replace("fabric:", "neoforge:")
+            new_cond["type"] = val.replace("\"forge:", "\"neoforge:").replace("\"fabric:", "\"neoforge:")
         else:
             new_cond["type"] = val
     # Process remaining keys
@@ -70,12 +70,12 @@ def convert_to_neoforge_condition(condition):
                 if isinstance(item, dict):
                     new_list.append(convert_to_neoforge_condition(item))
                 elif isinstance(item, str):
-                    new_list.append(item.replace("forge:", "neoforge:").replace("fabric:", "neoforge:"))
+                    new_list.append(item.replace("\"forge:", "\"neoforge:").replace("\"fabric:", "\"neoforge:"))
                 else:
                     new_list.append(item)
             new_value = new_list
         elif isinstance(value, str):
-            new_value = value.replace("forge:", "neoforge:").replace("fabric:", "neoforge:")
+            new_value = value.replace("\"forge:", "\"neoforge:").replace("\"fabric:", "\"neoforge:")
         else:
             new_value = value
         new_cond[key] = new_value
@@ -129,19 +129,12 @@ def process_json_file(file_path):
             ]
             modified = True
 
-        if "neoforge:conditions" in data:
+        if "neoforge:conditions" in data and "fabric:load_conditions" not in data:
             data["neoforge:conditions"] = [
                 convert_to_neoforge_condition(cond)
                 for cond in data["neoforge:conditions"]
             ]
             modified = True
-
-        if "neoforge:conditions" in data:
-             data["fabric:load_conditions"] = [
-                 convert_to_fabric_condition(cond)
-                 for cond in data["neoforge:conditions"]
-             ]
-             modified = True
 
     if modified:
         # Reorder top-level keys before writing back.
@@ -156,11 +149,14 @@ def process_folder(directory):
     """Recursively process all JSON files in a directory."""
     for root, _, files in os.walk(directory):
         for file in files:
+            """" check if file is in a /recipe directory"""
+            if "recipe" not in root:
+                continue
             if file.endswith(".json"):
                 process_json_file(os.path.join(root, file))
 
 if __name__ == "__main__":
-    folder_path = "common/src/main/resources"
+    folder_path = "common/src/main/resources/data"
     if os.path.isdir(folder_path):
         process_folder(folder_path)
         print("Processing complete.")

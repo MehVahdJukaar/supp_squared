@@ -5,7 +5,7 @@
       "flag": "candle_holder"
     },
     {
-      "condition": "neofabric:mod_loaded",
+      "condition": "fabric:mod_loaded",
       "modid": "cave_enhancements"
     }
   ],
@@ -15,7 +15,7 @@
       "flag": "candle_holder"
     },
     {
-      "type": "neoneoforge:mod_loaded",
+      "type": "neoforge:mod_loaded",
       "modid": "cave_enhancements"
     }
   ],

@@ -61,14 +61,14 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
             if (wood == WoodTypeRegistry.OAK_TYPE) return;
             try {
                 addSimilarJsonResource(manager, isBlockState, s ->
-                        s.replace("item_shelf_birch", id)
-                                .replace("birch", id.replace("item_shelf_", "")));
+                        s.replace("birch", id.replace("item_shelf_", ""))
+                                .replace("item_shelf_birch", id));
                 addSimilarJsonResource(manager, isModel, s ->
-                        s.replace("item_shelf_birch", id)
-                                .replace("birch", id.replace("item_shelf_", "")));
+                        s.replace("birch", id.replace("item_shelf_", ""))
+                                .replace("item_shelf_birch", id));
                 addSimilarJsonResource(manager, isItemModel, s ->
-                        s.replace("item_shelf_birch", id)
-                                .replace("birch", id.replace("item_shelf_", "")));
+                        s.replace("birch", id.replace("item_shelf_", ""))
+                                .replace("item_shelf_birch", id));
 
             } catch (Exception ex) {
                 getLogger().error("Failed to generate models for {} : {}", sign, ex);

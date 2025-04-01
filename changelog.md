@@ -1,3 +1,3 @@
-- added more configs
-- fixed some missing assets
-- improved recipe conditions
+fixed sacks loot tables
+
+improved item shelf model gen

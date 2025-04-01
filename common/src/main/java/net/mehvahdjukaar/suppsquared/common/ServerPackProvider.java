@@ -14,14 +14,20 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.crafting.Recipe;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Collection;
+import java.util.List;
+
 public class ServerPackProvider extends DynServerResourcesGenerator {
 
     public static final ServerPackProvider INSTANCE = new ServerPackProvider();
 
     public ServerPackProvider() {
         super(new DynamicDataPack(SuppSquared.res("generated_pack"), Pack.Position.BOTTOM, true, true));
-        this.dynamicPack.addNamespaces("minecraft");
-        this.dynamicPack.addNamespaces("supplementaries");
+    }
+
+    @Override
+    public Collection<String> additionalNamespaces() {
+        return List.of("minecraft", "supplementaries");
     }
 
     @Override
