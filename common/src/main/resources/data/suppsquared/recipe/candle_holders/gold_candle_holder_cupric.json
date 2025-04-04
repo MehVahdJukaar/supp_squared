@@ -37,7 +37,7 @@
       "item": "buzzier_bees:cupric_candle"
     },
     "2": {
-      "item": "minecraft:iron_ingot"
+      "tag": "c:ingots/gold"
     }
   },
   "result": {

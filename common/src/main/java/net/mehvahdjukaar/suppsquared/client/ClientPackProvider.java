@@ -60,15 +60,15 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
             String id = Utils.getID(sign).getPath();
             if (wood == WoodTypeRegistry.OAK_TYPE) return;
             try {
+                String id2 = id.replace("item_shelf_","");
                 addSimilarJsonResource(manager, isBlockState, s ->
-                        s.replace("birch", id.replace("item_shelf_", ""))
-                                .replace("item_shelf_birch", id));
+                        s.replace("item_shelf_birch", id)
+                                .replace("item_shelves/birch", "item_shelves/" + id2));
                 addSimilarJsonResource(manager, isModel, s ->
-                        s.replace("birch", id.replace("item_shelf_", ""))
-                                .replace("item_shelf_birch", id));
+                        s.replace("birch", id2));
                 addSimilarJsonResource(manager, isItemModel, s ->
-                        s.replace("birch", id.replace("item_shelf_", ""))
-                                .replace("item_shelf_birch", id));
+                        s.replace("item_shelf_birch", id)
+                                .replace("item_shelves/birch", "item_shelves/" + id2));
 
             } catch (Exception ex) {
                 getLogger().error("Failed to generate models for {} : {}", sign, ex);

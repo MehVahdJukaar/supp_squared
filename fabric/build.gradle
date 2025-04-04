@@ -36,6 +36,13 @@ dependencies {
     modCompileOnly("curse.maven:modmenu-308702:3920481") {
         exclude module: "fabric-api"
     }
+
+    modRuntimeOnly("maven.modrinth:frozenlib:1.9.1-mc1.21.1") // Wilder-Wild
+    modRuntimeOnly("maven.modrinth:wilder-wild:3.0.4-mc1.21.1")
+
+    // modRuntimeOnly("curse.maven:biomes-o-plenty-220318:5855569")
+  //  modRuntimeOnly("curse.maven:terrablender-fabric-565956:5864141") // v4.1.0.5 | Regions-Unexplored, Biomes-O'-Plenty
+ //   modRuntimeOnly("curse.maven:glitchcore-955399:5660741") // v2.1.0.0 | Biomes-O'-Plenty
 }
 
 

@@ -110,6 +110,9 @@ dependencies {
 
     modCompileOnly("curse.maven:emi-580555:5704405")
 
+    modRuntimeOnly("curse.maven:biomes-o-plenty-220318:5645384") // Terrablender, GlitchCore
+    modRuntimeOnly("curse.maven:terrablender-neoforge-940057:5864140") // v4.0.0.2 | BOP, Regions-Unexplored
+    modRuntimeOnly("curse.maven:glitchcore-955399:5660740") // v2.1.0.0 | BOP
 }
 
 tasks.withType(JavaCompile).configureEach {
