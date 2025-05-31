@@ -1,3 +1,3 @@
-fixed sacks loot tables
+fixed shelves models
 
-improved item shelf model gen
+fixed some recipes
