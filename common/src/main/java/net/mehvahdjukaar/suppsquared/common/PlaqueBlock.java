@@ -108,7 +108,7 @@ public class PlaqueBlock extends WaterBlock implements EntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof PlaqueBlockTile tile) {
-            return tile.textHolderInteract(0, level, pos, state, player, hand, stack);
+            return tile.textHolderInteract(0, level, pos, state, player, hand, stack, hitResult.getDirection());
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }

@@ -61,7 +61,7 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     }
 
     @Override
-    public void openScreen(Level level, BlockPos pos, Player player, Direction dir) {
+    public void openScreen(Level level, Player player, Direction direction) {
         PlaqueEditScreen.open(this);
     }
 

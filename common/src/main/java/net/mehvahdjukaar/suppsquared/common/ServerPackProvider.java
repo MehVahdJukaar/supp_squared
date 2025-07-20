@@ -1,10 +1,11 @@
 package net.mehvahdjukaar.suppsquared.common;
 
 import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
-import net.mehvahdjukaar.moonlight.api.resources.ResType;
 import net.mehvahdjukaar.moonlight.api.resources.SimpleTagBuilder;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynServerResourcesGenerator;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicDataPack;
+import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
+import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.supplementaries.Supplementaries;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
@@ -16,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ServerPackProvider extends DynServerResourcesGenerator {
 
@@ -36,38 +38,37 @@ public class ServerPackProvider extends DynServerResourcesGenerator {
     }
 
     @Override
-    public boolean dependsOnLoadedPacks() {
-        return true;
-    }
+    public void regenerateDynamicAssets(Consumer<ResourceGenTask> executor) {
+        super.regenerateDynamicAssets(executor);
+        executor.accept((manager, sink) -> {
 
-    @Override
-    public void regenerateDynamicAssets(ResourceManager manager) {
+            //------item shelves-----
+            SimpleTagBuilder builder = SimpleTagBuilder.of(SuppSquared.res("item_shelves"));
 
-        //------item shelves-----
-        SimpleTagBuilder builder = SimpleTagBuilder.of(SuppSquared.res("item_shelves"));
+            SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
+                builder.addEntry(sign);
+                if (wood != WoodTypeRegistry.OAK_TYPE) {
+                    sink.addSimpleBlockLootTable(sign);
+                }
+            });
 
-        SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
-            builder.addEntry(sign);
-            if (wood != WoodTypeRegistry.OAK_TYPE) {
-                dynamicPack.addSimpleBlockLootTable(sign);
-            }
+            sink.addTag(builder, Registries.BLOCK);
+            sink.addTag(builder, Registries.ITEM);
+
+            addItemShelfRecipes(manager, sink);
         });
-
-        dynamicPack.addTag(builder, Registries.BLOCK);
-        dynamicPack.addTag(builder, Registries.ITEM);
-
-        addItemShelfRecipes(manager);
     }
 
-    private void addItemShelfRecipes(ResourceManager manager) {
+
+    private void addItemShelfRecipes(ResourceManager manager, ResourceSink sink) {
         Recipe<?> recipe = RPUtils.readRecipe(manager, Supplementaries.res("item_shelf"));
 
         SuppSquared.ITEM_SHELVES.forEach((w, b) -> {
             if (w != WoodTypeRegistry.OAK_TYPE) {
                 try {
-                    var newR = RPUtils.makeSimilarRecipe(recipe, WoodTypeRegistry.OAK_TYPE, w, "item_shelf");
+                    var newR = RPUtils.makeSimilarRecipe(recipe, WoodTypeRegistry.OAK_TYPE, w, Supplementaries.res("item_shelf"));
                     //newR = ForgeHelper.addRecipeConditions(newR, recipe);
-                    this.dynamicPack.addRecipe(newR);
+                    sink.addRecipe(newR);
                 } catch (Exception e) {
                     Supplementaries.LOGGER.error("Failed to generate recipe for item shelf {}:", w, e);
                 }

@@ -7,6 +7,8 @@ import net.mehvahdjukaar.moonlight.api.resources.StaticResource;
 import net.mehvahdjukaar.moonlight.api.resources.assets.LangBuilder;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynClientResourcesGenerator;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicTexturePack;
+import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
+import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Palette;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Respriter;
 import net.mehvahdjukaar.moonlight.api.resources.textures.SpriteUtils;
@@ -23,6 +25,7 @@ import net.minecraft.world.item.Item;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ClientPackProvider extends DynClientResourcesGenerator {
 
@@ -40,112 +43,113 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
     }
 
     @Override
-    public boolean dependsOnLoadedPacks() {
-        return true;
-    }
+    public void regenerateDynamicAssets(Consumer<ResourceGenTask> executor) {
+        super.regenerateDynamicAssets(executor);
+        executor.accept((manager, sink) -> {
+            //------item shelves-----
+            StaticResource isItemModel = StaticResource.getOrLog(manager,
+                    ResType.ITEM_MODELS.getPath(SuppSquared.res("item_shelf_birch")));
+            StaticResource isBlockState = StaticResource.getOrLog(manager,
+                    ResType.BLOCKSTATES.getPath(SuppSquared.res("item_shelf_birch")));
+            StaticResource isModel = StaticResource.getOrLog(manager,
+                    ResType.BLOCK_MODELS.getPath(SuppSquared.res("item_shelves/birch")));
 
-    @Override
-    public void regenerateDynamicAssets(ResourceManager manager) {
+            SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
+                String id = Utils.getID(sign).getPath();
+                if (wood == WoodTypeRegistry.OAK_TYPE) return;
+                try {
+                    String id2 = id.replace("item_shelf_","");
+                    sink.  addSimilarJsonResource(manager, isBlockState, s ->
+                            s.replace("item_shelf_birch", id)
+                                    .replace("item_shelves/birch", "item_shelves/" + id2));
+                    sink.addSimilarJsonResource(manager, isModel, s ->
+                            s.replace("birch", id2));
+                    sink.addSimilarJsonResource(manager, isItemModel, s ->
+                            s.replace("item_shelf_birch", id)
+                                    .replace("item_shelves/birch", "item_shelves/" + id2));
 
-
-        //------item shelves-----
-        StaticResource isItemModel = StaticResource.getOrLog(manager,
-                ResType.ITEM_MODELS.getPath(SuppSquared.res("item_shelf_birch")));
-        StaticResource isBlockState = StaticResource.getOrLog(manager,
-                ResType.BLOCKSTATES.getPath(SuppSquared.res("item_shelf_birch")));
-        StaticResource isModel = StaticResource.getOrLog(manager,
-                ResType.BLOCK_MODELS.getPath(SuppSquared.res("item_shelves/birch")));
-
-        SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
-            String id = Utils.getID(sign).getPath();
-            if (wood == WoodTypeRegistry.OAK_TYPE) return;
-            try {
-                String id2 = id.replace("item_shelf_","");
-                addSimilarJsonResource(manager, isBlockState, s ->
-                        s.replace("item_shelf_birch", id)
-                                .replace("item_shelves/birch", "item_shelves/" + id2));
-                addSimilarJsonResource(manager, isModel, s ->
-                        s.replace("birch", id2));
-                addSimilarJsonResource(manager, isItemModel, s ->
-                        s.replace("item_shelf_birch", id)
-                                .replace("item_shelves/birch", "item_shelves/" + id2));
-
-            } catch (Exception ex) {
-                getLogger().error("Failed to generate models for {} : {}", sign, ex);
-            }
+                } catch (Exception ex) {
+                    getLogger().error("Failed to generate models for {} : {}", sign, ex);
+                }
+            });
         });
 
+        executor.accept((manager, sink) -> {
 
-        //item textures
-        try (TextureImage template = TextureImage.open(manager, Supplementaries.res("item/item_shelf"))) {
+            //item textures
+            try (TextureImage template = TextureImage.open(manager, Supplementaries.res("item/item_shelf"))) {
 
-            Respriter respriter = Respriter.of(template);
+                Respriter respriter = Respriter.of(template);
 
-            SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
+                SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
 
-                ResourceLocation textureRes = SuppSquared.res("item/item_shelves/" + Utils.getID(sign).getPath()
-                        .replace("item_shelf_", ""));
+                    ResourceLocation textureRes = SuppSquared.res("item/item_shelves/" + Utils.getID(sign).getPath()
+                            .replace("item_shelf_", ""));
 
-                if (alreadyHasTextureAtLocation(manager, textureRes)) return;
+                    if (sink.alreadyHasTextureAtLocation(manager, textureRes)) return;
 
-                TextureImage newImage = null;
-                Item signItem = wood.getItemOfThis("sign");
-                if (signItem != null) {
-                    try (TextureImage vanillaSign = TextureImage.open(manager,
-                            RPUtils.findFirstItemTextureLocation(manager, signItem));
-                         TextureImage signMask = TextureImage.open(manager,
-                                 Supplementaries.res("item/hanging_signs/sign_board_mask"))) {
+                    TextureImage newImage = null;
+                    Item signItem = wood.getItemOfThis("sign");
+                    if (signItem != null) {
+                        try (TextureImage vanillaSign = TextureImage.open(manager,
+                                RPUtils.findFirstItemTextureLocation(manager, signItem));
+                             TextureImage signMask = TextureImage.open(manager,
+                                     Supplementaries.res("item/hanging_signs/sign_board_mask"))) {
 
-                        List<Palette> targetPalette = Palette.fromAnimatedImage(vanillaSign, signMask);
-                        newImage = respriter.recolor(targetPalette);
+                            List<Palette> targetPalette = Palette.fromAnimatedImage(vanillaSign, signMask);
+                            newImage = respriter.recolor(targetPalette);
 
 
-                    } catch (Exception ignored) {
+                        } catch (Exception ignored) {
+                        }
                     }
-                }
-                //if it failed use plank one
-                if (newImage == null) {
-                    try (TextureImage plankPalette = TextureImage.open(manager,
+                    //if it failed use plank one
+                    if (newImage == null) {
+                        try (TextureImage plankPalette = TextureImage.open(manager,
+                                RPUtils.findFirstBlockTextureLocation(manager, wood.planks))) {
+                            Palette targetPalette = SpriteUtils.extrapolateWoodItemPalette(plankPalette);
+                            newImage = respriter.recolor(targetPalette);
+
+                        } catch (Exception ex) {
+                            getLogger().error("Failed to generate Sign Post item texture for for {} : {}", sign, ex);
+                        }
+                    }
+                    if (newImage != null) {
+                        sink.addAndCloseTexture(textureRes, newImage);
+                    }
+                });
+            } catch (Exception ex) {
+                getLogger().error("Could not generate any Item Shelves item texture : ", ex);
+            }
+
+        });
+
+        executor.accept((manager, sink) -> {
+
+            //block textures
+            try (TextureImage template = TextureImage.open(manager,
+                    Supplementaries.res("block/item_shelf"))) {
+
+                Respriter respriter = Respriter.of(template);
+
+                SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
+                    var textureRes = SuppSquared.res("block/item_shelves/" + Utils.getID(sign).getPath()
+                            .replace("item_shelf_", ""));
+                    if (sink.alreadyHasTextureAtLocation(manager, textureRes)) return;
+
+                    try (TextureImage plankTexture = TextureImage.open(manager,
                             RPUtils.findFirstBlockTextureLocation(manager, wood.planks))) {
-                        Palette targetPalette = SpriteUtils.extrapolateWoodItemPalette(plankPalette);
-                        newImage = respriter.recolor(targetPalette);
+                        Palette palette = Palette.fromImage(plankTexture);
+                        TextureImage newImage = respriter.recolor(palette);
 
+                        sink.addAndCloseTexture(textureRes, newImage);
                     } catch (Exception ex) {
-                        getLogger().error("Failed to generate Sign Post item texture for for {} : {}", sign, ex);
+                        getLogger().error("Failed to generate Item Shelf block texture for for {} : {}", sign, ex);
                     }
-                }
-                if (newImage != null) {
-                    dynamicPack.addAndCloseTexture(textureRes, newImage);
-                }
-            });
-        } catch (Exception ex) {
-            getLogger().error("Could not generate any Item Shelves item texture : ", ex);
-        }
-
-        //block textures
-        try (TextureImage template = TextureImage.open(manager,
-                Supplementaries.res("block/item_shelf"))) {
-
-            Respriter respriter = Respriter.of(template);
-
-            SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
-                var textureRes = SuppSquared.res("block/item_shelves/" + Utils.getID(sign).getPath()
-                        .replace("item_shelf_", ""));
-                if (alreadyHasTextureAtLocation(manager, textureRes)) return;
-
-                try (TextureImage plankTexture = TextureImage.open(manager,
-                        RPUtils.findFirstBlockTextureLocation(manager, wood.planks))) {
-                    Palette palette = Palette.fromImage(plankTexture);
-                    TextureImage newImage = respriter.recolor(palette);
-
-                    dynamicPack.addAndCloseTexture(textureRes, newImage);
-                } catch (Exception ex) {
-                    getLogger().error("Failed to generate Item Shelf block texture for for {} : {}", sign, ex);
-                }
-            });
-        } catch (Exception ex) {
-            getLogger().error("Could not generate any Item Shelf block texture : ", ex);
-        }
+                });
+            } catch (Exception ex) {
+                getLogger().error("Could not generate any Item Shelf block texture : ", ex);
+            }
 /*
         try (TextureImage c = TextureImage.open(manager, new ResourceLocation("block/copper_block"));
              TextureImage s = TextureImage.open(manager, SuppSquared.res("block/copper_plaque"))) {
@@ -158,8 +162,10 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
         } catch (Exception e) {
         }*/
 
-        // aa(manager);
+            // aa(manager);
+        });
     }
+
 
     @Override
     public void addDynamicTranslations(AfterLanguageLoadEvent lang) {
@@ -168,7 +174,7 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
     }
 
 
-    public void generateSacks(ResourceManager manager) {
+    public void generateSacks(ResourceManager manager, ResourceSink sink) {
 
 
         try (TextureImage front_mask = TextureImage.open(manager, SuppSquared.res("block/front_mask"));
@@ -193,23 +199,23 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
                      TextureImage top_c = TextureImage.open(manager, SuppSquared.res("block/sack_" + d.getName() + "_top"));
                      TextureImage front_c = TextureImage.open(manager, SuppSquared.res("block/sack_" + d.getName() + "_front"))
                 ) {
-                    this.dynamicPack.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_bottom"),
+                    sink.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_bottom"),
                             bottom_res.recolor(Palette.fromImage(bottom_c)));
 
-                    this.dynamicPack.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_closed"),
+                    sink.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_closed"),
                             closed_res.recolor(Palette.fromImage(closed_c)));
 
                     var i = open_res.recolor(Palette.fromImage(open_c, open_mask));
                     open_c.crop(open_mask.makeCopy(), false);
                     i.applyOverlay(open_c);
-                    this.dynamicPack.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_open"), i);
+                    sink.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_open"), i);
 
                     var f = front_res.recolor(Palette.fromImage(front_c, front_mask));
                     front_c.crop(front_mask.makeCopy(), false);
                     f.applyOverlay(front_c);
-                    this.dynamicPack.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_front"), f);
+                    sink.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_front"), f);
 
-                    this.dynamicPack.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_top"),
+                    sink.addAndCloseTexture(SuppSquared.res("sack_" + d.getName() + "_top"),
                             top_res.recolor(Palette.fromImage(top_c)));
 
                 } catch (Exception ignored) {
