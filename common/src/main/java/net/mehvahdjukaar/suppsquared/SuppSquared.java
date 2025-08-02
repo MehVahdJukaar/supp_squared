@@ -25,6 +25,7 @@ import net.mehvahdjukaar.supplementaries.reg.RegUtils;
 import net.mehvahdjukaar.suppsquared.client.ClientPackProvider;
 import net.mehvahdjukaar.suppsquared.common.*;
 import net.minecraft.Util;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
