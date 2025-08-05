@@ -9,11 +9,11 @@
       "item": "buzzier_bees:cupric_candle"
     },
     "2": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:gold_ingot"
     }
   },
   "result": {
-    "item": "suppsquared:gold_candle_holder_ender",
+    "item": "suppsquared:gold_candle_holder_cupric",
     "count": 1
   },
   "conditions": [
