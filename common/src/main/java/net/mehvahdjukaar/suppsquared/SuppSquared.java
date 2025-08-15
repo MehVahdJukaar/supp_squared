@@ -9,9 +9,11 @@ import net.mehvahdjukaar.moonlight.api.platform.configs.ConfigBuilder;
 import net.mehvahdjukaar.moonlight.api.platform.configs.ConfigType;
 import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
 import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
+import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.CandleHolderBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBraceBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.ItemShelfBlock;
@@ -28,6 +30,9 @@ import net.minecraft.Util;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.protocol.game.ClientboundRecipePacket;
@@ -40,8 +45,11 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -169,7 +177,7 @@ public class SuppSquared {
     private static void registerItemShelves(Registrator<Block> event, Collection<WoodType> types) {
         for (WoodType wood : types) {
             Block instance;
-            if (wood == WoodTypeRegistry.OAK_TYPE) {
+            if (wood == VanillaWoodTypes.OAK) {
                 //instance = ITEM_SHELF.get();
             } else {
                 String name = wood.getVariantId("item_shelf");
@@ -189,15 +197,12 @@ public class SuppSquared {
     public static void registerItemShelfItems(Registrator<Item> event, Collection<WoodType> woodTypes) {
         for (var entry : ITEM_SHELVES.entrySet()) {
             WoodType wood = entry.getKey();
-            if (wood == WoodTypeRegistry.OAK_TYPE) continue;
             Block block = entry.getValue();
             Item item = new WoodBasedBlockItem(
                     block, new Item.Properties(), wood
             );
             event.register(Utils.getID(block), item);
         }
-        ITEM_SHELVES.put(WoodTypeRegistry.OAK_TYPE, ModRegistry.ITEM_SHELF.get());
-        WoodTypeRegistry.OAK_TYPE.addChild("supplementaries:item_shelf", ModRegistry.ITEM_SHELF.get());
 
     }
 
@@ -246,7 +251,7 @@ public class SuppSquared {
     });
 
     public static final Map<DyeColor, Supplier<Block>> GOLDEN_CANDLE_HOLDERS = RegUtils.
-            registerCandleHolders(res("gold_candle_holder"));
+            registerCandleHolders(res("gold_candle_holder"), SuppSquared::getGoldenCandleHolderParticleOffsets);
 
 
     //iron frames
@@ -357,4 +362,20 @@ public class SuppSquared {
         return RegHelper.registerItem(SuppSquared.res(name), () -> new BlockItem(blockSup.get(), properties));
     }
 
+
+    private static final List<Vec3> S2_FLOOR_1 = List.of(new Vec3(0.5, 0.6875 + 3 / 16f, 0.5));
+    private static final List<Vec3> S2_FLOOR_3 = List.of(new Vec3(0.1875, 0.9375 - 1 / 16f, 0.5), new Vec3(0.5, 0.9375, 0.5), new Vec3(0.8125, 0.9375 - 1 / 16f, 0.5));
+    private static final List<Vec3> S2_FLOOR_3f = List.of(new Vec3(0.5, 0.9375 - 1 / 16f, 0.1875), new Vec3(0.5, 0.9375, 0.5), new Vec3(0.5, 0.9375 - 1 / 16f, 0.8125));
+
+    public static List<Vec3> getGoldenCandleHolderParticleOffsets(BlockState state) {
+        AttachFace face = state.getValue(CandleHolderBlock. FACE);
+        if (face == AttachFace.FLOOR) {
+            Direction direction =state.getValue(CandleHolderBlock.FACING);
+            int candles = state.getValue(CandleHolderBlock.CANDLES);
+            if (candles == 1) return S2_FLOOR_1;
+            if (candles == 3) return direction.getAxis() == Direction.Axis.Z ? S2_FLOOR_3 : S2_FLOOR_3f;
+        }
+        return CandleHolderBlock.getParticleOffsets(state);
+    }
 }
+

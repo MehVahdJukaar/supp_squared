@@ -6,6 +6,9 @@ import net.mehvahdjukaar.moonlight.api.resources.pack.DynServerResourcesGenerato
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicDataPack;
 import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
 import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
+import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
+import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
+import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.supplementaries.Supplementaries;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
@@ -17,6 +20,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
+
 import java.util.function.Consumer;
 
 public class ServerPackProvider extends DynServerResourcesGenerator {
@@ -47,7 +52,7 @@ public class ServerPackProvider extends DynServerResourcesGenerator {
 
             SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
                 builder.addEntry(sign);
-                if (wood != WoodTypeRegistry.OAK_TYPE) {
+                if (wood != VanillaWoodTypes.OAK) {
                     sink.addSimpleBlockLootTable(sign);
                 }
             });
@@ -64,7 +69,7 @@ public class ServerPackProvider extends DynServerResourcesGenerator {
         Recipe<?> recipe = RPUtils.readRecipe(manager, Supplementaries.res("item_shelf"));
 
         SuppSquared.ITEM_SHELVES.forEach((w, b) -> {
-            if (w != WoodTypeRegistry.OAK_TYPE) {
+            if (w != VanillaWoodTypes.OAK) {
                 try {
                     var newR = RPUtils.makeSimilarRecipe(recipe, WoodTypeRegistry.OAK_TYPE, w, Supplementaries.res("item_shelf"));
                     //newR = ForgeHelper.addRecipeConditions(newR, recipe);
