@@ -32,8 +32,8 @@ dependencies {
         exclude module: "fabric-api"
     }
     modImplementation ("net.mehvahdjukaar:moonlight-fabric:${project.moonlight_version}")
-    //modImplementation ("net.mehvahdjukaar:supplementaries-fabric:${project.supplementaries_version}")
-    modImplementation ("curse.maven:supplementaries-412082:5875806")
+    modImplementation ("net.mehvahdjukaar:supplementaries-fabric:${project.supplementaries_version}")
+   // modImplementation ("curse.maven:supplementaries-412082:5875806")
 
     modCompileOnly ("curse.maven:ecologics-570463:4171284")
     //modImplementation ("curse.maven:the-twilight-forest-227639:4389094")
