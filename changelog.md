@@ -1,1 +1,2 @@
-updated again because last file didnt work properly or something idk
+fixed some recipes
+fixed plaques can survive logic

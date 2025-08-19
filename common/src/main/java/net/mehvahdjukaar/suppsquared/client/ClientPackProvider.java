@@ -8,8 +8,6 @@ import net.mehvahdjukaar.moonlight.api.resources.assets.LangBuilder;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynClientResourcesGenerator;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicTexturePack;
 import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
-import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
-import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Palette;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Respriter;
 import net.mehvahdjukaar.moonlight.api.resources.textures.SpriteUtils;
@@ -18,10 +16,7 @@ import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.supplementaries.Supplementaries;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import org.apache.logging.log4j.Logger;
 
@@ -86,46 +81,46 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
 
                 SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
 
-                    ResourceLocation textureRes = SuppSquared.res("item/item_shelves/" + Utils.getID(sign).getPath()
-                            .replace("item_shelf_", ""));
+                    String textureRes = "item/item_shelves/" + Utils.getID(sign).getPath()
+                            .replace("item_shelf_", "");
 
-                    if (sink.alreadyHasTextureAtLocation(manager, textureRes)) return;
-//TODO: copy supp code here
-                    TextureImage newImage = null;
-                    Item signItem = wood.getItemOfThis("sign");
-                    if (signItem != null) {
-                        try (TextureImage vanillaSign = TextureImage.open(manager,
-                                RPUtils.findFirstItemTextureLocation(manager, signItem));
-                             TextureImage signMask = TextureImage.open(manager,
-                                     Supplementaries.res("item/hanging_signs/sign_board_mask"))) {
+                    sink.addTextureIfNotPresent(manager, textureRes, () -> {
+                        TextureImage newImage = null;
+                        Item signItem = wood.getItemOfThis("sign");
+                        if (signItem != null) {
+                            try (TextureImage vanillaSign = TextureImage.open(manager,
+                                    RPUtils.findFirstItemTextureLocation(manager, signItem));
+                                 TextureImage signMask = TextureImage.open(manager,
+                                         Supplementaries.res("item/hanging_signs/sign_board_mask"))) {
 
-                            List<Palette> targetPalette = Palette.fromAnimatedImage(vanillaSign, signMask);
-                            newImage = respriter.recolor(targetPalette);
+                                List<Palette> targetPalette = Palette.fromAnimatedImage(vanillaSign, signMask);
+                                newImage = respriter.recolor(targetPalette);
 
 
-                        } catch (Exception ignored) {
+                            } catch (Exception ignored) {
+                            }
                         }
-                    }
-                    //if it failed use plank one
-                    if (newImage == null) {
-                        try (TextureImage plankPalette = TextureImage.open(manager,
-                                RPUtils.findFirstBlockTextureLocation(manager, wood.planks))) {
-                            Palette targetPalette = SpriteUtils.extrapolateWoodItemPalette(plankPalette);
-                            newImage = respriter.recolor(targetPalette);
+                        //if it failed use plank one
+                        if (newImage == null) {
+                            try (TextureImage plankPalette = TextureImage.open(manager,
+                                    RPUtils.findFirstBlockTextureLocation(manager, wood.planks))) {
+                                Palette targetPalette = SpriteUtils.extrapolateWoodItemPalette(plankPalette);
+                                newImage = respriter.recolor(targetPalette);
 
-                        } catch (Exception ex) {
-                            getLogger().error("Failed to generate Sign Post item texture for for {} : {}", sign, ex);
+                            } catch (Exception ex) {
+                                getLogger().error("Failed to generate Sign Post item texture for for {} : {}", sign, ex);
+                            }
                         }
-                    }
-                    if (newImage != null) {
-                        sink.addAndCloseTexture(textureRes, newImage);
-                    }
+                        return newImage;
+                    });
+                    //TODO: copy supp code here for sings or something
+
                 });
             } catch (Exception ex) {
                 getLogger().error("Could not generate any Item Shelves item texture : ", ex);
             }
 
-            });
+        });
 
         executor.accept((manager, sink) -> {
 
