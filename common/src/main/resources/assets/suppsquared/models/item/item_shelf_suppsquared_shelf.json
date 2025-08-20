@@ -2,6 +2,6 @@
 	"credit": "Made with Blockbench",
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "suppsquared:item/item_shelves/birch"
+		"layer0": "suppsquared:item/item_shelves/suppsquared_shelf"
 	}
 }
