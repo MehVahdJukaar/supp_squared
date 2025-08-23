@@ -175,7 +175,7 @@ public class SuppSquared {
         for (WoodType wood : types) {
             Block instance;
             if (wood == VanillaWoodTypes.OAK) {
-                //instance = ITEM_SHELF.get();
+                instance = ITEM_SHELF.get();
             } else {
                 String name = wood.getVariantId("item_shelf");
                 ItemShelfBlock block = new ItemShelfBlock(wood.copyProperties()
@@ -185,15 +185,16 @@ public class SuppSquared {
                         .noCollission());
                 instance = block;
                 event.register(SuppSquared.res(name), block);
-                ITEM_SHELVES.put(wood, instance);
-                wood.addChild("supplementaries:item_shelf", instance);
             }
+            ITEM_SHELVES.put(wood, instance);
+            wood.addChild("supplementaries:item_shelf", instance);
         }
     }
 
     public static void registerItemShelfItems(Registrator<Item> event, Collection<WoodType> woodTypes) {
         for (var entry : ITEM_SHELVES.entrySet()) {
             WoodType wood = entry.getKey();
+            if (wood == VanillaWoodTypes.OAK) continue;
             Block block = entry.getValue();
             Item item = new WoodBasedBlockItem(
                     block, new Item.Properties(), wood, 200

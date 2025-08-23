@@ -1,2 +1,1 @@
-- fixed plaques can surviva
-- fixed a recipe
+backpoted some fixes
