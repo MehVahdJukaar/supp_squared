@@ -11,7 +11,6 @@ import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
 import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.CandleHolderBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBlock;
@@ -27,15 +26,11 @@ import net.mehvahdjukaar.supplementaries.reg.RegUtils;
 import net.mehvahdjukaar.suppsquared.client.ClientPackProvider;
 import net.mehvahdjukaar.suppsquared.common.*;
 import net.minecraft.Util;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.core.Direction;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.protocol.game.ClientboundRecipePacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
@@ -127,10 +122,10 @@ public class SuppSquared {
         }
         if (CommonConfigs.Building.CANDLE_HOLDER_ENABLED.get()) {
             //already added by supp
-           // event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(CANDLE_HOLDERS),
-             //       GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
+            // event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(CANDLE_HOLDERS),
+            //       GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
             //event.addAfter(CreativeModeTabs.COLORED_BLOCKS, i -> i.is(CANDLE_HOLDERS),
-              //      GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
+            //      GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
         }
         if (CommonConfigs.isEnabled(KEY_NAME)) {
             event.addAfter(CreativeModeTabs.TOOLS_AND_UTILITIES, i -> i.is(ModRegistry.KEY_ITEM.get().asItem()),
@@ -178,7 +173,7 @@ public class SuppSquared {
         for (WoodType wood : types) {
             Block instance;
             if (wood == VanillaWoodTypes.OAK) {
-                wood.addChild("supplementaries:item_shelf", ModRegistry.ITEM_SHELF.get());
+                instance = ModRegistry.ITEM_SHELF.get();
             } else {
                 String name = wood.getVariantId("item_shelf");
                 ItemShelfBlock block = new ItemShelfBlock(wood.copyProperties()
@@ -188,15 +183,16 @@ public class SuppSquared {
                         .noCollission());
                 instance = block;
                 event.register(SuppSquared.res(name), block);
-                ITEM_SHELVES.put(wood, instance);
-                wood.addChild("supplementaries:item_shelf", instance);
             }
+            wood.addChild("supplementaries:item_shelf", instance);
+            ITEM_SHELVES.put(wood, instance);
         }
     }
 
     public static void registerItemShelfItems(Registrator<Item> event, Collection<WoodType> woodTypes) {
         for (var entry : ITEM_SHELVES.entrySet()) {
             WoodType wood = entry.getKey();
+            if (wood == VanillaWoodTypes.OAK) continue;
             Block block = entry.getValue();
             Item item = new WoodBasedBlockItem(
                     block, new Item.Properties(), wood
@@ -209,7 +205,7 @@ public class SuppSquared {
     private static final RegHelper.VariantType[] TYPES = List.of(RegHelper.VariantType.SLAB, RegHelper.VariantType.STAIRS).toArray(RegHelper.VariantType[]::new);
 
     public static final Supplier<DataComponentType<UUID>> HEAVY_KEY_UUID = RegHelper.registerDataComponent(res("heavy_key_uuid"),
-            ()-> DataComponentType.<UUID>builder()
+            () -> DataComponentType.<UUID>builder()
                     .persistent(UUIDUtil.CODEC)
                     .networkSynchronized(UUIDUtil.STREAM_CODEC)
                     .build());
@@ -368,9 +364,9 @@ public class SuppSquared {
     private static final List<Vec3> S2_FLOOR_3f = List.of(new Vec3(0.5, 0.9375 - 1 / 16f, 0.1875), new Vec3(0.5, 0.9375, 0.5), new Vec3(0.5, 0.9375 - 1 / 16f, 0.8125));
 
     public static List<Vec3> getGoldenCandleHolderParticleOffsets(BlockState state) {
-        AttachFace face = state.getValue(CandleHolderBlock. FACE);
+        AttachFace face = state.getValue(CandleHolderBlock.FACE);
         if (face == AttachFace.FLOOR) {
-            Direction direction =state.getValue(CandleHolderBlock.FACING);
+            Direction direction = state.getValue(CandleHolderBlock.FACING);
             int candles = state.getValue(CandleHolderBlock.CANDLES);
             if (candles == 1) return S2_FLOOR_1;
             if (candles == 3) return direction.getAxis() == Direction.Axis.Z ? S2_FLOOR_3 : S2_FLOOR_3f;
