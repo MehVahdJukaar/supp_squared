@@ -175,7 +175,7 @@ public class SuppSquared {
         for (WoodType wood : types) {
             Block instance;
             if (wood == VanillaWoodTypes.OAK) {
-                instance = ITEM_SHELF.get();
+                instance = ModRegistry.ITEM_SHELF.get();
             } else {
                 String name = wood.getVariantId("item_shelf");
                 ItemShelfBlock block = new ItemShelfBlock(wood.copyProperties()
