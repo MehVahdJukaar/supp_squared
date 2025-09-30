@@ -76,10 +76,10 @@ public class SuppSquared {
         if (PlatHelper.getPhysicalSide().isClient()) {
             SuppSquaredClient.init();
 
-            ClientPackProvider.INSTANCE.register();
+            RegHelper.registerDynamicResourceProvider(new ClientPackProvider());
         }
+        RegHelper.registerDynamicResourceProvider(new ServerPackProvider());
 
-        ServerPackProvider.INSTANCE.register();
         BlockSetAPI.addDynamicBlockRegistration(SuppSquared::registerItemShelves, WoodType.class);
         BlockSetAPI.addDynamicItemRegistration(SuppSquared::registerItemShelfItems, WoodType.class);
 
@@ -105,6 +105,20 @@ public class SuppSquared {
             case "lanterns" -> LANTERNS.get();
             default -> true;
         });
+
+        RegHelper.addExtraBEBlockStatesRegistration(SuppSquared::addExtraBlockStates);
+    }
+
+    private static void addExtraBlockStates(RegHelper.ExtraBEStatesEvent event) {
+        event.addBlocks(ModRegistry.SACK_TILE.get(),
+                SACKS.values().stream()
+                        .filter(i -> i != ModRegistry.SACK.get())
+                        .map(Supplier::get).toArray(Block[]::new));
+        event.addBlocks(ModRegistry.ITEM_SHELF_TILE.get(),
+                ITEM_SHELVES.values()
+                        .stream().filter(i -> i != ModRegistry.ITEM_SHELF.get())
+                        .toList()
+                        .toArray(new Block[0]));
     }
 
     private static void addItemsToTabs(RegHelper.ItemToTabEvent event) {

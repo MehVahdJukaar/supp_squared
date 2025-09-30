@@ -2,49 +2,35 @@ package net.mehvahdjukaar.suppsquared.common;
 
 import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
 import net.mehvahdjukaar.moonlight.api.resources.SimpleTagBuilder;
-import net.mehvahdjukaar.moonlight.api.resources.pack.DynServerResourcesGenerator;
-import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicDataPack;
-import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
-import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
+import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicServerResourceProvider;
+import net.mehvahdjukaar.moonlight.api.resources.pack.PackGenerationStrategy;
 import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
 import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceSink;
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.supplementaries.Supplementaries;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.crafting.Recipe;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
-import java.util.function.Consumer;
+public class ServerPackProvider extends DynamicServerResourceProvider {
 
-public class ServerPackProvider extends DynServerResourcesGenerator {
-
-    public static final ServerPackProvider INSTANCE = new ServerPackProvider();
 
     public ServerPackProvider() {
-        super(new DynamicDataPack(SuppSquared.res("generated_pack"), Pack.Position.BOTTOM, true, true));
+        super(SuppSquared.res("dynamic_assets"), PackGenerationStrategy.CACHED);
     }
 
     @Override
-    public Collection<String> additionalNamespaces() {
-        return List.of("minecraft", "supplementaries");
-    }
-
-    @Override
-    public Logger getLogger() {
-        return SuppSquared.LOGGER;
+    protected Collection<String> gatherSupportedNamespaces() {
+        return List.of("supplementaries", "minecraft");
     }
 
     @Override
     public void regenerateDynamicAssets(Consumer<ResourceGenTask> executor) {
-        super.regenerateDynamicAssets(executor);
         executor.accept((manager, sink) -> {
 
             //------item shelves-----
@@ -71,7 +57,7 @@ public class ServerPackProvider extends DynServerResourcesGenerator {
         SuppSquared.ITEM_SHELVES.forEach((w, b) -> {
             if (w != VanillaWoodTypes.OAK) {
                 try {
-                    var newR = RPUtils.makeSimilarRecipe(recipe, WoodTypeRegistry.OAK_TYPE, w, Supplementaries.res("item_shelf"));
+                    var newR = RPUtils.makeSimilarRecipe(recipe, VanillaWoodTypes.OAK, w, Supplementaries.res("item_shelf"));
                     //newR = ForgeHelper.addRecipeConditions(newR, recipe);
                     sink.addRecipe(newR);
                 } catch (Exception e) {

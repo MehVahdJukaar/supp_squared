@@ -5,8 +5,8 @@ import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
 import net.mehvahdjukaar.moonlight.api.resources.ResType;
 import net.mehvahdjukaar.moonlight.api.resources.StaticResource;
 import net.mehvahdjukaar.moonlight.api.resources.assets.LangBuilder;
-import net.mehvahdjukaar.moonlight.api.resources.pack.DynClientResourcesGenerator;
-import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicTexturePack;
+import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicClientResourceProvider;
+import net.mehvahdjukaar.moonlight.api.resources.pack.PackGenerationStrategy;
 import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Palette;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Respriter;
@@ -16,31 +16,27 @@ import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.supplementaries.Supplementaries;
 import net.mehvahdjukaar.suppsquared.SuppSquared;
-import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import org.apache.logging.log4j.Logger;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ClientPackProvider extends DynClientResourcesGenerator {
+public class ClientPackProvider extends DynamicClientResourceProvider {
 
-    public static final ClientPackProvider INSTANCE = new ClientPackProvider();
 
     public ClientPackProvider() {
-        super(new DynamicTexturePack(SuppSquared.res("generated_pack"), Pack.Position.BOTTOM, true, true));
-        this.dynamicPack.addNamespaces("minecraft");
-        this.dynamicPack.addNamespaces("supplementaries");
+        super(SuppSquared.res("dynamic_assets"), PackGenerationStrategy.CACHED);
     }
 
     @Override
-    public Logger getLogger() {
-        return SuppSquared.LOGGER;
+    protected Collection<String> gatherSupportedNamespaces() {
+        return List.of("supplementaries", "minecraft");
     }
 
     @Override
     public void regenerateDynamicAssets(Consumer<ResourceGenTask> executor) {
-        super.regenerateDynamicAssets(executor);
 
         executor.accept((manager, sink) -> {
 
@@ -67,7 +63,7 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
                                     .replace("suppsquared_shelf", id.replace("item_shelf_", "")));
 
                 } catch (Exception ex) {
-                    getLogger().error("Failed to generate models for {} : {}", sign, ex);
+                    SuppSquared.LOGGER.error("Failed to generate models for {} : {}", sign, ex);
                 }
             });
         });
@@ -81,8 +77,8 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
 
                 SuppSquared.ITEM_SHELVES.forEach((wood, sign) -> {
 
-                    String textureRes = "item/item_shelves/" + Utils.getID(sign).getPath()
-                            .replace("item_shelf_", "");
+                    ResourceLocation textureRes = SuppSquared.res("item/item_shelves/" + Utils.getID(sign).getPath()
+                            .replace("item_shelf_", ""));
 
                     sink.addTextureIfNotPresent(manager, textureRes, () -> {
                         TextureImage newImage = null;
@@ -108,7 +104,7 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
                                 newImage = respriter.recolor(targetPalette);
 
                             } catch (Exception ex) {
-                                getLogger().error("Failed to generate Sign Post item texture for for {} : {}", sign, ex);
+                                SuppSquared.LOGGER.error("Failed to generate Sign Post item texture for for {} : {}", sign, ex);
                             }
                         }
                         return newImage;
@@ -117,7 +113,7 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
 
                 });
             } catch (Exception ex) {
-                getLogger().error("Could not generate any Item Shelves item texture : ", ex);
+                SuppSquared.LOGGER.error("Could not generate any Item Shelves item texture : ", ex);
             }
 
         });
@@ -142,11 +138,11 @@ public class ClientPackProvider extends DynClientResourcesGenerator {
                             sink.addTexture(textureRes, newImage);
                         }
                     } catch (Exception ex) {
-                        getLogger().error("Failed to generate Item Shelf block texture for for {} : {}", sign, ex);
+                        SuppSquared.LOGGER.error("Failed to generate Item Shelf block texture for for {} : {}", sign, ex);
                     }
                 });
             } catch (Exception ex) {
-                getLogger().error("Could not generate any Item Shelf block texture : ", ex);
+                SuppSquared.LOGGER.error("Could not generate any Item Shelf block texture : ", ex);
             }
 /*
         try (TextureImage c = TextureImage.open(manager, new ResourceLocation("block/copper_block"));
