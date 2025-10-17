@@ -107,7 +107,7 @@ dependencies {
 
     modImplementation("net.mehvahdjukaar:moonlight-forge:${project.moonlight_version}")
     //modImplementation("net.mehvahdjukaar:supplementaries-forge:${project.supplementaries_version}")
-    modImplementation ("curse.maven:supplementaries-412082:5875807")
+    //modImplementation ("curse.maven:supplementaries-412082:5875807")
 
      //   exclude module: "registrate"
     //}
