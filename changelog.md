@@ -1,1 +1,1 @@
-fixed some recipes
+published again since an old arch loom version caused some stuff to not be obfuscated

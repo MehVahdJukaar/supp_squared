@@ -11,7 +11,6 @@ import net.mehvahdjukaar.moonlight.api.set.BlockSetAPI;
 import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.CandleHolderBlock;
 import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBlock;
@@ -20,16 +19,11 @@ import net.mehvahdjukaar.supplementaries.common.block.blocks.ItemShelfBlock;
 import net.mehvahdjukaar.supplementaries.common.items.SackItem;
 import net.mehvahdjukaar.supplementaries.common.items.TimberFrameItem;
 import net.mehvahdjukaar.supplementaries.configs.CommonConfigs;
-import net.mehvahdjukaar.supplementaries.reg.ModCreativeTabs;
-import net.mehvahdjukaar.supplementaries.reg.ModRegistry;
-import net.mehvahdjukaar.supplementaries.reg.ModSounds;
-import net.mehvahdjukaar.supplementaries.reg.RegUtils;
+import net.mehvahdjukaar.supplementaries.reg.*;
 import net.mehvahdjukaar.suppsquared.client.ClientPackProvider;
 import net.mehvahdjukaar.suppsquared.common.*;
 import net.minecraft.Util;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -55,9 +49,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-
-import static net.mehvahdjukaar.supplementaries.reg.ModConstants.KEY_NAME;
-import static net.mehvahdjukaar.supplementaries.reg.ModConstants.SACK_NAME;
 
 /**
  * Author: MehVahdJukaar
@@ -129,7 +120,7 @@ public class SuppSquared {
             event.addAfter(CreativeModeTabs.COLORED_BLOCKS, i -> i.is(CANDLE_HOLDERS),
                     GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
         }
-        if (CommonConfigs.isEnabled(KEY_NAME)) {
+        if (CommonConfigs.isEnabled(ModConstants.KEY_NAME)) {
             event.addAfter(CreativeModeTabs.TOOLS_AND_UTILITIES, i -> i.is(ModRegistry.KEY_ITEM.get().asItem()),
                     SKELETON_KEY.get());
         }
@@ -220,7 +211,7 @@ public class SuppSquared {
     public static final Map<DyeColor, Supplier<ColoredSackBlock>> SACKS = Util.make(() -> {
         var map = new LinkedHashMap<DyeColor, Supplier<ColoredSackBlock>>();
         for (var c : BlocksColorAPI.SORTED_COLORS) {
-            map.put(c, regBlock(SACK_NAME + "_" + c.getName(), () -> new ColoredSackBlock(
+            map.put(c, regBlock(ModConstants.SACK_NAME + "_" + c.getName(), () -> new ColoredSackBlock(
                     BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL)
                             .mapColor(c)
                             .pushReaction(PushReaction.DESTROY)
@@ -235,7 +226,7 @@ public class SuppSquared {
     public static final Map<DyeColor, Supplier<Item>> SACK_ITEMS = Util.make(() -> {
         var map = new LinkedHashMap<DyeColor, Supplier<Item>>();
         for (var c : BlocksColorAPI.SORTED_COLORS) {
-            map.put(c, regItem(SACK_NAME + "_" + c.getName(), () -> new SackItem(
+            map.put(c, regItem(ModConstants.SACK_NAME + "_" + c.getName(), () -> new SackItem(
                     SACKS.get(c).get(),
                     new Item.Properties().stacksTo(1)
             )));
@@ -362,9 +353,9 @@ public class SuppSquared {
     private static final List<Vec3> S2_FLOOR_3f = List.of(new Vec3(0.5, 0.9375 - 1 / 16f, 0.1875), new Vec3(0.5, 0.9375, 0.5), new Vec3(0.5, 0.9375 - 1 / 16f, 0.8125));
 
     public static List<Vec3> getGoldenCandleHolderParticleOffsets(BlockState state) {
-        AttachFace face = state.getValue(CandleHolderBlock. FACE);
+        AttachFace face = state.getValue(CandleHolderBlock.FACE);
         if (face == AttachFace.FLOOR) {
-            Direction direction =state.getValue(CandleHolderBlock.FACING);
+            Direction direction = state.getValue(CandleHolderBlock.FACING);
             int candles = state.getValue(CandleHolderBlock.CANDLES);
             if (candles == 1) return S2_FLOOR_1;
             if (candles == 3) return direction.getAxis() == Direction.Axis.Z ? S2_FLOOR_3 : S2_FLOOR_3f;
