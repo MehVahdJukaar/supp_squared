@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow"
+    id 'com.gradleup.shadow'
 }
 
 architectury {
@@ -8,42 +8,26 @@ architectury {
 }
 
 loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
 }
 
 configurations {
-    common
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
     shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
+
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
 }
 
-dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
-
-    modImplementation("net.mehvahdjukaar:moonlight-fabric:${moonlight_version}")
-    modImplementation("net.mehvahdjukaar:supplementaries-fabric:${project.supplementaries_version}")
-
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}") {
-        exclude group: 'net.fabricmc.fabric-api'
-    }
-    modImplementation("curse.maven:yacl-667299:4574163")
-
-    modCompileOnly("curse.maven:modmenu-308702:3920481") {
-        exclude module: "fabric-api"
-    }
-
-    modRuntimeOnly("maven.modrinth:frozenlib:1.9.1-mc1.21.1") // Wilder-Wild
-    modRuntimeOnly("maven.modrinth:wilder-wild:3.0.4-mc1.21.1")
-
-    // modRuntimeOnly("curse.maven:biomes-o-plenty-220318:5855569")
-  //  modRuntimeOnly("curse.maven:terrablender-fabric-565956:5864141") // v4.1.0.5 | Regions-Unexplored, Biomes-O'-Plenty
- //   modRuntimeOnly("curse.maven:glitchcore-955399:5660741") // v2.1.0.0 | Biomes-O'-Plenty
-}
 
 
 processResources {
@@ -52,20 +36,27 @@ processResources {
     }
 }
 
-
 shadowJar {
     exclude "architectury.common.json"
 
-    configurations = [project.configurations.shadowCommon]
+    configurations = [project.configurations.shadowBundle]
     archiveClassifier = "dev-shadow"
+}
 
-    zip64 true
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = 'dev-shadow'
 }
 
 remapJar {
+    exclude '**/example/**'
+
+    injectAccessWidener = true
+    inputFile.set shadowJar.archiveFile
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    archiveClassifier = "fabric"
+    archiveClassifier = null
+    archiveClassifier = 'fabric'
 }
 
 jar {
@@ -76,12 +67,12 @@ sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
+
+    archiveClassifier = "fabric-sources"
 }
 
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
-    }
+remapSourcesJar{
+    archiveClassifier = "fabric-sources"
 }
 
 publishing {
@@ -99,5 +90,38 @@ publishing {
             url = "https://www.cursemaven.com"
             allowInsecureProtocol = true
         }
+        maven {
+            name = "TerraformersMC"
+            url = "https://maven.terraformersmc.com/releases"
+        }
+        maven {
+            url = "https://maven.shedaniel.me"
+        }
+    }
+}
+
+repositories {
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.terraformersmc.com/releases" }
+}
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+
+    modImplementation("net.mehvahdjukaar:moonlight-fabric:${moonlight_version}")
+    modImplementation("net.mehvahdjukaar:supplementaries-fabric:${project.supplementaries_version}")
+    //modImplementation("curse.maven:supplementaries-412082:7114488")
+
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}") {
+        exclude group: 'net.fabricmc.fabric-api'
+    }
+    modImplementation("curse.maven:yacl-667299:4574163")
+
+    modCompileOnly("curse.maven:modmenu-308702:3920481") {
+        exclude module: "fabric-api"
     }
 }
