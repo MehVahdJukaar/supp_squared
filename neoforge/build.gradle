@@ -101,7 +101,7 @@ dependencies {
     implementation 'org.jetbrains:annotations:22.0.0'
 
     modImplementation("net.mehvahdjukaar:moonlight-neoforge:${moonlight_version}")
-    modImplementation("net.mehvahdjukaar:supplementaries-neoforge:${project.supplementaries_version}")
+    //modImplementation("net.mehvahdjukaar:supplementaries-neoforge:${project.supplementaries_version}")
     //modImplementation("curse.maven:supplementaries-412082:7114487")
 
     modCompileOnly("curse.maven:jei-238222:3928388")
