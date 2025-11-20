@@ -34,7 +34,7 @@ public class HeavyKeyItem extends KeyItem {
     public void onCraftedBy(ItemStack stack, Level level, Player player) {
         super.onCraftedBy(stack, level, player);
         stack.getOrCreateTag().putUUID(KEY_TAG, UUID.randomUUID());
-        player.sendSystemMessage(Component.literal("crafted" + stack.getTag()));
+    
     }
 
     private static String uuidToLongString(UUID id) {
