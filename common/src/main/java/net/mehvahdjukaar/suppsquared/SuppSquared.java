@@ -12,10 +12,7 @@ import net.mehvahdjukaar.moonlight.api.set.BlocksColorAPI;
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.CandleHolderBlock;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBlock;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.FrameBraceBlock;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.ItemShelfBlock;
+import net.mehvahdjukaar.supplementaries.common.block.blocks.*;
 import net.mehvahdjukaar.supplementaries.common.items.SackItem;
 import net.mehvahdjukaar.supplementaries.common.items.TimberFrameItem;
 import net.mehvahdjukaar.supplementaries.configs.CommonConfigs;
@@ -24,6 +21,7 @@ import net.mehvahdjukaar.suppsquared.client.ClientPackProvider;
 import net.mehvahdjukaar.suppsquared.common.*;
 import net.minecraft.Util;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -37,6 +35,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
@@ -113,6 +112,10 @@ public class SuppSquared {
         if (CommonConfigs.Building.WATTLE_AND_DAUB_ENABLED.get()) {
             event.addAfter(CreativeModeTabs.BUILDING_BLOCKS, i -> i.is(ModRegistry.DAUB_CROSS_BRACE.get().asItem()),
                     FRAMES.get(RegHelper.VariantType.STAIRS).get(), FRAMES.get(RegHelper.VariantType.SLAB).get());
+        }
+        if (CommonConfigs.Building.SCONCE_LEVER_ENABLED.get() && CommonConfigs.Building.SCONCE_ENABLED.get()) {
+            event.addAfter(CreativeModeTabs.REDSTONE_BLOCKS, i -> i.is(ModRegistry.SCONCE_LEVER.get().asItem()),
+                    SOUL_SCONCE_LEVER.get());
         }
         if (CommonConfigs.Building.CANDLE_HOLDER_ENABLED.get()) {
             event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(CANDLE_HOLDERS),
@@ -323,6 +326,14 @@ public class SuppSquared {
                     .noOcclusion())
     );
 
+    public static final Supplier<Block> SOUL_SCONCE_LEVER = regWithItem("sconce_lever_soul",
+            () -> new SconceLeverBlock(BlockBehaviour.Properties.of()
+                    .noCollission().noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)
+                    .instabreak()
+                    .lightLevel((state) -> (Boolean) state.getValue(BlockStateProperties.LIT) ? 10 : 0)
+                    .sound(SoundType.LANTERN),
+                    () -> ParticleTypes.SOUL_FIRE_FLAME));
 
     public static <T extends Item> Supplier<T> regItem(String name, Supplier<T> sup) {
         return RegHelper.registerItem(SuppSquared.res(name), sup);

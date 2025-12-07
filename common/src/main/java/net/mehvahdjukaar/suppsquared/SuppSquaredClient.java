@@ -22,6 +22,7 @@ public class SuppSquaredClient {
         ClientHelper.registerRenderType(SuppSquared.BRASS_LANTERN.get(), RenderType.cutout());
         ClientHelper.registerRenderType(SuppSquared.COPPER_LANTERN.get(), RenderType.cutout());
         ClientHelper.registerRenderType(SuppSquared.CRIMSON_LANTERN.get(), RenderType.cutout());
+        ClientHelper.registerRenderType(SuppSquared.SOUL_SCONCE_LEVER.get(), RenderType.cutout());
         SuppSquared.GOLDEN_CANDLE_HOLDERS.values().forEach(v ->
                 ClientHelper.registerRenderType(v.get(), RenderType.cutout()));
     }
