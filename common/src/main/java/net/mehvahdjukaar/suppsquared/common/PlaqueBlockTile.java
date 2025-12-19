@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -61,7 +62,7 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     }
 
     @Override
-    public void openScreen(Level level, Player player, Direction direction) {
+    public void openScreen(Level level, Player player, Direction direction, Vec3 hitPos) {
         PlaqueEditScreen.open(this);
     }
 
@@ -76,16 +77,6 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     }
 
     @Override
-    public void setPlayerWhoMayEdit(@Nullable UUID uuid) {
-        this.playerWhoMayEdit = uuid;
-    }
-
-    @Override
-    public UUID getPlayerWhoMayEdit() {
-        return playerWhoMayEdit;
-    }
-
-    @Override
     public boolean isWaxed() {
         return waxed;
     }
@@ -93,6 +84,17 @@ public class PlaqueBlockTile extends BlockEntity implements ITextHolderProvider,
     @Override
     public void setWaxed(boolean b) {
         this.waxed = b;
+    }
+
+    @Override
+    public void setCurrentUser(@Nullable UUID uuid) {
+        this.playerWhoMayEdit = uuid;
+
+    }
+
+    @Override
+    public @Nullable UUID getCurrentUser() {
+        return playerWhoMayEdit;
     }
 }
 
