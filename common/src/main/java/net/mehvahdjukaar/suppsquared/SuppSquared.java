@@ -118,10 +118,10 @@ public class SuppSquared {
                     SOUL_SCONCE_LEVER.get());
         }
         if (CommonConfigs.Building.CANDLE_HOLDER_ENABLED.get()) {
-            event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(CANDLE_HOLDERS),
-                    GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
-            event.addAfter(CreativeModeTabs.COLORED_BLOCKS, i -> i.is(CANDLE_HOLDERS),
-                    GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
+        //    event.addAfter(CreativeModeTabs.FUNCTIONAL_BLOCKS, i -> i.is(CANDLE_HOLDERS),
+        //            GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
+        //    event.addAfter(CreativeModeTabs.COLORED_BLOCKS, i -> i.is(CANDLE_HOLDERS),
+        //            GOLDEN_CANDLE_HOLDERS.values().stream().map(Supplier::get).toArray(Block[]::new));
         }
         if (CommonConfigs.isEnabled(ModConstants.KEY_NAME)) {
             event.addAfter(CreativeModeTabs.TOOLS_AND_UTILITIES, i -> i.is(ModRegistry.KEY_ITEM.get().asItem()),
