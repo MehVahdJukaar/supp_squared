@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "suppsquared:gold_candle_holder_gray"
+    "suppsquared:gold_candle_holder_gray",
+    "suppsquared:sack_gray"
   ]
 }

@@ -1,1 +1,4 @@
-fixed some recipes
+- misc fixes
+- Fixed #72
+- Fixed #73
+- Fixed #76
