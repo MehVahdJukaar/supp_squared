@@ -1,10 +1,8 @@
-
 modLoader = "javafml"
-loaderVersion = "${loader_version_range}"
+loaderVersion = "*"
 
 license = "${mod_license}"
 issueTrackerURL = "${mod_github}/issues"
-
 
 [[mods]]
 modId = "${mod_id}"
@@ -15,36 +13,33 @@ authors = "${mod_authors}"
 credits = "${mod_credits}"
 description = '''${mod_description}'''
 modUrl = "${mod_homepage}"
-itemIcon = "suppsquared:sack_lime" #catalogue icon
+itemIcon = "suppsquared:sack_lime"
 
-[[dependencies.${mod_id}]]
+[[dependencies.${ mod_id }]]
     modId = "neoforge"
     type = "required"
-    versionRange = "${neo_version_range}"
+    versionRange = "*"
     ordering = "NONE"
     side = "BOTH"
 
-[[dependencies.${mod_id}]]
+[[dependencies.${ mod_id }]]
     modId = "minecraft"
     type = "required"
-    versionRange = "[${minecraft_min_version},${minecraft_max_version})"
-    ordering = "NONE"
-    side = "CLIENT"
-
-[[dependencies.${mod_id}]]
-    modId = "moonlight"
-    type = "required"
-    referralUrl = "https://www.curseforge.com/minecraft/mc-mods/selene"
-    versionRange = "[${moonlight_version_range},]"
+    versionRange = "[${minecraft_version}]"
     ordering = "NONE"
     side = "BOTH"
 
+[[dependencies.${ mod_id }]]
+    modId = "moonlight"
+    type = "required"
+    versionRange = "[${moonlight_min_version},)"
+    ordering = "NONE"
+    side = "BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="supplementaries"
+[[dependencies.${ mod_id }]]
+    modId = "supplementaries"
     type = "required"
     referralUrl = "https://www.curseforge.com/minecraft/mc-mods/supplementaries"
-    versionRange="[1.21-2.9.0,]"
-    side="BOTH"
-    ordering="AFTER"
-
+    versionRange = "[${supplementaries_min_version},)"
+    ordering = "AFTER"
+    side = "BOTH"
